@@ -21,8 +21,9 @@
 
     computed:{
       imageUrl(){
+        return this.imgSrc?this.imgSrc:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpngimage.net%2Fwp-content%2Fuploads%2F2018%2F06%2Fno-image-png-2.png&f=1&nofb=1&ipt=5efc1082b4d3b4624e2c64d5849209f3449af89891f9e87ac32e95e55c6b4243&ipo=images"
         return this.imgSrc?this.imgSrc:"https://cdn.discordapp.com/attachments/321941760911736833/1024787851688288316/telecharge_4.gif"
-      }
+      },
     },
 
     mounted(){
@@ -45,8 +46,8 @@
     <!--</div>-->
     <div class="footer">
       <ul class="footer-ul">
-        <li class="card-text footer-text" v-if="keywords?.length>0" v-for="keyword in keywords">{{keyword}}</li>
-        <li v-else class="card-text">Card's attribute</li>
+        <li class="card-text footer-text" v-if="(keywords?.length>=1 && keywords[0]!=='')" v-for="keyword in keywords">{{keyword}}</li>
+        <li v-else class="card-text footer-text">Card's attribute</li>
       </ul>
     </div>
   </div>
@@ -103,6 +104,7 @@
     padding-inline-start: 0px;
   }
   .footer-text{
+    text-transform: capitalize;
     display: inline-block;
     font-size: 25px;
     margin: 5px;

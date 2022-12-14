@@ -10,21 +10,27 @@
   export default {
     
     props:{
-      base:String
+      keywords:[],
+      name:String,
+      rank:String,
+      src:String,
+      content:Object,
+      edition:Boolean
     },
 
     data(){
       return{
         flipped:false,
-        keywords:["witch","doll","emperyan","cold magic","party animal"],
-        name:"Party ranni",
-        rank:"A+",
-        src:"https://cdn.mos.cms.futurecdn.net/XmsMoNkgpTcnP4DjQzKMhJ.jpg",
-        content:{
-          ecology:"Hakuna matata mais quel phrase mamgnifique hakune matata quel chant fantastique ces mot signifie que tu vivra ta vie sans aucun souciz philosophie",
-          strength:"erthy,qetyhq,etyhqertyh,qszrtjhzs,rthjzsr,tyhszrt,hy",
-          weakness:"qsethyq,serthyqs,retyhqertyh,qertyhq,retq,etyuhqet,huyqetyhu,sfgyhs"
-        }
+        noteDisplayed:false
+        // keywords: "" /* ["witch","doll","emperyan","cold magic","party animal"]*/,
+        // name:"" /* "Party ranni" */,
+        // rank:"" /* "A+" */,
+        // src:"" /* "https://cdn.mos.cms.futurecdn.net/XmsMoNkgpTcnP4DjQzKMhJ.jpg" */,
+        // content:{
+        //   ecology:"" /* "Hakuna matata mais quel phrase mamgnifique hakune matata quel chant fantastique ces mot signifie que tu vivra ta vie sans aucun souciz philosophie" */,
+        //   strength:"" /*  "erthy,qetyhq,etyhqertyh,qszrtjhzs,rthjzsr,tyhszrt,hy" */,
+        //   weakness:"" /* "qsethyq,serthyqs,retyhqertyh,qertyhq,retq,etyuhqet,huyqetyhu,sfgyhs" */
+        // }
       }
     },
 
@@ -34,7 +40,7 @@
 
     computed:{
       test(){
-        console.log(this.src);
+        console.log(this.content);
         return 1
       }
     },
@@ -52,17 +58,20 @@
     <div class="card-container">
       <CardFrontVue v-if="!flipped" :name=name :rank=rank :imgSrc=src :keywords=keywords></CardFrontVue>
       <CardBackVue v-else :content=content></CardBackVue>
-      <input @click="flipped = !flipped" class="flip-button" type="button" value="Flip">
+      <div class="button-container">
+        <input @click="flipped = !flipped" class="button" type="button" value="Flip">
+        <input @click="noteDisplayed = !flipped" class="button" type="button" value="Notes">
+      </div>
     </div>
-    <div class="editor-container">
-      <CardEditorVue 
-      @imgSrc="(url:any)=>src = url" 
-      @name="(emitName:any)=> name = emitName"
-      @rank="(emitRank:any)=> rank = emitRank"
-      @keywords="(emitKeywords:any)=> keywords = emitKeywords.split(',')"
-      @ecology="(emitEcology:any)=>content.ecology = emitEcology"
-      @strength="(emitStrength:any)=>content.strength = emitStrength"
-      @weakness="(emitWeakness:any)=>content.weakness = emitWeakness"
+    <div v-if="edition" class="editor-container">
+      <CardEditorVue
+        @imgSrc="(url:any)=>src = url" 
+        @name="(emitName:any)=> name = emitName"
+        @rank="(emitRank:any)=> rank = emitRank"
+        @keywords="(emitKeywords:any)=> keywords = emitKeywords.split(',')"
+        @ecology="(emitEcology:any)=>content.ecology = emitEcology"
+        @strength="(emitStrength:any)=>content.strength = emitStrength"
+        @weakness="(emitWeakness:any)=>content.weakness = emitWeakness"
       ></CardEditorVue>
     </div>
   </div>
@@ -75,12 +84,34 @@
     flex-direction: row;
     justify-content: space-evenly;
   }
-  .flip-button{
+  .button{
+    padding: 12px;
     margin-top: 20px;
-    height: 2em;
+    height: 3em;
     width: 5em;
-    background-color: #0d6efd;;
+    font-size: 15px;
+    font-weight:bold;
+    color:white;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    cursor: pointer;
+    border-radius: 0.375rem;
   }
+  .button:hover{
+    background-color: #0b4cad;
+    border-color: #0b4cad;
+  }
+
+  .button:focus{
+    outline-color: #0b4cad;
+  }
+  
+  .button-container{
+    display: flex;
+    flex-direction: row !important;
+    justify-content:space-between;
+  }
+
   .card-container{
   }
 </style>

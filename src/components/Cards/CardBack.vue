@@ -3,7 +3,10 @@
   export default {
     
     props:{
-      content:Object
+      content:{
+        type:Object,
+        default:{ecology:'',strength:'',weakness:''}
+      }
     },
 
     data(){
@@ -19,24 +22,40 @@
     computed:{
       strength(){
         let returnValue:String = ""
-        let strengthArray:Array<String> = this.content.strength.split(',')
-        strengthArray.forEach(element=>{
-          returnValue += `• ${element}\n`
-        })
-        return returnValue
+        let strengthArray:Array<String> = this.content?.strength?.split(',')
+        if(strengthArray[0]!==''){
+          strengthArray.forEach(element=>{
+            let current:String =''
+            if(element.startsWith(' ')) element = element.replace(' ','')
+            current = element
+            returnValue += `• ${current}\n`
+          })
+          return returnValue
+        }
+        return "• Physical attack immunity\n• Fire resistances\n"
       },
       weakness(){
         let returnValue:String = ""
-        let strengthArray:Array<String> = this.content.weakness.split(',')
-        strengthArray.forEach(element=>{
-          returnValue += `• ${element}\n`
-        })
-        return returnValue
+        let strengthArray:Array<String> = this.content?.weakness?.split(',')
+        if(strengthArray[0]!==''){
+          strengthArray.forEach(element=>{
+            let current:String =''
+            if(element.startsWith(' ')) element = element.replace(' ','')
+            current = element
+            returnValue += `• ${current}\n`
+          })
+          return returnValue
+        }
+        return "• Radiant damage\n• Necrotic damage\n"
       }
     },
 
     mounted(){
-      // console.log(this.keywords)
+     
+    },
+
+    created(){
+
     }
 
 
@@ -48,7 +67,7 @@
   <div class="container">
     <div class="ecology">
       <h2 class="card-text">ECOLOGY</h2>
-      <textarea rows="6" readonly class="text-area" >{{content.ecology}} </textarea>
+      <textarea rows="6" readonly class="text-area" >{{content?.ecology || "Here goes the monster's environement, lore and history."}} </textarea>
     </div>
     <div class="strength">
       <h2 class="card-text">STRENGTH</h2>
@@ -88,6 +107,7 @@
     margin-top: auto;
     margin-bottom: auto;
     padding-left: 8px;
+    text-transform: capitalize;
 
   }
   .ecology{
@@ -163,8 +183,8 @@
     /* border: 3px solid rgba(223, 174, 85, 0.425);  creates padding around scroll thumb */
   }
   .text-area::-webkit-scrollbar-thumb {
-  background-color: black;    /* color of the scroll thumb */
-  border-radius: 0.375rem;       /* roundness of the scroll thumb */
-  border: 3px solid rgba(223, 174, 85, 0.425);  /* creates padding around scroll thumb */
-}
+    background-color: black;    /* color of the scroll thumb */
+    border-radius: 0.375rem;       /* roundness of the scroll thumb */
+    border: 3px solid rgba(223, 174, 85, 0.425);  /* creates padding around scroll thumb */
+  }
 </style>

@@ -37,9 +37,11 @@
 <style scoped>
   footer{
     /* position: relative; */
+    margin-top: 2rem;
     text-align: center;
     color: black;
     background-color: #eeeef0;
     line-height: 1.5;
+    height: 8rem;
   }
 </style>

@@ -39,7 +39,7 @@
       <span class="user-info-text lastname"> {{lastname}}</span>
     </div>
     <div class="user-info right">
-      <a class="user-info-text username links" :href=link?.url v-for="link in urls">{{link?.name}}</a>
+      <a class="user-info-text links" :href=link?.url v-for="link in urls">{{link?.name}}</a>
       <span class="user-info-text username">{{username}}</span>
       <img class="user-icon" :src=iconSrc alt="user icon">
     </div>
@@ -81,10 +81,14 @@
     margin: auto;
     display: block;
     margin-right: 5px;
+    margin-left: 1rem;
   }
   .links{
     font-style: italic;
     text-decoration: none;
+    margin: auto;
+    display: block;
+    margin-right: 5px;
     
   }
   .links:hover{

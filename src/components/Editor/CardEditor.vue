@@ -53,7 +53,7 @@
 <template>
   <div class="container">
     <label for="name">Monster's name</label>
-    <input @keyup="handleInputChange" type="text" placeholder="Red dragon" name="name" id="">
+    <input @keyup="handleInputChange" type="text" placeholder="Ranni the Witch" name="name" id="">
 
     <label for="rank">Monster's rank</label>
     <!--
@@ -68,7 +68,7 @@
       <option value="D-">D-</option>
       <option value="D">D</option>
       <option value="D+">D+</option>
-      <option value="C6">C-</option>
+      <option value="C-">C-</option>
       <option value="C">C</option>
       <option value="C+">C+</option>
       <option value="B-">B-</option>
