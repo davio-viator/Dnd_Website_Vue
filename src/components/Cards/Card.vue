@@ -50,18 +50,27 @@
 <template>
   <div class="parent-container">
     <div class="card-container">
-      <CardFrontVue v-if="flipped" :name=name :rank=rank :imgSrc=src :keywords=keywords></CardFrontVue>
+      <CardFrontVue v-if="!flipped" :name=name :rank=rank :imgSrc=src :keywords=keywords></CardFrontVue>
       <CardBackVue v-else :content=content></CardBackVue>
       <input @click="flipped = !flipped" class="flip-button" type="button" value="Flip">
     </div>
     <div class="editor-container">
-      <CardEditorVue @response="(url:any)=>src = url"></CardEditorVue>
+      <CardEditorVue 
+      @imgSrc="(url:any)=>src = url" 
+      @name="(emitName:any)=> name = emitName"
+      @rank="(emitRank:any)=> rank = emitRank"
+      @keywords="(emitKeywords:any)=> keywords = emitKeywords.split(',')"
+      @ecology="(emitEcology:any)=>content.ecology = emitEcology"
+      @strength="(emitStrength:any)=>content.strength = emitStrength"
+      @weakness="(emitWeakness:any)=>content.weakness = emitWeakness"
+      ></CardEditorVue>
     </div>
   </div>
 </template>
 
 <style scoped>
   .parent-container{
+    margin-top:50px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;

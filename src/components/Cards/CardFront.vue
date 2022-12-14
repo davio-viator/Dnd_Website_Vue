@@ -82,7 +82,7 @@
   }
   .card-image{
     object-fit: fill;
-    max-width: 25rem;
+    width: 25rem;
     height:32rem;
   }
   .footer{
@@ -108,6 +108,15 @@
     margin: 5px;
   }
   .footer::-webkit-scrollbar {
-  width: 0px;
+  width: 3px;
   }
+  .footer::-webkit-scrollbar-track{
+    background-color: maroon;
+    background-color: black;
+  }
+  .footer::-webkit-scrollbar-thumb {
+  background-color: white;    /* color of the scroll thumb */
+  border-radius: 0.375rem;       /* roundness of the scroll thumb */
+  border: 3px solid rgba(223, 174, 85, 0.425);  /* creates padding around scroll thumb */
+}
 </style>

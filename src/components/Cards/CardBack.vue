@@ -154,7 +154,17 @@
     font-size: 25px;
     margin: 5px;
   }
-  .footer::-webkit-scrollbar {
-  width: 0px;
+  .text-area::-webkit-scrollbar {
+    width: 5px;
   }
+  .text-area::-webkit-scrollbar-track{
+    background-color: maroon;
+    background-color: #fdf5e0;
+    /* border: 3px solid rgba(223, 174, 85, 0.425);  creates padding around scroll thumb */
+  }
+  .text-area::-webkit-scrollbar-thumb {
+  background-color: black;    /* color of the scroll thumb */
+  border-radius: 0.375rem;       /* roundness of the scroll thumb */
+  border: 3px solid rgba(223, 174, 85, 0.425);  /* creates padding around scroll thumb */
+}
 </style>

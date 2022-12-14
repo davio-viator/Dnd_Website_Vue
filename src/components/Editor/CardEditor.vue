@@ -6,7 +6,7 @@
 
   export default {
     
-    emits:['response'],
+    emits:['imgSrc','name','rank','keywords','ecology','strength','weakness'],
 
     props:{
       base:String
@@ -14,23 +14,26 @@
 
     data(){
       return{
+        fileName:''
       }
     },
 
     methods:{
       uploadImage(e:any){
-        if(e.target.value.includes('http')) this.$emit('response',e.target.value)
+        if(e.target.value.includes('http')) this.$emit('imgSrc',e.target.value)
         else if(e.target.files){
           this.fileName = e.target.files[0].name
           let reader = new FileReader();
           reader.onload = (event:any)=>{
-            this.$emit('response',event.target.result)
+            this.$emit('imgSrc',event.target.result)
           }
           reader.readAsDataURL(e.target.files[0]) 
         }
       },
       handleInputChange(e:any){
         let inputName = e.target.name;
+        let inputValue = e.target.value;
+        this.$emit(inputName,inputValue);
       }
     },
 
@@ -53,19 +56,43 @@
     <input @keyup="handleInputChange" type="text" placeholder="Red dragon" name="name" id="">
 
     <label for="rank">Monster's rank</label>
-    <input type="text" placeholder="C+" name="rank" id="">
+    <!--
+      <input @keyup="handleInputChange" type="text" placeholder="C+" name="rank" id="">
+    -->  
+    <select @keyup="handleInputChange" @change="handleInputChange" name="rank" id="rank">
+      <option value="∅">∅</option>
+      <option value="F">F</option>
+      <option value="E-">E-</option>
+      <option value="E">E</option>
+      <option value="E+">E+</option>
+      <option value="D-">D-</option>
+      <option value="D">D</option>
+      <option value="D+">D+</option>
+      <option value="C6">C-</option>
+      <option value="C">C</option>
+      <option value="C+">C+</option>
+      <option value="B-">B-</option>
+      <option value="B">B</option>
+      <option value="B+">B+</option>
+      <option value="A-">A-</option>
+      <option value="A">A</option>
+      <option value="A+">A+</option>
+      <option value="A++">A++</option>
+      <option value="S">S</option>
+      <option value="S+">S+</option>
+    </select>
 
     <label for="keyword">Monster's keywords</label>
-    <input type="text" placeholder="Undead,Magic user,Humanoid" name="keyword" id="">
+    <input @keyup="handleInputChange" type="text" placeholder="Undead,Magic user,Humanoid" name="keywords" id="">
 
     <label for="ecology">Monster's history/description</label>
-    <textarea type="text" placeholder="This monster resign in a abandonned tower guarded by her a dragon and her followers." name="ecology" id=""></textarea>
+    <textarea @keyup="handleInputChange" type="text" placeholder="This monster resign in a abandonned tower guarded by her a dragon and her followers." name="ecology" id=""></textarea>
 
     <label for="strength">Monster's strength</label>
-    <textarea type="text" name="strenth" id="" placeholder="Owner of the run of death, Lunar magic"></textarea>
+    <textarea @keyup="handleInputChange" type="text" name="strength" id="" placeholder="Owner of the run of death, Lunar magic"></textarea>
 
     <label for="weakness">Monster's weakness</label>
-    <textarea type="text" name="weakness" id="" placeholder="Holy magic, other stuff"></textarea>
+    <textarea @keyup="handleInputChange" type="text" name="weakness" id="" placeholder="Holy magic, other stuff"></textarea>
 
     <label for="link">Image's link</label>
     <input @touch.passive="uploadImage" @keyup="uploadImage" type="text" name="link" id="" placeholder="http://image.com">
@@ -89,10 +116,19 @@
   label{
     font-size: 26px;
     font-weight:500;
+    margin-top: 0.5rem;
   }
   input{
     height: 2rem;
     font-size: 26px;
+  }
+  select{
+    height: 2rem;
+    font-size: 26px;
+  }
+  option{
+    height: 2rem;
+    font-size: 20px;
   }
   .file-upload{
     display: none;
