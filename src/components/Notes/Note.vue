@@ -5,10 +5,13 @@
 <script type="module" lang="ts">
 
   export default {
+
+    emits:['noteContent'],
     
     props:{
       title:String,
-      content:String
+      content:String,
+      open:Boolean
     },
 
     data(){
@@ -18,7 +21,10 @@
     },
 
     methods:{
-      
+      handleInput(event:any){
+        let value:String = event.target?.value
+        this.$emit('noteContent',value)
+      }
     },
 
     computed:{
@@ -26,35 +32,52 @@
     },
 
     mounted(){
-    }
 
+    }
+    ,
+    created(){
+    }
 
   }
 
 </script>
 
 <template>
-  <div class="container">
+  <div ref="div" :class="{'container open':open,'container close':!open}">
     <div class="title">
       <h2>{{title || "Notes: Ranni the Witch"}}</h2>
     </div>
     <div class="content-container">
-      <textarea class="content" name="content">{{content || defaultNotes.trim()}}</textarea>
+      <textarea @keyup="handleInput" class="content" name="content">{{content || defaultNotes.trim()}}</textarea>
     </div>
   </div>
 </template>
 
 <style scoped>
   .container{
-    z-index: 10;
-    background-color: yellow;
+    z-index: 10 !important;
+    background-color: #E8DCB8;
     height: 45rem;
     width: 20rem;
     border-radius: 0.375rem 0 0 0.375rem ;
     padding: 12px;
     position: absolute;
-    top: 8rem;
+    top: 0rem;
     right: 0;
+  }
+
+  
+  .open{
+    animation-name:slider-open;
+    animation-duration:0.5s;
+    animation-timing-function: ease-in-out;
+  }
+  .close{
+    animation-name:slider-close;
+    animation-duration:0.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    /* animation-iteration-count:infinite; */
   }
   
   .title{
@@ -64,20 +87,23 @@
     margin: 0.5rem 0;
     min-height: min-content;
     max-height: 5rem;
-    background-color: blue;
+    /* background-color: blue; */
     overflow-y: hidden;
     text-overflow: ellipsis;
+
   }
 
   .content-container{
-    background-color: red;
-    min-height: calc(100% - 5rem - 12px);
-    max-height: calc(100% - 2.5rem - 12px);
+    /* background-color: red; */
+    min-height: calc(100% - 5rem - 12px); /* not sure this does something */
+    max-height: calc(100% - 2.5rem - 12px); /* not sure this does something */
+    height: calc(100% - 5rem - 12px);
   }
 
   .content{
-    /* size: auto; */
-    /* resize: none; */
+    /* background-color: violet; */
+
+    background-color: transparent;
 
     padding: 5px;
 
@@ -93,6 +119,7 @@
 
     font-family: inherit;
     font-size: 17px;
+
   }
 
   .content::-webkit-scrollbar{
@@ -108,5 +135,44 @@
     border-radius: 0.375rem;       /* roundness of the scroll thumb */
     border: 3px solid black;  /* creates padding around scroll thumb */
   }
+  .title::-webkit-scrollbar{
+    width: 5px;
+    height: 8px;
+  }
+
+  .title::-webkit-scrollbar-track{
+    background-color: #fdf5e0;
+    /* border: 3px solid rgba(223, 174, 85, 0.425);  creates padding around scroll thumb */
+  }
+  .title::-webkit-scrollbar-thumb {
+    background-color: black;    /* color of the scroll thumb */
+    border-radius: 0.375rem;       /* roundness of the scroll thumb */
+    border: 3px solid black;  /* creates padding around scroll thumb */
+  }
+
+  @keyframes slider-open {
+    0%   {
+      opacity:0;
+      transform:translateX(20rem);
+    }
+    100% {
+      opacity:1;
+      transform: translateX(0px);
+      display: block;
+    }
+  }
+
+  @keyframes slider-close {
+    0%   {
+      opacity:1;
+      transform:translateX(0px);
+    }
+    100% {
+      opacity:0;
+      transform: translateX(20rem);
+    }
+  }
+
+
 
 </style>

@@ -3,25 +3,34 @@
   import CardBackVue from './CardBack.vue';
   import CardEditorVue from '../Editor/CardEditor.vue'
 
+  import { useDisplayNote } from '@/stores/counter';
 </script>
 
 <script type="module" lang="ts">
 
   export default {
     
+    emits:['noteDisplayed','noteTitle'],
+
     props:{
-      keywords:[],
+      keywords:Array,
       name:String,
       rank:String,
       src:String,
       content:Object,
-      edition:Boolean
+      edition:Boolean,
     },
 
     data(){
       return{
         flipped:false,
-        noteDisplayed:false
+        noteDisplayed:useDisplayNote()
+        /* 
+          content:{
+          type:Object,
+          default:{ecology:'',strength:'',weakness:''}
+      }
+        */
         // keywords: "" /* ["witch","doll","emperyan","cold magic","party animal"]*/,
         // name:"" /* "Party ranni" */,
         // rank:"" /* "A+" */,
@@ -35,7 +44,11 @@
     },
 
     methods:{
-      
+      displayNotes(){
+        this.noteDisplayed.displayNote()
+        this.$emit('noteDisplayed',this.noteDisplayed.noteDisplayed)
+        this.$emit('noteTitle',this.name)
+      }
     },
 
     computed:{
@@ -60,7 +73,7 @@
       <CardBackVue v-else :content=content></CardBackVue>
       <div class="button-container">
         <input @click="flipped = !flipped" class="button" type="button" value="Flip">
-        <input @click="noteDisplayed = !flipped" class="button" type="button" value="Notes">
+        <input @click="displayNotes" class="button" type="button" value="Notes">
       </div>
     </div>
     <div v-if="edition" class="editor-container">

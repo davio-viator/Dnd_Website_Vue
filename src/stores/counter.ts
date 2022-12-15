@@ -7,6 +7,15 @@ export const useCounterStore = defineStore('counter', () => {
   function increment() {
     count.value++
   }
-
+  
   return { count, doubleCount, increment }
+})
+
+export const useDisplayNote = defineStore('dislayNote',() => {
+  const noteDisplayed = ref(false);
+  function displayNote(){
+    noteDisplayed.value = !noteDisplayed.value
+  }
+
+  return {noteDisplayed,displayNote}
 })
