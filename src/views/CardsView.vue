@@ -78,7 +78,7 @@
       },
       initDb(){
         getAllCards()
-        .then(res => {
+        .then((res: never[]): void => {
           this.cardArray = res
           this.pending = false
         })
