@@ -7,7 +7,7 @@
       lastname:String,
       username:String,
       iconSrc:String,
-      urls:Array<Object>
+      urls:Array<any>
     },
     
     data(){
@@ -86,9 +86,10 @@
   .links{
     font-style: italic;
     text-decoration: none;
+    text-transform: capitalize;
     margin: auto;
     display: block;
-    margin-right: 5px;
+    margin-right: 8px;
     
   }
   .links:hover{

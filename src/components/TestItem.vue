@@ -31,13 +31,7 @@
 </script>
 
 <template>
-  <div>
-    <input ref="inputRef" type="text" placeholder="name" v-model="name"/>
-    <div>
-      <button 
-      @click="submitForm"
-      :disabled="name.length==0" 
-      type="submit">Submit</button>
-    </div>
+  <div style="height:150vw;width: 100%;background-color: red;">
+    
   </div>
 </template>

@@ -13,9 +13,18 @@ export const useCounterStore = defineStore('counter', () => {
 
 export const useDisplayNote = defineStore('dislayNote',() => {
   const noteDisplayed = ref(false);
+  const title = ref("")
   function displayNote(){
     noteDisplayed.value = !noteDisplayed.value
   }
+  function setTitle(titre:any){
+    title.value = titre
+  }
 
-  return {noteDisplayed,displayNote}
+  return {noteDisplayed,title,displayNote,setTitle}
+})
+
+export const useNoteTitle = defineStore('noteTitle', () => {
+
+  return 1
 })

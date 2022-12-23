@@ -4,6 +4,8 @@
   import CardEditorVue from '../Editor/CardEditor.vue'
 
   import { useDisplayNote } from '@/stores/counter';
+
+  import { getAllUsers, createUser } from '../../services/UserService'
 </script>
 
 <script type="module" lang="ts">
@@ -13,52 +15,51 @@
     emits:['noteDisplayed','noteTitle'],
 
     props:{
-      keywords:Array,
+      keywords:Array<string>,
       name:String,
       rank:String,
       src:String,
-      content:Object,
+      content:{
+        type:Object,
+        default:{ecology:'',strength:'',weakness:''}
+      },
       edition:Boolean,
+      ecology:String,
+      strength:String,
+      weakness:String
     },
 
     data(){
       return{
         flipped:false,
-        noteDisplayed:useDisplayNote()
-        /* 
-          content:{
-          type:Object,
-          default:{ecology:'',strength:'',weakness:''}
-      }
-        */
-        // keywords: "" /* ["witch","doll","emperyan","cold magic","party animal"]*/,
-        // name:"" /* "Party ranni" */,
-        // rank:"" /* "A+" */,
-        // src:"" /* "https://cdn.mos.cms.futurecdn.net/XmsMoNkgpTcnP4DjQzKMhJ.jpg" */,
-        // content:{
-        //   ecology:"" /* "Hakuna matata mais quel phrase mamgnifique hakune matata quel chant fantastique ces mot signifie que tu vivra ta vie sans aucun souciz philosophie" */,
-        //   strength:"" /*  "erthy,qetyhq,etyhqertyh,qszrtjhzs,rthjzsr,tyhszrt,hy" */,
-        //   weakness:"" /* "qsethyq,serthyqs,retyhqertyh,qertyhq,retq,etyuhqet,huyqetyhu,sfgyhs" */
-        // }
+        noteDisplayed:useDisplayNote(),
+        users:[]
       }
     },
 
     methods:{
       displayNotes(){
         this.noteDisplayed.displayNote()
+        this.noteDisplayed.setTitle(this.name)
         this.$emit('noteDisplayed',this.noteDisplayed.noteDisplayed)
         this.$emit('noteTitle',this.name)
+      },
+      getUsers(){
+        getAllUsers().then((res: any[]) => {
+        res.map((item: any)=>this.users.push(item))
+      })
       }
     },
 
     computed:{
-      test(){
-        console.log(this.content);
-        return 1
-      }
+
     },
 
-    mounted(){
+    mounted(){ 
+
+    },
+    created(){
+      // this.getUsers()
     }
 
 
@@ -68,12 +69,12 @@
 
 <template>
   <div class="parent-container">
-    <div class="card-container">
+    <div>
       <CardFrontVue v-if="!flipped" :name=name :rank=rank :imgSrc=src :keywords=keywords></CardFrontVue>
-      <CardBackVue v-else :content=content></CardBackVue>
+      <CardBackVue v-else :content=content :ecology=ecology :strength=strength :weakness=weakness></CardBackVue>
       <div class="button-container">
         <input @click="flipped = !flipped" class="button" type="button" value="Flip">
-        <input @click="displayNotes" class="button" type="button" value="Notes">
+        <input v-if="!edition" @click="displayNotes" class="button" type="button" value="Notes">
       </div>
     </div>
     <div v-if="edition" class="editor-container">
@@ -82,9 +83,9 @@
         @name="(emitName:any)=> name = emitName"
         @rank="(emitRank:any)=> rank = emitRank"
         @keywords="(emitKeywords:any)=> keywords = emitKeywords.split(',')"
-        @ecology="(emitEcology:any)=>content.ecology = emitEcology"
-        @strength="(emitStrength:any)=>content.strength = emitStrength"
-        @weakness="(emitWeakness:any)=>content.weakness = emitWeakness"
+        @ecology="(emitEcology:any)=>ecology = emitEcology"
+        @strength="(emitStrength:any)=>strength = emitStrength"
+        @weakness="(emitWeakness:any)=>weakness = emitWeakness"
       ></CardEditorVue>
     </div>
   </div>
@@ -94,8 +95,8 @@
   .parent-container{
     margin-top:50px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    flex-direction: row !important;
+    justify-content: space-evenly !important;
   }
   .button{
     padding: 12px;
@@ -125,6 +126,4 @@
     justify-content:space-between;
   }
 
-  .card-container{
-  }
 </style>

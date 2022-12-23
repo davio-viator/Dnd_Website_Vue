@@ -16,7 +16,8 @@
 
     data(){
       return{
-        defaultNotes:"Ranni the Witch is an NPC in Elden Ring. Ranni the Witch is a mysterious figure who first introduces herself as Renna. Upon meeting her again at Three Sisters, she reveals her true name and eventually will recruit you into her servitude, sending you off in search of a hidden treasure. This page covers vital information for Ranni's questline for Elden Ring.\n\n \" I am the witch Ranni. I stole Death long ago, and search now for the dark path.\"\n\nRanni is the daughter of Radagon and Rennala. After Radagon departed and became the consort to Marika, Ranni and her siblings were raised to demigod status, as they were now the children of the consort of a goddess. She appears to have some involvement in The Night of Black Knives, where Black Knife Assassins stole a shard of the Rune of Death and murdered Godwyn, the Golden. At the same time, Ranni seems to have lost her original body and now resides as spirit inhabiting an artificial doll body, seeking to restore her Empyrean status with the aid of blacksmith Iji, preceptor Seluvis, wolf warrior Blaidd, and the Tarnished."
+        defaultNotes:"Ranni the Witch is an NPC in Elden Ring. Ranni the Witch is a mysterious figure who first introduces herself as Renna. Upon meeting her again at Three Sisters, she reveals her true name and eventually will recruit you into her servitude, sending you off in search of a hidden treasure. This page covers vital information for Ranni's questline for Elden Ring.\n\n \" I am the witch Ranni. I stole Death long ago, and search now for the dark path.\"\n\nRanni is the daughter of Radagon and Rennala. After Radagon departed and became the consort to Marika, Ranni and her siblings were raised to demigod status, as they were now the children of the consort of a goddess. She appears to have some involvement in The Night of Black Knives, where Black Knife Assassins stole a shard of the Rune of Death and murdered Godwyn, the Golden. At the same time, Ranni seems to have lost her original body and now resides as spirit inhabiting an artificial doll body, seeking to restore her Empyrean status with the aid of blacksmith Iji, preceptor Seluvis, wolf warrior Blaidd, and the Tarnished.",
+        mounted:true
       }
     },
 
@@ -36,6 +37,7 @@
     }
     ,
     created(){
+
     }
 
   }
@@ -43,7 +45,7 @@
 </script>
 
 <template>
-  <div ref="div" :class="{'container open':open,'container close':!open}">
+  <div class="container">
     <div class="title">
       <h2>{{title || "Notes: Ranni the Witch"}}</h2>
     </div>
@@ -65,20 +67,6 @@
     top: 0rem;
     right: 0;
   }
-
-  
-  .open{
-    animation-name:slider-open;
-    animation-duration:0.5s;
-    animation-timing-function: ease-in-out;
-  }
-  .close{
-    animation-name:slider-close;
-    animation-duration:0.5s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
-    /* animation-iteration-count:infinite; */
-  }
   
   .title{
     text-align: center;
@@ -87,21 +75,18 @@
     margin: 0.5rem 0;
     min-height: min-content;
     max-height: 5rem;
-    /* background-color: blue; */
     overflow-y: hidden;
     text-overflow: ellipsis;
 
   }
 
   .content-container{
-    /* background-color: red; */
     min-height: calc(100% - 5rem - 12px); /* not sure this does something */
     max-height: calc(100% - 2.5rem - 12px); /* not sure this does something */
     height: calc(100% - 5rem - 12px);
   }
 
   .content{
-    /* background-color: violet; */
 
     background-color: transparent;
 
@@ -149,30 +134,5 @@
     border-radius: 0.375rem;       /* roundness of the scroll thumb */
     border: 3px solid black;  /* creates padding around scroll thumb */
   }
-
-  @keyframes slider-open {
-    0%   {
-      opacity:0;
-      transform:translateX(20rem);
-    }
-    100% {
-      opacity:1;
-      transform: translateX(0px);
-      display: block;
-    }
-  }
-
-  @keyframes slider-close {
-    0%   {
-      opacity:1;
-      transform:translateX(0px);
-    }
-    100% {
-      opacity:0;
-      transform: translateX(20rem);
-    }
-  }
-
-
 
 </style>

@@ -1,21 +1,23 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+  import { RouterLink, RouterView } from 'vue-router'
 
-import HelloWorld from './components/HelloWorld.vue'
+  import HelloWorld from './components/HelloWorld.vue'
 
-import TheHeaderVue from '@/components/TheHeader.vue';
-import TheFooterVue from '@/components/TheFooter.vue';
-import CardVue from './components/Cards/Card.vue';
-import NoteVue from './components/Notes/Note.vue';
+  import TheHeaderVue from '@/components/TheHeader.vue';
+  import TheFooterVue from '@/components/TheFooter.vue';
+  import CardVue from './components/Cards/Card.vue';
+  import NoteVue from './components/Notes/Note.vue';
 
-import { faker } from '@faker-js/faker';
+  import { faker } from '@faker-js/faker';
+  import { useDisplayNote } from '@/stores/counter';
+
 </script>
 
 <script type="module" lang="ts">
   export default {
     data() {
       return {
-        links:[{name:'link a',url:'linkA'},{name:'link b',url:'linkB'}, {name:'link c',url:'linkC'}],
+        links:[{name:'Home',url:'home'},{name:'About',url:'about'},{name:'Cards',url:'/'}, {name:'card creator',url:'/create-card'}],
         content:{
           ecology:"",
           strength:"",
@@ -29,42 +31,21 @@ import { faker } from '@faker-js/faker';
     }
 
     ,methods:{
-      init(){
-        let iteration:Number = parseInt(faker.random.numeric());
-        iteration = 3;
-        for (let i = 0; i < iteration; i++) {
-          let name:String = faker.name.fullName();
-          let rank:String = faker.helpers.arrayElement(["∅","F","E-","E","E+","D-","D","D+","C-","C","C+","B-","B","B+","A-","A","A+","A++","S","S+"])
-          let keywords:String[] = faker.random.words(5).split(' ')
-          let content:Object = {ecology:faker.lorem.text(),strength:faker.random.words(8).replaceAll(' ',','),weakness:faker.random.words(8).replaceAll(' ',',')}
-          let url:String = faker.helpers.arrayElement(
-            [
-              "https://cdn.discordapp.com/attachments/321941760911736833/1027320724806975589/Jack-O27_Childish_Jump.webp",
-              "https://cdn.discordapp.com/attachments/321941760911736833/1024787851688288316/telecharge_4.gif",
-              "https://cdn.mos.cms.futurecdn.net/XmsMoNkgpTcnP4DjQzKMhJ.jpg",
-              "https://i.pinimg.com/originals/ba/a2/7a/baa27a58a45aae675b89c5b8b59b056c.png",
-              "https://pbs.twimg.com/media/FeCLslBUYAEdkRV?format=jpg&name=4096x4096",
-              "https://pbs.twimg.com/media/FeEhntpVIAAAs7t?format=jpg&name=medium"
-            ]
-          )
-        let Card:Array = []
-          Card['name'] = name
-          Card['rank'] = rank
-          Card['keywords'] = keywords
-          Card['content'] = content
-          Card['url'] = url
-          this.cardArray.push(Card)
-        }
-      }
+
     }
 
     ,created(){
-      this.init()
+
     }
     ,computed:{
-      test(){
-        console.log(this.cardContent,this.noteOpenned);
-        return 1
+      noteIsOpen(){
+        let status = useDisplayNote()
+        return status.noteDisplayed
+      },
+      noteTitle(){
+        let title = useDisplayNote().title
+        this.cardTitle = title;
+        return this.cardTitle
       }
     }
   }
@@ -72,36 +53,57 @@ import { faker } from '@faker-js/faker';
 </script>
 
 <template>  
-  <RouterView />
-  <TheHeaderVue 
-    firstname="davio" 
-    lastname="viator" 
-    username="SpiritSonic" 
-    iconSrc="https://cdn.discordapp.com/attachments/321941760911736833/1027320724806975589/Jack-O27_Childish_Jump.webp"
-    :urls=links>
-  </TheHeaderVue>
-  <div :class="{'card-container note-open-card':noteOpenned,'card-container note-close-card':!noteOpenned}">
-    <CardVue @noteDisplayed="(emitNoteDisplayed)=>noteOpenned = emitNoteDisplayed" @noteTitle="(emitNoteTitle)=>cardTitle = emitNoteTitle" v-for="card in cardArray" :name="card['name']" :rank="card['rank']" :keywords="card['keywords']" :content="card['content']" :src="card['url']" :edition="!Boolean" ></CardVue>
-  </div>
+    <div class="wrapper">     
+      <TheHeaderVue 
+        firstname="davio" 
+        lastname="viator" 
+        username="SpiritSonic" 
+        iconSrc="https://cdn.discordapp.com/attachments/321941760911736833/1027320724806975589/Jack-O27_Childish_Jump.webp"
+        :urls=links>
+      </TheHeaderVue>
+      <RouterView />
+      <div ref="note" :class="{'note-container note-open-note':noteIsOpen,'note-container note-close-note':!noteIsOpen}">
+        <NoteVue 
+          :open="noteIsOpen" 
+          :title="noteTitle" 
+          @noteContent="(emitContent)=>cardContent=emitContent" 
+          :content="cardContent">
+        </NoteVue>
+      </div>
+       <!--
+        <div :class="{'card-container note-open-card':noteIsOpen,'card-container note-close-card':!noteIsOpen}">
+          <CardVue @noteDisplayed="(emitNoteDisplayed)=>noteOpenned = emitNoteDisplayed" @noteTitle="(emitNoteTitle)=>cardTitle = emitNoteTitle" v-for="card in cardArray" :name="card['name']" :rank="card['rank']" :keywords="card['keywords']" :content="card['content']" :src="card['url']" :edition="!Boolean" ></CardVue>
+        </div>
+      -->
+    </div>
+    <TheFooterVue/>
 
-  <div :class="{'note-container':noteOpenned,'note-container note-open-note':!noteOpenned}">
-    <NoteVue :name="test" :open="noteOpenned" :title="cardTitle" @noteContent="(emitContent)=>cardContent=emitContent" :content="cardContent"></NoteVue>
-  </div>
-
-  <TheFooterVue/>
 </template>
 
 <style scoped>
+  .wrapper{
+    min-height: calc(100vh - 4rem);
+  }
   .note-container{
     /* z-index: -1; */
     overflow-x: hidden;
-    position: absolute;
+    position: fixed;
     right: 0;
     top: 8rem;
     width: 20rem;
     height: 45rem;
+    transition: all ease-in-out 0.5s;
+    transform: translateX(100%);
+    opacity: 0;
   }
-  .card-container{
+
+  .note-open-note{
+    /* animation-name:note-opens; */
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  /* .card-container{
     display: grid;
     grid-template-columns: auto auto auto;
   }
@@ -136,15 +138,11 @@ import { faker } from '@faker-js/faker';
     100% {
       margin-right: 0;
     }
-  }
+  } 
+  */
 
 
-
-  .note-open-note{
-    display: none;
-  }
-
-  header {
+  /* header {
     line-height: 1.5;
     max-height: 100vh;
   }
@@ -204,5 +202,5 @@ import { faker } from '@faker-js/faker';
       padding: 1rem 0;
       margin-top: 1rem;
     }
-  }
+  } */
 </style>

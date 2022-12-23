@@ -6,7 +6,10 @@
       content:{
         type:Object,
         default:{ecology:'',strength:'',weakness:''}
-      }
+      },
+      ecology:String,
+      strength:String,
+      weakness:String
     },
 
     data(){
@@ -20,13 +23,13 @@
     },
 
     computed:{
-      strength(){
+      strengthParsed(){
         let returnValue:String = ""
-        let strengthArray:Array<String> = this.content?.strength?.split(',')
-        if(strengthArray[0]!==''){
+        let strengthArray:Array<string> = this.strength?.split(',')
+        if(strengthArray){
           strengthArray.forEach(element=>{
             let current:String =''
-            if(element.startsWith(' ')) element = element.replace(' ','')
+            if(element?.startsWith(' ')) element = element?.replace(' ','')
             current = element
             returnValue += `• ${current}\n`
           })
@@ -34,10 +37,10 @@
         }
         return "• Physical attack immunity\n• Fire resistances\n"
       },
-      weakness(){
+      weaknessParsed(){
         let returnValue:String = ""
-        let strengthArray:Array<String> = this.content?.weakness?.split(',')
-        if(strengthArray[0]!==''){
+        let strengthArray:Array<string> = this.weakness?.split(',')
+        if(strengthArray){
           strengthArray.forEach(element=>{
             let current:String =''
             if(element.startsWith(' ')) element = element.replace(' ','')
@@ -47,6 +50,9 @@
           return returnValue
         }
         return "• Radiant damage\n• Necrotic damage\n"
+      },
+      ecologyy(){
+        return this.content.ecology
       }
     },
 
@@ -55,7 +61,7 @@
     },
 
     created(){
-
+      
     }
 
 
@@ -67,15 +73,15 @@
   <div class="container">
     <div class="ecology">
       <h2 class="card-text">ECOLOGY</h2>
-      <textarea rows="6" readonly class="text-area" >{{content?.ecology || "Here goes the monster's environement, lore and history."}} </textarea>
+      <textarea rows="6" readonly class="text-area" >{{content.ecology|| ecology || "Here goes the monster's environement, lore and history." }} </textarea>
     </div>
     <div class="strength">
       <h2 class="card-text">STRENGTH</h2>
-      <textarea rows="6" readonly class="text-area" >{{strength}} </textarea>
+      <textarea rows="6" readonly class="text-area" >{{strengthParsed}} </textarea>
     </div>
     <div class="weakness">
       <h2 class="card-text">WEAKNESS</h2>
-      <textarea rows="6" readonly class="text-area bottom" >{{weakness}} </textarea>
+      <textarea rows="6" readonly class="text-area bottom" >{{weaknessParsed}} </textarea>
       <ul class="footer-ul">
       </ul>
     </div>

@@ -61,6 +61,7 @@
     flex-direction: column !important;
   }
   .header{
+    text-transform: capitalize;
     min-width: 15rem;
     max-width: 25rem;
     height: 2.5rem;
@@ -68,7 +69,7 @@
     background-color: black;
     display: flex;
     justify-content:space-between;
-    padding: 4px;
+    padding: 4px 15px;
     font-size: 28px;
   }
   .card-text{
@@ -85,6 +86,9 @@
     object-fit: fill;
     width: 25rem;
     height:32rem;
+    border-style: solid;
+    border-width: 0px 5px;
+    border-color: black;
   }
   .footer{
     min-width: 15rem;
@@ -104,10 +108,10 @@
     padding-inline-start: 0px;
   }
   .footer-text{
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     display: inline-block;
     font-size: 25px;
-    margin: 5px;
+    margin: 5px 8px;
   }
   .footer::-webkit-scrollbar {
   width: 3px;
