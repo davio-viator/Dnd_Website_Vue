@@ -58,7 +58,7 @@
     grid-template-columns: auto auto;
     
     height: 15rem;
-    width: calc(90vw / 4);
-
+    min-width: 100%;
+    /* width: calc(90vw / 4); */
   }
 </style>

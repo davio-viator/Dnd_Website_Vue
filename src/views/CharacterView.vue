@@ -1,6 +1,9 @@
 <script setup lang="ts">
   import StatBlock from '../components/Characters/CharacterStatBlock.vue'
   import SavingThrows from '../components/Characters/SavingThrowBlock.vue'
+  import Sense from '../components/Characters/SensesBlock.vue'
+  import Proficiency from '@/components/Characters/ProficiencyBlock.vue';
+  import Skill from '@/components/Characters/SkillsBlock.vue'
 </script>
 
 <script type="module" lang="ts">
@@ -83,9 +86,12 @@
       />
     </div>
     <div class="passives b">
-      <SavingThrows>
-      </SavingThrows>
-
+      <SavingThrows/>
+      <Sense/>
+      <Proficiency/>
+    </div>
+    <div class="skill c">
+      <Skill/>
     </div>
   </div>
 </template>
@@ -93,12 +99,13 @@
 <style scoped>
   .container{
     margin-top: 2rem;
+    min-width: 90vw;
     max-width: 90vw;
     margin-left: auto;
     margin-right: auto;
 
     display: grid;
-    grid-template-columns: repeat(4, 4fr);
+    grid-template-columns: repeat(4, 24rem);
     grid-template-rows: 150px 15rem 15rem 20rem;
     grid-gap:15px;
     grid-auto-rows: 100px;
@@ -118,6 +125,12 @@
   }
   .passives{
     height: fit-content;
+    /* min-width: 100%; */
+  }
+
+  .skill{
+    height: 100%;
+    /* min-width: 100%; */
   }
 
   .a{grid-area: a;}
