@@ -17,7 +17,7 @@
   export default {
     data() {
       return {
-        links:[{name:'Home',url:'home'},{name:'About',url:'about'},{name:'Cards',url:'/'}, {name:'card creator',url:'create-card'},{name:'Characters',url:'characters'}],
+        links:[{name:'Home',url:'/home'},{name:'About',url:'/about'},{name:'Cards',url:'/'}, {name:'card creator',url:'/create-card'},{name:'Characters',url:'/characters'}],
         content:{
           ecology:"",
           strength:"",

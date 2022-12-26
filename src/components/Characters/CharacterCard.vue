@@ -7,10 +7,6 @@
   export default {
     
     props:{
-      base:{
-        type:Array,
-        default:''
-      },
       firstname:{
         type:String,
         default:'thalok'
@@ -35,6 +31,7 @@
         type:String,
         default:""
       },
+      id:Number
     },
 
     data(){
@@ -45,11 +42,14 @@
     },
 
     methods:{
-      
+      viewCharacter(){
+        let url:String = `/character/${this.id}`
+        console.log(url);
+        this.$router.push({name:'character-view',params:{id:this.id,test:'x'}})
+      }
     },
 
     computed:{
-
     },
 
     mounted(){
@@ -81,7 +81,7 @@
       </div>
     </div>
     <div class="footer">
-      <button class="character-card-icon">View</button>
+      <button  @click="viewCharacter" class="character-card-icon">View</button>
       <button class="character-card-icon">Edit</button>
       <button class="character-card-icon">Copy</button>
       <button class="character-card-icon danger">Delete</button>
