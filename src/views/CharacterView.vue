@@ -4,6 +4,8 @@
   import Sense from '../components/Characters/SensesBlock.vue'
   import Proficiency from '@/components/Characters/ProficiencyBlock.vue';
   import Skill from '@/components/Characters/SkillsBlock.vue'
+  import SubStat from '@/components/Characters/SubStatBlock.vue';
+  import HealthBlock from '@/components/Characters/HealthBlock.vue';
 </script>
 
 <script type="module" lang="ts">
@@ -48,7 +50,8 @@
             modifier:this.randomMinMax(-5,5),
             score:this.randomMinMax(0,20)
           },
-        ]
+        ],
+        inspiration:false
       }
     },
 
@@ -77,6 +80,7 @@
 
 <template>
   <div class="container">
+
     <div class="statblock-container a">
       <StatBlock 
         v-for="i in blocks"
@@ -85,35 +89,55 @@
         :score="i.score"
       />
     </div>
+
     <div class="passives b">
       <SavingThrows/>
       <Sense/>
       <Proficiency/>
     </div>
+
     <div class="skill c">
       <Skill/>
     </div>
+
+      <div class="substats d">
+        <SubStat title="proficiency" content="3" footer="bonus"/>
+        <SubStat title="walking" content="30 ft" footer="speed" speed/>
+      </div>
+
+      <div class="g health-block">
+        <div class="inspiration">
+          <div @click="inspiration = !inspiration" class="box" :class="{'checked':inspiration}">
+
+          </div>
+          <span style="position:absolute;bottom:0;padding-left:5px;padding-bottom:4px">INSPIRATION</span>
+        </div>
+        <HealthBlock/>
+      </div>
+
+      <div class="initiative-armor e">
+        ey yoo
+      </div>
   </div>
 </template>
 
 <style scoped>
   .container{
     margin-top: 2rem;
-    min-width: 90vw;
-    max-width: 90vw;
+    width: 1500px;
     margin-left: auto;
     margin-right: auto;
 
     display: grid;
-    grid-template-columns: repeat(4, 24rem);
-    grid-template-rows: 150px 15rem 15rem 20rem;
+    grid-template-columns: repeat(5, 300px);
+    grid-template-rows: 100px 12rem 12rem 20rem;
     grid-gap:15px;
     grid-auto-rows: 100px;
     grid-template-areas:
-      "a a d d f g"
-      "b c e e h h"
-      "b c i i i i"
-      "b c i i i i";
+      "a a d g g"
+      "b c e h h"
+      "b c i i i"
+      "b c i i i";
     align-items: start;
   }
 
@@ -122,15 +146,54 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
+    height: 100%;
   }
   .passives{
-    height: fit-content;
-    /* min-width: 100%; */
+    height: 100%;
   }
 
   .skill{
     height: 100%;
-    /* min-width: 100%; */
+  }
+
+  .substats{
+    height: 100%; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .inspiration{
+    /* position: absolute; */
+    bottom: 0;
+    text-transform: uppercase;
+    background-color: none;
+    width: 18%;
+    border-radius: 0.375rem;
+  }
+
+  .box{
+    background-color: white ;
+    border-style: solid;
+    border-width: 1px 1px 1px 1px;
+    border-radius: 0.75em;
+    border-color: red;
+    margin: auto;
+    margin-top: 1.6rem;
+    height: 39px;
+    width: 39px;
+  }
+
+  .checked{
+    background-image: url(https://cdn.discordapp.com/attachments/321941760911736833/1027676300351119532/Capture_decran_2022-10-06_221801.png);
+    object-fit: contain;
+  }
+
+  .health-block{
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
   .a{grid-area: a;}

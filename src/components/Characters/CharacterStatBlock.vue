@@ -58,8 +58,8 @@
   .wrapper-stat{
     text-align: center;
     border-radius: 0.375rem;
-    width: 7rem;
-    height: 8rem;
+    width: calc(600px / 6 - 5px);
+    height: 100%;
     border: 1px solid red;
   }
 
@@ -73,7 +73,7 @@
   .name{
     color:gray;
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: bold;
     margin-bottom: 5px;
   }

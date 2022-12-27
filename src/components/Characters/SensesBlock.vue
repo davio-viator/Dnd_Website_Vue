@@ -45,15 +45,18 @@
 </template>
 
 <style scoped>
+
   .wrapper{
     margin-top: 15px;
     padding-left: 2rem;
     background-color: blue;
-    height: 15rem;
+    height: 12rem;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     border-radius: 0.375rem;
+
+    border: 1px solid red;
 
     min-width: 100%;
   }

@@ -71,6 +71,8 @@
 
     min-width: 100%;
     border-radius: 0.375rem;
+
+    border: 1px solid red;
   }
 
   .content{

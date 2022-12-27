@@ -50,15 +50,18 @@
 <style scoped>
   .wrapper{
     background-color: yellow;
-    border-color: red;
+    border: 1px solid red;
     border-radius: 0.375rem;
     text-align: center;
 
     display: grid;
     grid-template-columns: auto auto;
     
-    height: 15rem;
+    /* height: 15rem; */
+    height: calc(12rem);
     min-width: 100%;
+
+    padding-top: 35px;
     /* width: calc(90vw / 4); */
   }
 </style>

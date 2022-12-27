@@ -73,22 +73,27 @@
     background-color: purple;
     height: 100%;
 
-    padding: 12px;
+    padding: 12px 10px;
     min-width: 100%;
+    border-radius: 0.375rem;
+
+    border: 1px solid red;
   }
   
   .header{
     color:white;
     text-transform: uppercase;
     display: grid;
-    grid-template-columns: 3rem 3rem 13rem 1rem;
+    grid-template-columns: 3rem 3rem 7rem 1rem;
+    margin-bottom: 1rem;
   }
 
   .content{
     display: grid;
-    grid-template-columns: 3rem 3rem 14rem 1rem;
+    grid-template-columns: 3rem 3rem 8rem 1rem;
 
     text-transform: capitalize;
+    height: 2.3rem;
   }
 
   .skill-radio{
@@ -97,6 +102,7 @@
     width: 10px !important;
     height: 10px;
     padding: 0 !important;
+    margin-left: 13px;
     margin-bottom: 2px;
     background-color: white;
     border-radius: 50%;
