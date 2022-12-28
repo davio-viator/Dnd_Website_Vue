@@ -6,6 +6,8 @@
   import Skill from '@/components/Characters/SkillsBlock.vue'
   import SubStat from '@/components/Characters/SubStatBlock.vue';
   import HealthBlock from '@/components/Characters/HealthBlock.vue';
+  import StatusBlock from '@/components/Characters/StatusBlock.vue';
+  import PrimaryBox from '@/components/Characters/PrimaryBoxBlock.vue';
 </script>
 
 <script type="module" lang="ts">
@@ -116,7 +118,29 @@
       </div>
 
       <div class="initiative-armor e">
-        ey yoo
+
+        <div class="initiative-box">
+          <span>INITIATIVE</span>
+          <input class="initiative" type="button" :value="'+2'">
+        </div>
+
+        <div class="armor-box">
+          <span style="margin-top: 5px;" class="titre">
+            Armor
+          </span>
+          <span style="margin-top:auto;font-size:25px;font-weight:bold">16</span>
+          <span style=" margin-top: auto;margin-bottom: 5px;" class="titre">
+            Class
+          </span>
+        </div>
+      </div>
+
+      <div class="status h">
+        <StatusBlock/>
+      </div>
+
+      <div class="primary-box i">
+        <PrimaryBox/>
       </div>
   </div>
 </template>
@@ -124,7 +148,7 @@
 <style scoped>
   .container{
     margin-top: 2rem;
-    width: 1500px;
+    width: 1550px;
     margin-left: auto;
     margin-right: auto;
 
@@ -194,6 +218,56 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+  }
+
+  .initiative-armor{
+    height: 50%; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .initiative-box{
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .armor-box{
+    text-align: center;
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid red;
+    border-radius: 30%;
+  }
+
+  .titre{
+    text-transform: uppercase;
+    color: gray;
+  }
+
+  .initiative{
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 1rem;
+    font-size: 22px;
+    padding: 5px 0px;
+    border-radius: 0.500rem;
+    background-color: white;
+    border: 1px solid #bfccd6;
+    outline: 1px solid red;
+    outline-offset: 8px;
+  }
+
+  .status{
+    height: 50%;
+  }
+
+  .primary-box{
+    margin-top: -6rem;
+    height: calc(100% - 6rem - 15px);
   }
 
   .a{grid-area: a;}
