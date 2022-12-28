@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+  import NavBar from '../navbar/NavBar.vue';
 </script>
 
 <script type="module" lang="ts">
@@ -12,7 +12,7 @@
 
     data(){
       return{
-        
+        tabs:['action','spells','inventory','features & traits',' description','notes','extras']
       }
     },
 
@@ -38,7 +38,7 @@
 
 <template>
   <div class="wrapper">
-    srfyjh
+    <NavBar :tabs="tabs"/>
   </div>
 </template>
 
