@@ -7,7 +7,7 @@
   import SubStat from '@/components/Characters/SubStatBlock.vue';
   import HealthBlock from '@/components/Characters/HealthBlock.vue';
   import StatusBlock from '@/components/Characters/StatusBlock.vue';
-  import PrimaryBox from '@/components/Characters/PrimaryBoxBlock.vue';
+  import PrimaryBox from '@/components/Characters/primarybox/PrimaryBoxBlock.vue';
 </script>
 
 <script type="module" lang="ts">
