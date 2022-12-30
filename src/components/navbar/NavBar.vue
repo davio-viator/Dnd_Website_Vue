@@ -66,7 +66,6 @@
 <style scoped>
 
   .nav-bar-wrapper{
-    background-color: ;
     margin-top: 15px;
     padding: 0 12px;
   }

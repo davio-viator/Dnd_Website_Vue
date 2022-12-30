@@ -48,17 +48,17 @@
   <div class="wrapper">
     <nav>
       <NavBar @selected="(tabSelected)=>selected = tabSelected" :tabs="tabs"/>
-      <!-- <NavBar :tabs="tabs2" sub/> -->  
     </nav>
-    {{ handleDisplay }}
-    <Actions v-if="selected=='actions'" />
+    <div>
+      <Actions v-if="selected=='actions'" />
+    </div>
   </div>
 </template>
 
 <style scoped>
   .wrapper{
     width: 100%;
-    height: 150%;
+    height: 100%;
 
     background-color: white;
     border: 1px solid red;

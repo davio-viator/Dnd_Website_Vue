@@ -14,8 +14,8 @@
 
     data(){
       return{
-        maxHealth:this.max?this.max:36,
-        currentHealth:this.current?this.current:36,
+        maxHealth:this.max?this.max:42,
+        currentHealth:this.current?this.current:30,
         tempHP:this.temp?this.temp:null
 
       }

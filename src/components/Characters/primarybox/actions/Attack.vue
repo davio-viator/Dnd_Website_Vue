@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import Attack from './Attack.vue';
+
 </script>
 
 <script type="module" lang="ts">
@@ -7,7 +7,42 @@
   export default {
     
     props:{
-      focused:Boolean
+      icon:{
+        type:String,
+        default:'X'
+      },
+      name:{
+        type:String,
+        default:'Mace'
+      },
+      attack_type:{
+        type:String,
+        default:'Melee Weapon'
+      },
+      range:{
+        type:String,
+        default:'5ft'
+      },
+      range_type:{
+        type:String,
+        default:'reach'
+      },
+      hit_dc:{
+        type:Number,
+        default:'+4'
+      },
+      damage:{
+        type:String,
+        default:'1d6+1'
+      },
+      damage_icon:{
+        type:String,
+        default:'X'
+      },
+      notes:{
+        type:String,
+        default:'Simple'
+      }
     },
 
     data(){
@@ -37,39 +72,17 @@
 </script>
 
 <template>
-  <div class="wrapper">
-    <div class="title"><span class="title-text">actions • </span>Attacks per Action: {{ 1 }}</div>
-
-    <div class="attack-header"><span> </span><span>attack</span><span>range</span><span>hit / dc</span><span>damage</span><span>notes</span></div>
-
-    <Attack v-for="i in ['a','b','c','d']"/>
-
-    <div v-if="focused" >
-      <div class="title"><span class="title-text">bonus actions</span></div>
-
-      <div class="attack-header"><span> </span><span>attack</span><span>range</span><span>hit / dc</span><span>damage</span><span>notes</span></div>
-
-      <Attack v-for="i in ['a']" 
-        icon="O"
-        name="spiritual weapon"
-        attack_type="melee weapon"
-        range="60ft"
-        range_type="reach"
-        hit_dc="+6"
-        damage="1d8+3"
-        damage_icon="/"
-        notes="D: 1m, V/S"
-      />
-      
-    </div>
+  <div class="attack-container ">
+    <div class="attack-icon">{{icon}}</div>
+    <div class="attack-name">{{name}}<span class="attack-type">{{attack_type}}</span></div>
+    <div class="attack-range">{{range}}<span class="attack-type">{{range_type}}</span></div>
+    <div class="clickable hit">{{hit_dc}}</div>
+    <div class="clickable damage">{{damage}}<span class="attack-icon"> {{ ' '+damage_icon }}</span></div>
+    <div class="notes">{{notes}}</div>
   </div>
 </template>
 
 <style scoped>
-  .wrapper{
-    padding: 0 12px;
-  }
-
   .title{
     border-bottom: 1px solid #eaeaea;
   }

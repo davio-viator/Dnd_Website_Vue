@@ -266,8 +266,12 @@
   }
 
   .primary-box{
-    margin-top: -6rem;
-    height: calc(100% - 6rem - 15px);
+    /* margin-top: -6rem;
+    height: calc(100% - 6rem - 15px); */
+    position: absolute;
+    top: -95px;
+    height: calc(100% + 95px);
+    width: 100%;
   }
 
   .a{grid-area: a;}

@@ -39,7 +39,6 @@
     },
 
     created(){
-      console.log(this.size);
     },
     
     mounted(){
@@ -70,7 +69,7 @@
 
 <style scoped>
   .wrapper{
-    background-color: purple;
+    /* background-color: purple; */
     height: 100%;
 
     padding: 12px 10px;
