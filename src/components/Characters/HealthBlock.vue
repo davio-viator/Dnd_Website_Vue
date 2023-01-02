@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 </script>
 
 <script type="module" lang="ts">
@@ -16,7 +15,7 @@
       return{
         maxHealth:this.max?this.max:42,
         currentHealth:this.current?this.current:30,
-        tempHP:this.temp?this.temp:null
+        tempHP:this.temp?this.temp:null,
 
       }
     },

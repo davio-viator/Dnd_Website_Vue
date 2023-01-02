@@ -18,7 +18,7 @@
     },
 
     methods:{
-      test(e:any){
+      checkInput(e:any){
         this.tabs?.forEach((elem,index)=>{
           this.$refs['item'+index][0].classList.remove(('tab-active'))
         })
@@ -52,7 +52,7 @@
       <div 
         :ref="'item'+i" 
         v-for="(tab,i) in tabs" :id="'item'+i" 
-        @click="test" 
+        @click="checkInput" 
         class="tab idle" 
         :class="{'tab-active':i==0,'sub':sub}"
         :data-name="tab">

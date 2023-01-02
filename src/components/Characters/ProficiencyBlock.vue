@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+  import { useCharacter } from '@/stores/CharacterService';
 </script>
 
 <script type="module" lang="ts">
@@ -12,7 +12,7 @@
 
     data(){
       return{
-        
+        character:useCharacter().character
       }
     },
 
@@ -40,25 +40,25 @@
   <div class="wrapper">
     <div class="content">
       <div class="title">armor</div>
-      etg ,qaertg qaer,gt qaerg ,ergt a,e
+      {{ character.proficiencyies.armors.join(', ')  }}
     </div>
     <hr>
 
     <div class="content">
       <div class="title">weapons</div>
-      simple weapons
+      {{ character.proficiencyies.weapons.join(', ')  }}
     </div>
     <hr>
     
     <div class="content">
       <div class="title">tool</div>
-      none
+      {{ character.proficiencyies.tools.join(', ').length > 0 ? character.proficiencyies.tools.join(',') : 'None'}}
     </div>
     <hr>
 
     <div class="content">
       <div class="title">languages</div>
-      Celestial, Common, Draconic, Elvish
+      {{ character.proficiencyies.languages.join(', ')  }}
     </div>
 </div>
 </template>

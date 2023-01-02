@@ -11,7 +11,7 @@
   export default {
     
     props:{
-      base:String
+      base:String,
     },
 
     data(){

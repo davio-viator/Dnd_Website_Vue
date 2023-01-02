@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+  import { useCharacter } from '@/stores/CharacterService';
 </script>
 
 <script type="module" lang="ts">
@@ -12,7 +12,7 @@
 
     data(){
       return{
-        
+        character:useCharacter().character
       }
     },
 
@@ -38,9 +38,9 @@
 
 <template>
   <div class="wrapper">
-    <div><span class="bubble">18</span> <div class="sense">Passive WIS (perception)</div></div>
-    <div><span class="bubble">15</span> <div class="sense">Passive INT (investigation)</div></div>
-    <div><span class="bubble">13</span> <div class="sense">Passive WIS (insight)</div></div>
+    <div><span class="bubble">{{ character.senses.passive_perception }}</span> <div class="sense">Passive WIS (perception)</div></div>
+    <div><span class="bubble">{{ character.senses.passive_investigation }}</span> <div class="sense">Passive INT (investigation)</div></div>
+    <div><span class="bubble">{{ character.senses.passive_insight }}</span> <div class="sense">Passive WIS (insight)</div></div>
   </div>
 </template>
 

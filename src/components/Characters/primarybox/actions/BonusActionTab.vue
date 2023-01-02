@@ -33,7 +33,7 @@
         attack_type="melee weapon"
         range="60ft"
         range_type="reach"
-        hit_dc="+6"
+        :hit_dc="6"
         damage="1d8+3"
         damage_icon="/"
         notes="D: 1m, V/S"

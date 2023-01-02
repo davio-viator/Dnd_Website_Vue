@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { faker } from '@faker-js/faker';
+  import { useCharacter } from '@/stores/CharacterService'; 
 </script>
 
 <script type="module" lang="ts">
@@ -13,12 +14,13 @@
     data(){
       return{
         size:Array(18),
-        bonus:Array(18)
+        bonus:Array(18),
+        character:useCharacter().character
       }
     },
 
     methods:{
-      randomMinMax(min: number, max: number): Number {
+      randomMinMax(min: number, max: number): number {
         let random: number = min + Math.random() * (max + 1 - min);
         return Math.floor(random);
       },
@@ -28,6 +30,14 @@
           rand = rand>=0 ? `+${rand}` : rand
           this.bonus[i] = rand
         }
+      },
+      rollSkill(e:any){
+        let bonus:any = parseInt(e.target.innerText);
+        let name:string = e.target.dataset.name;
+        let roll:number = this.randomMinMax(1,20);
+        let result:number = roll+bonus
+        if(roll<20)alert('You rolled '+result+' for '+name)
+        else if (roll == 20) alert('You rolled a natural 20!!! result is '+result+' for '+name)
       }
     },
 
@@ -57,11 +67,11 @@
     </div>
 
     <div>
-      <div v-for="(elem,i) in size" class="content">
-        <input class="skill-radio" readonly type="checkbox" :checked="i%4==0">
-        <span>{{ faker.helpers.arrayElement(['DEX','STR','WIS','CHA','INT','DEX']) }}</span>
-        <span>skill here</span>
-        <span>{{ bonus[i] }}</span>
+      <div v-for="(elem,i) in character.skills" class="content">
+        <input class="skill-radio" readonly type="checkbox" :checked="elem.proficient">
+        <span style="text-transform:uppercase">{{ elem.modifier }}</span>
+        <span style="border-bottom:1px solid #d8d8d8">{{ elem.skill }}</span>
+        <span class="bonus" :data-name="elem.skill" @click="rollSkill" style="">{{ elem.bonus >= 0 ? '+'+elem.bonus : '-'+elem.bonus }}</span>
       </div>
     </div>
   </div>
@@ -80,7 +90,7 @@
   }
   
   .header{
-    color:white;
+    /* color:white; */
     text-transform: uppercase;
     display: grid;
     grid-template-columns: 3rem 3rem 7rem 1rem;
@@ -89,10 +99,11 @@
 
   .content{
     display: grid;
-    grid-template-columns: 3rem 3rem 8rem 1rem;
+    grid-template-columns: 3rem 3rem 7.5rem 1rem;
 
     text-transform: capitalize;
-    height: 2.3rem;
+    height: 2.2rem;
+    padding: 5px;
   }
 
   .skill-radio{
@@ -116,5 +127,16 @@
 
   .skill-radio:checked{
     background-color: black
+  }
+
+  .bonus{
+    padding-top: 3px;
+    border:1px solid #d8d8d8;
+    border-radius:0.375rem;
+    width:2rem;
+    text-align:center;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
   }
 </style>

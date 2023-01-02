@@ -8,6 +8,9 @@
   import HealthBlock from '@/components/Characters/HealthBlock.vue';
   import StatusBlock from '@/components/Characters/StatusBlock.vue';
   import PrimaryBox from '@/components/Characters/primarybox/PrimaryBoxBlock.vue';
+
+  import { useCharacter } from '@/stores/CharacterService';
+  import { useDisplayNote } from '@/stores/counter';
 </script>
 
 <script type="module" lang="ts">
@@ -15,7 +18,7 @@
   export default {
     
     props:{
-
+      
     },
 
     data(){
@@ -53,7 +56,9 @@
             score:this.randomMinMax(0,20)
           },
         ],
-        inspiration:false
+        character:useCharacter().character,
+        inspiration:useCharacter().character.inspiration,
+        characterStore:useCharacter()
       }
     },
 
@@ -73,6 +78,7 @@
     },
 
     mounted(){
+
     }
 
 
@@ -85,9 +91,9 @@
 
     <div class="statblock-container a">
       <StatBlock 
-        v-for="i in blocks"
+        v-for="i in character.stats"
         :name="i.name"
-        :modifier="i.modifier"
+        :modifier="i.bonus"
         :score="i.score"
       />
     </div>
@@ -103,32 +109,32 @@
     </div>
 
       <div class="substats d">
-        <SubStat title="proficiency" content="3" footer="bonus"/>
-        <SubStat title="walking" content="30 ft" footer="speed" speed/>
+        <SubStat title="proficiency" :content="character.proficiency+''" footer="bonus"/>
+        <SubStat title="walking" :content="character.speed" footer="speed" speed/>
       </div>
 
       <div class="g health-block">
         <div class="inspiration">
-          <div @click="inspiration = !inspiration" class="box" :class="{'checked':inspiration}">
+          <div @click="characterStore.setInspiration()" class="box" :class="{'checked':character.inspiration}">
 
           </div>
           <span style="position:absolute;bottom:0;padding-left:5px;padding-bottom:4px">INSPIRATION</span>
         </div>
-        <HealthBlock/>
+        <HealthBlock :max="character.health.max" :current="character.health.current" :temp="character.health.temp"/>
       </div>
 
       <div class="initiative-armor e">
 
         <div class="initiative-box">
           <span>INITIATIVE</span>
-          <input class="initiative" type="button" :value="'+2'">
+          <input class="initiative" type="button" :value="character.initiative > 0 ? '+'+character.initiative : '-'+character.initiative">
         </div>
 
         <div class="armor-box">
           <span style="margin-top: 5px;" class="titre">
             Armor
           </span>
-          <span style="margin-top:auto;font-size:25px;font-weight:bold">16</span>
+          <span style="margin-top:auto;font-size:25px;font-weight:bold">{{ character.armor }}</span>
           <span style=" margin-top: auto;margin-bottom: 5px;" class="titre">
             Class
           </span>
@@ -136,11 +142,11 @@
       </div>
 
       <div class="status h">
-        <StatusBlock/>
+        <StatusBlock :defences="character.defences" :conditions="character.conditions" />
       </div>
 
       <div class="primary-box i">
-        <PrimaryBox/>
+        <PrimaryBox />
       </div>
   </div>
 </template>

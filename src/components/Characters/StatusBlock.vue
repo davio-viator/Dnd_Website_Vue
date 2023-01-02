@@ -7,8 +7,14 @@
   export default {
     
     props:{
-      defences:Array,
-      conditions:Array
+      defences:{
+        type:Array,
+        default:[]
+      },
+      conditions:{
+        type:Array,
+        default:[]
+      }
     },
 
     data(){
@@ -23,10 +29,10 @@
 
     computed:{
       defencesList(){
-        return this.defences? this.defences?.join(','):'Add Active Defences'
+        return this.defences.length>0? this.defences?.join(', '):'Add Active Defences'
       },
       conditionList(){
-        return this.conditions? this.conditions?.join(','):'Add Active Conditions'
+        return this.conditions.length>0? this.conditions?.join(', '):'Add Active Conditions'
       }
     },
 

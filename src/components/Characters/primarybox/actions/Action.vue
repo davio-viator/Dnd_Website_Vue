@@ -65,7 +65,7 @@
   <div class="action-text-container">
     <h3 class="title">{{ title }}</h3>
 
-    <p v-if="!bold" class="text">{{ parsedText }}</p>
+    <p v-if="!bold" v-html="parsedText" class="text"></p>
     <div v-if="bold" class="border-left-thick">{{ parsedTextBold }}</div>
     <div v-if="amount > 0" class="input-container">
       <div v-for="(elem,i) in size">

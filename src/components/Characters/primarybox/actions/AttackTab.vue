@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import Attack from './Attack.vue';
+  import { useCharacter } from '@/stores/CharacterService';
 </script>
 
 <script type="module" lang="ts">
@@ -12,7 +13,9 @@
 
     data(){
       return{
-        
+        attacks:useCharacter().character.actions.attacks,
+        regular:[],
+        bonus:[]
       }
     },
 
@@ -29,6 +32,10 @@
     },
 
     mounted(){
+      this.attacks.forEach(elem =>  {
+        if(!elem.bonus)this.regular.push(elem)
+        else if(elem.bonus)this.bonus.push(elem)
+      })
     }
 
 
@@ -42,24 +49,36 @@
 
     <div class="attack-header"><span> </span><span>attack</span><span>range</span><span>hit / dc</span><span>damage</span><span>notes</span></div>
 
-    <Attack v-for="i in ['a','b','c','d']"/>
+    <Attack 
+      v-for="(attack,i) in regular"
+      :icon="attack.icon"
+      :name="attack.name"
+      :attack_type="attack.attack_type"
+      :range="attack.range"
+      :range_type="attack.range_type"
+      :hit_dc="attack.hit_dc+''"
+      :damage="attack.damage"
+      :damage_icon="attack.damage_icon"
+      :notes="attack.notes"
+    />
 
     <div v-if="focused" >
       <div class="title"><span class="title-text">bonus actions</span></div>
 
       <div class="attack-header"><span> </span><span>attack</span><span>range</span><span>hit / dc</span><span>damage</span><span>notes</span></div>
 
-      <Attack v-for="i in ['a']" 
-        icon="O"
-        name="spiritual weapon"
-        attack_type="melee weapon"
-        range="60ft"
-        range_type="reach"
-        hit_dc="+6"
-        damage="1d8+3"
-        damage_icon="/"
-        notes="D: 1m, V/S"
-      />
+      <Attack 
+      v-for="(attack,i) in bonus"
+      :icon="attack.icon"
+      :name="attack.name"
+      :attack_type="attack.attack_type"
+      :range="attack.range"
+      :range_type="attack.range_type"
+      :hit_dc="attack.hit_dc+''"
+      :damage="attack.damage"
+      :damage_icon="attack.damage_icon"
+      :notes="attack.notes"
+    />
       
     </div>
   </div>

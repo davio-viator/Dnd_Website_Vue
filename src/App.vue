@@ -10,6 +10,7 @@
 
   import { faker } from '@faker-js/faker';
   import { useDisplayNote } from '@/stores/counter';
+  import { useCharacter } from '@/stores/CharacterService';
 
 </script>
 
@@ -26,7 +27,7 @@
         cardArray:[],
         cardTitle:'Hey i\'m the note\'s title',
         cardContent:'Hey i\'m the note\'s content',
-        noteOpenned:false,
+        noteOpenned:false
       }
     }
 
@@ -36,6 +37,9 @@
 
     ,created(){
 
+    },
+    mounted(){
+      
     }
     ,computed:{
       noteIsOpen(){
@@ -61,7 +65,7 @@
         iconSrc="https://cdn.discordapp.com/attachments/321941760911736833/1027320724806975589/Jack-O27_Childish_Jump.webp"
         :urls=links>
       </TheHeaderVue>
-      <RouterView />
+      <RouterView/>
       <div ref="note" :class="{'note-container note-open-note':noteIsOpen,'note-container note-close-note':!noteIsOpen}">
         <NoteVue 
           :open="noteIsOpen" 

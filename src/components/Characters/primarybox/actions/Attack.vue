@@ -28,8 +28,8 @@
         default:'reach'
       },
       hit_dc:{
-        type:Number,
-        default:'+4'
+        type:String,
+        default:4
       },
       damage:{
         type:String,
@@ -73,11 +73,12 @@
 
 <template>
   <div class="attack-container ">
-    <div class="attack-icon">{{icon}}</div>
+    <img class="attack-icon" :src="icon">
     <div class="attack-name">{{name}}<span class="attack-type">{{attack_type}}</span></div>
     <div class="attack-range">{{range}}<span class="attack-type">{{range_type}}</span></div>
-    <div class="clickable hit">{{hit_dc}}</div>
-    <div class="clickable damage">{{damage}}<span class="attack-icon"> {{ ' '+damage_icon }}</span></div>
+    <div v-if="!hit_dc.includes('|')" class="clickable hit">{{hit_dc}}</div>
+    <div v-else class="hit flex"><span class="mod">{{ hit_dc.split('|')[1].toUpperCase() }}</span><span style="font-size:15px;font-weight:bold">{{ hit_dc.split('|')[0] }}</span></div>
+    <div class="clickable damage">{{damage}}<img :src="damage_icon" class="attack-icon"></div>
     <div class="notes">{{notes}}</div>
   </div>
 </template>
@@ -85,6 +86,18 @@
 <style scoped>
   .title{
     border-bottom: 1px solid #eaeaea;
+  }
+
+  .flex{
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+    padding-right: 2.5rem;
+  }
+
+  .mod{
+    color:gray;
+    font-size: 15px;
   }
 
   .title-text{
@@ -106,6 +119,12 @@
     margin: 18px 0;
     display: grid;
     grid-template-columns: 40px 14rem 6.75rem 6.375rem 10rem 17.5rem;
+  }
+
+  .attack-icon{
+    margin-left: 5px;
+    height: 15px;
+    width: 15px;
   }
 
   .attack-name{

@@ -9,6 +9,10 @@ import lightning from '../assets/svg/lightning.svg'
 import force from '../assets/svg/force.svg'
 import bludgeoning from '../assets/svg/bludgeoning.svg'
 import necrotic from '../assets/svg/necrotic.svg'
+import sphere from '../assets/svg/sphere.svg'
+import radiant from '../assets/svg/radiant.svg'
+import healing from '../assets/svg/healing.svg'
+
 
 export const useCounterStore = defineStore('counter', () => {
   const count = ref(0)
@@ -20,25 +24,7 @@ export const useCounterStore = defineStore('counter', () => {
   return { count, doubleCount, increment }
 })
 
-export const useDisplayNote = defineStore('dislayNote',() => {
-  const noteDisplayed = ref(false);
-  const title = ref("")
-  function displayNote(){
-    noteDisplayed.value = !noteDisplayed.value
-  }
-  function setTitle(titre:any){
-    title.value = titre
-  }
-
-  return {noteDisplayed,title,displayNote,setTitle}
-})
-
-export const useNoteTitle = defineStore('noteTitle', () => {
-
-  return 1
-})
-
-export async function createUser(data) {
+export async function createUser(data:any) {
   const response = await fetch(`/api/user`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -47,11 +33,13 @@ export async function createUser(data) {
   return await response.json();
 }
 
-export function getCharacter() {
-  function calculateBonus(value ){
+export const useCharacter = defineStore('character',() => {
+  function calculateBonus(value:any ){
     return Math.floor((value-10)/2)
   }
-  const character = {
+  let name:string = 'Odof'
+  const character = ref(
+    {
     stats:[
       {
         name:'strength',
@@ -88,13 +76,13 @@ export function getCharacter() {
     speed:'30ft',
     inspiration:false,
     health:{
-      current:30,
+      current:29,
       max:42,
       temp:0
     },
     initiative:2,
     armor:16,
-    defences:[],
+    defences:['Lightning'],
     conditions:[],
     savingthrows:{
       strength:1,
@@ -102,15 +90,15 @@ export function getCharacter() {
       constitution:2,
       intelligence:0,
       wisdom:6,
-      charism:4
+      charisma:4
     },
-    sense:{
+    senses:{
       passive_perception:18,
       passive_investigation:15,
       passive_insight:13
     },
     proficiencyies:{
-      armor:['heavy armor','light armor','medium armor','shield'],
+      armors:['heavy armor','light armor','medium armor','shield'],
       weapons:['simple weapons'],
       tools:[],
       languages:['Celestial','Common','Draconic','Elvish']
@@ -227,16 +215,17 @@ export function getCharacter() {
     ],
     actions:{
       attacks:[
-        {
-          basic_attack:'',
-          evocation:'',
-          necromancy:'',
-          unarmed:'',
-          lightning:'',
-          force:'',
-          bludgeoning:'',
-          necrotic:''
-        },
+        // {
+        //   basic_attack:'',
+        //   evocation:'',
+        //   necromancy:'',
+        //   unarmed:'',
+        //   lightning:'',
+        //   force:'',
+        //   bludgeoning:'',
+        //   necrotic:'',
+        //   sphere:''
+        // },
         {
           icon:basic_attack,
           name:'mace',
@@ -314,9 +303,112 @@ export function getCharacter() {
           used:0
         },
         {
-          
+          title:'Channel Divinity: Preserve Life',
+          text:'As an action, you can restore <strong>25</strong> HP. Choose any creatures within 30 ft. of you, and divide those hit points among them. This feature can restore a creature to no more than half of its hit point maximum. You can’t use this feature on an undead or a construct.',
+          times:0,
+          frequency:'',
+          used:0
+        },
+        {
+          title:'Channel Divinity: Turn Undead',
+          text:'As an action, you present your holy symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a WIS saving throw (DC <strong>14</strong>). If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage. A turned creature must spend its turns trying to move as far away from you as it can, and it can’t willingly move to a space within 30 feet of you. It also can’t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there’s nowhere to move, the creature can use the Dodge action.',
+          times:0,
+          frequency:'',
+          used:0
+        },
+        {
+          title:'Unarmed Strike',
+          text:'ou can punch, kick, head-butt, or use a similar forceful blow and deal bludgeoning damage equal to 1 + STR modifier',
+          times:0,
+          frequency:'',
+          used:0
         }
       ]
-    }
+    },
+    spells:{
+      0:{
+        slots:-1,
+        spells:[
+          {
+            name:'Light', 
+            frequency:'at will',
+            class:'cleric',
+            time:'1A',
+            range:'touch',
+            hit_dc:'dex 14',
+            effect:'creation',
+            notes:'D: 1h, 20ft '+sphere+', V/S'
+          },
+          {
+            name:'Mending', 
+            frequency:'at will',
+            class:'cleric',
+            time:'1m',
+            range:'touch',
+            hit_dc:'--',
+            effect:'utility',
+            notes:'V/S/M'
+          },
+          {
+            name:'Sacred Flame', 
+            frequency:'at will',
+            class:'cleric',
+            time:'1a',
+            range:'touch',
+            hit_dc:'dex 14',
+            effect:'2d9 '+radiant,
+            notes:'V/S'
+          },
+          {
+            name:'Spare the dying', 
+            frequency:'at will',
+            class:'cleric',
+            time:'1a',
+            range:'touch',
+            hit_dc:'--',
+            effect:'Healing',
+            notes:'V/S'
+          }
+        ]
+      },
+      1:{
+        slots:4,
+        spells:[
+          {
+            name:'Bless', 
+            frequency:'cast',
+            concentration:true,
+            class:'cleric',
+            time:'1A',
+            range:'30ft',
+            hit_dc:'--',
+            effect:'buff',
+            notes:'D: 1m, V/S/M'
+          },
+          {
+            name:'Cure Wounds', 
+            frequency:'cast',
+            class:'cleric',
+            time:'1A',
+            range:'touch',
+            hit_dc:'--',
+            effect:'1d8+6 '+healing,
+            notes:'V/S'
+          }
+        ]
+      }
+    },
+    inventory:[
+
+    ]
   }
-}
+  )
+
+  console.log(character.value.inspiration);
+
+  function setInspiration(){
+    character.value.inspiration = !character.value.inspiration
+  }
+  
+  return {character,setInspiration}
+})

@@ -8,8 +8,7 @@
   export default {
     
     props:{
-      focused:Boolean,
-      test:String
+      focused:Boolean
     },
 
     data(){

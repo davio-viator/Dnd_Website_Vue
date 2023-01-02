@@ -9,7 +9,10 @@
     props:{
       speed:Boolean,
       title:String,
-      content:String,
+      content:{
+        type:String,
+        default:''
+      },
       footer:String
     },
 

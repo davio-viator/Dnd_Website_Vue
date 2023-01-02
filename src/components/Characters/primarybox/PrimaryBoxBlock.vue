@@ -14,7 +14,6 @@
     data(){
       return{
         tabs:['actions','spells','inventory','features & traits',' description','notes','extras'],
-        tabs2:['all','attacks','action','bonus action','reaction','other','limited use'],
         selected:''
       }
     },

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+    import { useCharacter } from '@/stores/CharacterService';
 </script>
 
 <script type="module" lang="ts">
@@ -12,7 +12,7 @@
 
     data(){
       return{
-        
+        character:useCharacter().character
       }
     },
 
@@ -21,7 +21,24 @@
     },
 
     computed:{
-
+      str(){
+        return this.character.savingthrows.strength>0 ? '+'+this.character.savingthrows.strength : '-'+ this.character.savingthrows.strength
+      },
+      int(){
+        return this.character.savingthrows.intelligence>0 ? '+'+this.character.savingthrows.intelligence : '-'+ this.character.savingthrows.intelligence
+      },
+      dex(){
+        return this.character.savingthrows.dexterity>0 ? '+'+this.character.savingthrows.dexterity : '-'+ this.character.savingthrows.dexterity
+      },
+      wis(){
+        return this.character.savingthrows.wisdom>0 ? '+'+this.character.savingthrows.wisdom : '-'+ this.character.savingthrows.wisdom
+      },
+      con(){
+        return this.character.savingthrows.constitution>0 ? '+'+this.character.savingthrows.constitution : '-'+ this.character.savingthrows.constitution
+      },
+      cha(){
+        return this.character.savingthrows.charisma>0 ? '+'+this.character.savingthrows.charisma : '-'+ this.character.savingthrows.charisma
+      }
     },
 
     created(){
@@ -38,12 +55,12 @@
 
 <template>
   <div class="wrapper">
-    <div><span>str </span>+1</div>
-    <div><span>int </span>+0</div>
-    <div><span>dex </span>+2</div>
-    <div><span>wis </span>+6</div>
-    <div><span>con </span>+2</div>
-    <div><span>cha </span>+4</div>
+    <div><span>str </span>{{ str }}</div>
+    <div><span>int </span>{{ int }}</div>
+    <div><span>dex </span>{{ dex }}</div>
+    <div><span>wis </span>{{ wis }}</div>
+    <div><span>con </span>{{ con }}</div>
+    <div><span>cha </span>{{ cha }}</div>
   </div>
 </template>
 
