@@ -1,6 +1,9 @@
 <script setup lang="ts">
   import NavBar from '../../navbar/NavBar.vue';
   import Actions from './PrimaryBoxActions.vue';
+  import Spells from './PrimaryBoxSpells.vue';
+
+  import { useCharacter } from '@/stores/CharacterService';
 </script>
 
 <script type="module" lang="ts">
@@ -14,7 +17,8 @@
     data(){
       return{
         tabs:['actions','spells','inventory','features & traits',' description','notes','extras'],
-        selected:''
+        selected:'',
+        isSpellcaster:useCharacter().character.spellcaster
       }
     },
 
@@ -28,6 +32,12 @@
     computed:{
       handleDisplay(){
         ''
+      },
+      realTabs(){
+        if(!this.isSpellcaster) return this.tabs.filter(tab=>{
+          return tab != "spells"
+        })
+        else return this.tabs
       }
     },
 
@@ -46,10 +56,11 @@
 <template>
   <div class="wrapper">
     <nav>
-      <NavBar @selected="(tabSelected)=>selected = tabSelected" :tabs="tabs"/>
+      <NavBar @selected="(tabSelected)=>selected = tabSelected" :tabs="realTabs"/>
     </nav>
     <div>
       <Actions v-if="selected=='actions'" />
+      <Spells v-if="selected=='spells' && isSpellcaster" />
     </div>
   </div>
 </template>

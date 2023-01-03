@@ -2,6 +2,7 @@
   import Attack from './Attack.vue';
   import Action from './Action.vue';
 
+  import { useCharacter } from '@/stores/CharacterService';
 </script>
 
 <script type="module" lang="ts">
@@ -11,13 +12,42 @@
         base: String
     },
     data() {
-        return {};
+        return {
+          attacks:useCharacter().character.actions.attacks,
+          actions:useCharacter().character.actions.action,
+          spells:useCharacter().character.spells,
+          bonus_actions:[],
+          hasAttacks:false,
+          hasActions:false,
+          isSpellcaster:useCharacter().character.spellcaster,
+          spelltextArray:[]
+        };
     },
     methods: {},
     computed: {},
     created() {
     },
     mounted() {
+      this.attacks.forEach(element => {
+        if (element.bonus){
+          this.bonus_actions.push(element)
+          this.hasAttacks = true
+        }
+      });
+      this.actions.forEach(element => {
+        if (element.bonus) {
+          this.bonus_actions.push(element)
+          this.hasActions = true
+        }
+      });
+      Object.keys(this.spells).forEach((element,index) => {
+        this.spells[element].spells.forEach((elem: { bonus: boolean; name: string; }) => {
+          if(elem.bonus){
+            console.log(elem.name,element.split(' ')[0]);
+            this.spelltextArray.push(`${elem.name} (${element.split(' ')[0]})`)
+          }
+        })
+      });
     },
 }
 
@@ -26,18 +56,20 @@
 <template>
   <div class="container">
     <div class="title"><span class="title-text">bonus actions</span></div>
-    <div class="attack-header"><span> </span><span>attack</span><span>range</span><span>hit / dc</span><span>damage</span><span>notes</span></div>
-    <Attack v-for="i in ['a']" 
-        icon="O"
-        name="spiritual weapon"
-        attack_type="melee weapon"
-        range="60ft"
-        range_type="reach"
-        :hit_dc="6"
-        damage="1d8+3"
-        damage_icon="/"
-        notes="D: 1m, V/S"
-      />
+    <div v-if="hasAttacks">
+      <div class="attack-header"><span> </span><span>attack</span><span>range</span><span>hit / dc</span><span>damage</span><span>notes</span></div>
+      <Attack v-for="i in bonus_actions" 
+          icon="O"
+          name="spiritual weapon"
+          attack_type="melee weapon"
+          range="60ft"
+          range_type="reach"
+          :hit_dc="'8'"
+          damage="1d8+3"
+          damage_icon="/"
+          notes="D: 1m, V/S"
+        />
+    </div>
 
       <Action
         bold
@@ -45,7 +77,7 @@
         text="Two-Weapon Fighting"        
       />
 
-      <Action v-for="elem in [{title:'Spells',text:['Spiritual Weapon (2nd)']}]"
+      <Action v-if="isSpellcaster" v-for="elem in [{title:'Spells',text:spelltextArray}]"
         bold
         :title="elem.title"
         :text="elem.text.join(', ')"

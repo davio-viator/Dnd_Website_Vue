@@ -75,8 +75,9 @@ export const useCharacter = defineStore('character',() => {
     proficiency:3,
     speed:'30ft',
     inspiration:false,
+    spellcaster:true,
     health:{
-      current:29,
+      current:30,
       max:42,
       temp:0
     },
@@ -300,33 +301,37 @@ export const useCharacter = defineStore('character',() => {
           text:'As an action once per short rest, exhale in a 5 by 30 ft. line (DEX DC 13, half damage on success) for 2d6 Lightning Damage [6th] 3d6, [11th] 4d6, [16th] 5d6',
           times:1,
           frequency:'Short Rest',
-          used:0
+          used:0,
+          bonus:false
         },
         {
           title:'Channel Divinity: Preserve Life',
           text:'As an action, you can restore <strong>25</strong> HP. Choose any creatures within 30 ft. of you, and divide those hit points among them. This feature can restore a creature to no more than half of its hit point maximum. You can’t use this feature on an undead or a construct.',
           times:0,
           frequency:'',
-          used:0
+          used:0,
+          bonus:false
         },
         {
           title:'Channel Divinity: Turn Undead',
           text:'As an action, you present your holy symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a WIS saving throw (DC <strong>14</strong>). If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage. A turned creature must spend its turns trying to move as far away from you as it can, and it can’t willingly move to a space within 30 feet of you. It also can’t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there’s nowhere to move, the creature can use the Dodge action.',
           times:0,
           frequency:'',
-          used:0
+          used:0,
+          bonus:false
         },
         {
           title:'Unarmed Strike',
           text:'ou can punch, kick, head-butt, or use a similar forceful blow and deal bludgeoning damage equal to 1 + STR modifier',
           times:0,
           frequency:'',
-          used:0
+          used:0,
+          bonus:false
         }
       ]
     },
     spells:{
-      0:{
+      "cantrip":{
         slots:-1,
         spells:[
           {
@@ -335,7 +340,7 @@ export const useCharacter = defineStore('character',() => {
             class:'cleric',
             time:'1A',
             range:'touch',
-            hit_dc:'dex 14',
+            hit_dc:'dex|14',
             effect:'creation',
             notes:'D: 1h, 20ft '+sphere+', V/S'
           },
@@ -355,7 +360,7 @@ export const useCharacter = defineStore('character',() => {
             class:'cleric',
             time:'1a',
             range:'touch',
-            hit_dc:'dex 14',
+            hit_dc:'dex|14',
             effect:'2d9 '+radiant,
             notes:'V/S'
           },
@@ -371,8 +376,9 @@ export const useCharacter = defineStore('character',() => {
           }
         ]
       },
-      1:{
+      "1st level":{
         slots:4,
+        used:0,
         spells:[
           {
             name:'Bless', 
@@ -394,6 +400,41 @@ export const useCharacter = defineStore('character',() => {
             hit_dc:'--',
             effect:'1d8+6 '+healing,
             notes:'V/S'
+          },
+          
+        ]
+      },
+      "2nd level":{
+        slots:3,
+        used:0,
+        spells:[
+          {
+            name:'Spiritual Weapons', 
+            frequency:'cast',
+            class:'cleric',
+            time:'1A',
+            range:'60ft',
+            hit_dc:'6',
+            effect:'1d8+6 '+force,
+            notes:'D: 1m, V/S',
+            bonus:true
+          }
+        ]
+      },
+      "3rd level":{
+        slots:2,
+        used:0,
+        spells:[
+          {
+            name:"Spirit Guardians",
+            frequency:'cast',
+            class:'cleric',
+            time:'1A',
+            range:'self',
+            hit_dc:'wis|14',
+            effect:'3d8 '+radiant,
+            notes:'D: 10m, '+sphere+' ; V/S/M',
+            bonus:true
           }
         ]
       }
@@ -403,8 +444,6 @@ export const useCharacter = defineStore('character',() => {
     ]
   }
   )
-
-  console.log(character.value.inspiration);
 
   function setInspiration(){
     character.value.inspiration = !character.value.inspiration

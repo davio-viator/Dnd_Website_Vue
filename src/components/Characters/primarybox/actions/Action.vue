@@ -31,9 +31,10 @@
     methods:{
       click(e:any){
         let input:any = e.target
-        if([...input.classList].includes('used')) input.classList.remove('used')
+        if([...input.classList].includes('used')) {
+          this.$emit('used',this.used-1)
+        }
         else {
-          input.classList.add('used')
           this.$emit('used',this.used+1)
         }
       }
@@ -84,6 +85,7 @@
 
   .title{
     font-weight: bold;
+    text-transform: capitalize;
   }
 
   .text{
@@ -99,25 +101,25 @@
   }
 
   .checkbox{
-  height: 20px;
-  margin: 2px;
-  margin-right: 3px;
-  min-width: 20px;
-  width: 20px;
-  cursor: pointer;
-  background-color: #fff;
-  border: 1px solid #d8d8d8;
-  box-shadow: inset 0 0 4px 0 #d8d8d8;
-}
-.used:before{
-  content: "";
-  display: block;
-  height: 10px;
-  margin-top: 4px;
-  width: 10px;
-  background: red;
-  margin: 4px auto 0;
-}
+    height: 20px;
+    margin: 2px;
+    margin-right: 3px;
+    min-width: 20px;
+    width: 20px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #d8d8d8;
+    box-shadow: inset 0 0 4px 0 #d8d8d8;
+  }
+  .used:before{
+    content: "";
+    display: block;
+    height: 10px;
+    margin-top: 4px;
+    width: 10px;
+    background: red;
+    margin: 4px auto 0;
+  }
 
 .input-container{
   margin-top: 5px;

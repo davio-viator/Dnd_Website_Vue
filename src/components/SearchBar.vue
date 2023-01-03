@@ -12,9 +12,10 @@ import type { placeholder } from '@babel/types';
       order:Boolean,
       icon:Boolean,
       placeholder:String,
-      options:Array
+      options:Array,
+      small:Boolean
     },
-    emits:['orderSort'],
+    emits:['orderSort','searchTerm'],
 
     data(){
       return{
@@ -41,8 +42,6 @@ import type { placeholder } from '@babel/types';
       })
     },
     mounted(){
-      console.log(this.placeholder);
-      console.log("order: ",this.order,"icon :",this.icon,"placeholder: ",this.placeholder);
 
     }
 
@@ -52,12 +51,11 @@ import type { placeholder } from '@babel/types';
 </script>
 
 <template>
-  <div>SearchBard works</div>
   <div class="wrapper">
     <div style="position: relative;">
-      <div v-if="icon" class="search-icon"></div>
-      <div class="input-container">
-        <input class="searchbar" type="text" name="searchbar" id="searchbar" :placeholder="placeholderCalc">
+      <div v-if="icon" :class="{'small':small}" class="search-icon"></div>
+      <div :class="{'small':small}" class="input-container">
+        <input :class="{'small':small}" @keyup="this.$emit('searchTerm',$event.target.value)" class="searchbar" type="text" name="searchbar" id="searchbar" :placeholder="placeholderCalc">
         <select 
           v-if="order" class="selector" 
           v-model="sortOrder" 
@@ -83,6 +81,11 @@ import type { placeholder } from '@babel/types';
     font-size: 22px
   }
 
+  .searchbar.small{
+    height: 2rem ;
+    font-size: 14px;
+  }
+
   .search-icon{
     z-index: 10;
     position: absolute;
@@ -92,6 +95,12 @@ import type { placeholder } from '@babel/types';
     height: 20px;
     top: calc(0.5rem + 20px);
     margin-left: 8px;
+  }
+
+  .search-icon.small{
+    top: calc(0.1rem + 20px) ;
+    width: 20px ;
+    height: 20px ;
   }
 
   .selector{
@@ -108,5 +117,9 @@ import type { placeholder } from '@babel/types';
   .input-container{
     display: flex;
     justify-self: start;
+  }
+
+  .input-container.small{
+    height: 3rem;
   }
 </style>

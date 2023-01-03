@@ -37,7 +37,7 @@
     },
 
     mounted(){
-      this.$emit('selected',this.tabs[0])
+      this.$emit('selected',this.tabs[1])
     }
 
 
@@ -54,7 +54,7 @@
         v-for="(tab,i) in tabs" :id="'item'+i" 
         @click="checkInput" 
         class="tab idle" 
-        :class="{'tab-active':i==0,'sub':sub}"
+        :class="{'tab-active':i==1,'sub':sub}"
         :data-name="tab">
           {{ tab }}
       </div>
@@ -90,7 +90,7 @@
     margin: 0 8px;
     text-align: center;
     /* width: 8rem; */
-    font-size: 16px;
+    font-size: 14px;
     border: 1px solid transparent;
     border-width: 0 0 5px 0;
   }

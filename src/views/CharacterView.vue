@@ -66,6 +66,10 @@
       randomMinMax(min: number, max: number) {
         let random: number = min + Math.random() * (max + 1 - min);
         return Math.floor(random);
+      },
+      roll(e:any){
+        let initiative:number = parseInt(e.target.value)
+        alert(`You rolled ${initiative + this.randomMinMax(1,20)}`)
       }
     },
 
@@ -127,7 +131,7 @@
 
         <div class="initiative-box">
           <span>INITIATIVE</span>
-          <input class="initiative" type="button" :value="character.initiative > 0 ? '+'+character.initiative : '-'+character.initiative">
+          <input class="initiative" @click="roll" type="button" :value="character.initiative > 0 ? '+'+character.initiative : '-'+character.initiative">
         </div>
 
         <div class="armor-box">
@@ -265,6 +269,11 @@
     border: 1px solid #bfccd6;
     outline: 1px solid red;
     outline-offset: 8px;
+    cursor: pointer;
+  }
+
+  .initiative:hover {
+    background-color: #ced9e0;
   }
 
   .status{

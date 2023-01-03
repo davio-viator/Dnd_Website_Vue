@@ -48,7 +48,7 @@
         <AttackTab :focused="selected == 'attack'" v-if="selected == 'attack' || selected == 'all'"/>
         <ActionTab v-if="selected == 'action' || selected == 'all'" :focused="selected == 'action'"/>
         <BonusActionTab v-if="selected == 'bonus action' || selected == 'all'"/>
-        <ReactionTab/>
+        <ReactionTab v-if="selected == 'reaction' || selected == 'all'"/>
       </div>
   </div>
 </template>

@@ -29,7 +29,7 @@
       },
       hit_dc:{
         type:String,
-        default:4
+        default:'4'
       },
       damage:{
         type:String,
@@ -52,7 +52,37 @@
     },
 
     methods:{
-      
+      rollHit(e:any){
+        let value:number = parseInt(e.target.innerText)
+        let roll:number = this.randomMinMax(1,20)
+        let result:number = value + roll
+        if(roll == 20) alert(`You rolled a ${result} with a natural 20!!!`)
+        else if(roll == 1) alert(`You rolled a ${result} with a natural 1!!!`)
+        else alert(`You rolled a ${result}`)
+      },
+      rollDamage(e:any){
+        let parse = e.target.innerText.split('d')
+        let occurance = parse[0]
+        if(parse[1]){
+          let die = parse[1].split('+')[0]
+          let fixDamage = parseInt(parse[1].split('+')[1])? parseInt(parse[1].split('+')[1]) : 0
+          let roll = 0
+          let rollHistory = []
+          for(let i = 0; i < parseInt(occurance); i++){
+            const res = this.randomMinMax(1,parseInt(die))
+            rollHistory.push(res) 
+            roll += res
+          }
+          let result = roll + fixDamage
+          alert(`You did ${result} damage! ( ${rollHistory.join('+ ')} ) ${fixDamage>0 ? '+ '+fixDamage:''} `)
+        }else{
+          alert(`You did ${occurance} damage!`)
+        }
+      },
+      randomMinMax(min: number, max: number): number {
+        let random: number = min + Math.random() * (max + 1 - min);
+        return Math.floor(random);
+      }
     },
 
     computed:{
@@ -76,9 +106,9 @@
     <img class="attack-icon" :src="icon">
     <div class="attack-name">{{name}}<span class="attack-type">{{attack_type}}</span></div>
     <div class="attack-range">{{range}}<span class="attack-type">{{range_type}}</span></div>
-    <div v-if="!hit_dc.includes('|')" class="clickable hit">{{hit_dc}}</div>
+    <div v-if="!hit_dc.includes('|')" class="clickable hit" @click="rollHit">{{parseInt(hit_dc) >= 0 ? '+'+hit_dc : '-'+ hit_dc}}</div>
     <div v-else class="hit flex"><span class="mod">{{ hit_dc.split('|')[1].toUpperCase() }}</span><span style="font-size:15px;font-weight:bold">{{ hit_dc.split('|')[0] }}</span></div>
-    <div class="clickable damage">{{damage}}<img :src="damage_icon" class="attack-icon"></div>
+    <div class="clickable damage" @click="rollDamage">{{damage}}<img :src="damage_icon" class="attack-icon"></div>
     <div class="notes">{{notes}}</div>
   </div>
 </template>
