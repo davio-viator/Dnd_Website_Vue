@@ -358,7 +358,7 @@ export const useCharacter = defineStore('character',() => {
             name:'Sacred Flame', 
             frequency:'at will',
             class:'cleric',
-            time:'1a',
+            time:'1A',
             range:'touch',
             hit_dc:'dex|14',
             effect:'2d9 '+radiant,
@@ -368,7 +368,7 @@ export const useCharacter = defineStore('character',() => {
             name:'Spare the dying', 
             frequency:'at will',
             class:'cleric',
-            time:'1a',
+            time:'1A',
             range:'touch',
             hit_dc:'--',
             effect:'Healing',
@@ -439,15 +439,32 @@ export const useCharacter = defineStore('character',() => {
         ]
       }
     },
-    inventory:[
-
-    ]
+    inventory:{
+      copper:1,
+      silver:2,
+      electrum:3,
+      gold:10,
+      platinum:4,
+      hasBackpack:true,
+      hasAlmsBox:true,
+      equipment:[
+        
+      ],
+      backpack:[
+        
+      ]
+    }
   }
   )
 
   function setInspiration(){
     character.value.inspiration = !character.value.inspiration
   }
+
+  function changeCoinValue(name:string,value:string){
+    character.value.inventory[name] = value
+  }
+
   
-  return {character,setInspiration}
+  return {character,setInspiration,changeCoinValue}
 })

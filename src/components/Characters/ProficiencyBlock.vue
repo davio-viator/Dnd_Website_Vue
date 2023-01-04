@@ -67,7 +67,7 @@
   .wrapper{
     /* background-color: green; */
     margin-top: 15px;
-    height: 20rem;
+    height: 25rem;
 
     min-width: 100%;
     border-radius: 0.375rem;

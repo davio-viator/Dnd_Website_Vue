@@ -86,6 +86,7 @@
 
 <style scoped>
   .wrapper{
+    font-family: 'Roboto', sans-serif;
     min-height: calc(100vh - 4rem);
   }
   .note-container{

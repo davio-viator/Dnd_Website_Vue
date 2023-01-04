@@ -37,7 +37,7 @@
     },
 
     mounted(){
-      this.$emit('selected',this.tabs[1])
+      this.$emit('selected',this.tabs[2])
     }
 
 
@@ -54,7 +54,7 @@
         v-for="(tab,i) in tabs" :id="'item'+i" 
         @click="checkInput" 
         class="tab idle" 
-        :class="{'tab-active':i==1,'sub':sub}"
+        :class="{'tab-active':i==2,'sub':sub}"
         :data-name="tab">
           {{ tab }}
       </div>

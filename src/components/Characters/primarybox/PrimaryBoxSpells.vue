@@ -33,7 +33,8 @@
         spell.time.includes(this.searchTerm) ||
         spell.notes.includes(this.searchTerm) ||
         spell.effect.includes(this.searchTerm) ||
-        spell.range.includes(this.searchTerm)
+        spell.range.includes(this.searchTerm) ||
+        spell.hit_dc.includes(this.searchTerm) 
         
       }
     },
@@ -56,7 +57,6 @@
 
     <div class="searchbar-container">
       <SearchBar @search-term="(emitSearchTerm) => searchTerm = emitSearchTerm " small icon placeholder="Search Spell Names, Casting Times, Damage Types, Conditions or Tags"/>
-        {{ searchTerm }}
       </div>
     <div class="content">
 
@@ -96,6 +96,8 @@
             :notes="spell.notes"
             :concentration="spell.concentration"
             :ritual="spell.ritual"
+            :slots="spells[level].slots"
+            :used="spells[level].used"
           />
         </template>
       </div>
@@ -124,9 +126,9 @@
 
   .content{
     margin-top: 12px;
-    height: 460px;
+    height: 545px;
     padding-right: 12px;
-    overflow-Y: auto;
+    overflow-y: auto;
     /* overflow-x: hidden; */
   }
 

@@ -104,7 +104,7 @@
     grid-template-columns: 3rem 3rem 7.5rem 1rem;
 
     text-transform: capitalize;
-    height: 2.2rem;
+    height: 2.5rem;
     padding: 5px;
   }
 

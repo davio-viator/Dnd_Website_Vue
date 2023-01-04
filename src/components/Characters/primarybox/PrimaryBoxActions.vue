@@ -56,7 +56,7 @@
 <style scoped>
   .content{
     margin-top: 12px;
-    height: 485px;
+    height: 575px;
     overflow: auto;
     overflow-x: hidden;
   }

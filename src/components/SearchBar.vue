@@ -19,12 +19,17 @@ import type { placeholder } from '@babel/types';
 
     data(){
       return{
-        sortOrder:''
+        sortOrder:'',
+        used:false
       }
     },
 
     methods:{
-      
+      clearInput(){
+        this.$emit('searchTerm','')
+        this.$refs.input.value = ''
+        this.used = false
+      }
     },
 
     computed:{
@@ -42,7 +47,6 @@ import type { placeholder } from '@babel/types';
       })
     },
     mounted(){
-
     }
 
 
@@ -54,8 +58,9 @@ import type { placeholder } from '@babel/types';
   <div class="wrapper">
     <div style="position: relative;">
       <div v-if="icon" :class="{'small':small}" class="search-icon"></div>
+      <div v-if="used" @click="clearInput" class="clear">clear x</div>
       <div :class="{'small':small}" class="input-container">
-        <input :class="{'small':small}" @keyup="this.$emit('searchTerm',$event.target.value)" class="searchbar" type="text" name="searchbar" id="searchbar" :placeholder="placeholderCalc">
+        <input ref="input" :class="{'small':small}" @keyup="this.$emit('searchTerm',$event.target.value);used=$event.target.value.length>0" class="searchbar" type="text" name="searchbar" id="searchbar" :placeholder="placeholderCalc">
         <select 
           v-if="order" class="selector" 
           v-model="sortOrder" 
@@ -95,6 +100,19 @@ import type { placeholder } from '@babel/types';
     height: 20px;
     top: calc(0.5rem + 20px);
     margin-left: 8px;
+  }
+
+  .clear{
+    z-index: 10;
+    position: absolute;
+    top: calc(0.5rem + 15px);
+    right: 0;
+    margin-right: 12px;
+    color: red;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+
   }
 
   .search-icon.small{

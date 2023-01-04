@@ -11,6 +11,7 @@
 
   import { useCharacter } from '@/stores/CharacterService';
   import { useDisplayNote } from '@/stores/counter';
+  import CharacterManager from '@/components/Characters/managers/CharacterManager.vue';
 </script>
 
 <script type="module" lang="ts">
@@ -25,37 +26,37 @@
       return{
         id:this.$route.params.id,
         blocks:[
-          {
-            name:'strength',
-            modifier:this.randomMinMax(-5,5),
-            score:this.randomMinMax(0,20)
-          },
-          {
+                {
+                    name:'strength',
+                    modifier:this.randomMinMax(-5,5),
+                    score:this.randomMinMax(0,20)
+                },
+                {
             name:'dexterity',
             modifier:this.randomMinMax(-5,5),
             score:this.randomMinMax(0,20)
-          },
-          {
+                },
+                {
             name:'constitution',
             modifier:this.randomMinMax(-5,5),
             score:this.randomMinMax(0,20)
-          },
-          {
+                },
+                {
             name:'intelligence',
             modifier:this.randomMinMax(-5,5),
             score:this.randomMinMax(0,20)
-          },
-          {
+                },
+                {
             name:'wisdom',
             modifier:this.randomMinMax(-5,5),
             score:this.randomMinMax(0,20)
-          },
-          {
+                },
+                {
             name:'charisma',
             modifier:this.randomMinMax(-5,5),
             score:this.randomMinMax(0,20)
-          },
-        ],
+                },
+            ],
         character:useCharacter().character,
         inspiration:useCharacter().character.inspiration,
         characterStore:useCharacter()
@@ -63,14 +64,14 @@
     },
 
     methods:{
-      randomMinMax(min: number, max: number) {
-        let random: number = min + Math.random() * (max + 1 - min);
-        return Math.floor(random);
-      },
+        randomMinMax(min: number, max: number) {
+            let random: number = min + Math.random() * (max + 1 - min);
+            return Math.floor(random);
+        },
       roll(e:any){
         let initiative:number = parseInt(e.target.value)
         alert(`You rolled ${initiative + this.randomMinMax(1,20)}`)
-      }
+        }
     },
 
     computed:{
@@ -86,11 +87,14 @@
     }
 
 
-  }
+}
 
 </script>
 
 <template>
+  <div class="manager">
+    <CharacterManager caller="money"/>
+  </div>
   <div class="container">
 
     <div class="statblock-container a">
@@ -164,7 +168,7 @@
 
     display: grid;
     grid-template-columns: repeat(5, 300px);
-    grid-template-rows: 100px 12rem 12rem 20rem;
+    grid-template-rows: 100px 12rem 12rem 25rem;
     grid-gap:15px;
     grid-auto-rows: 100px;
     grid-template-areas:

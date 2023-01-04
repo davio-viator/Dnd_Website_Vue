@@ -46,6 +46,14 @@
       ritual:{
         type:Boolean,
         default:false
+      },
+      slots:{
+        type:Number,
+        default:0
+      },
+      used:{
+        type:Number,
+        default:0
       }
     },
 
@@ -66,24 +74,28 @@
       },
       rollDamage(e:any){
         if(this.isNumber(e.target.innerText)){
-          let parse = e.target.innerText.split('d')
-          let occurance = parse[0]
-          if(parse[1]){
-            let die = parse[1].split('+')[0]
-            let fixDamage = parseInt(parse[1].split('+')[1])? parseInt(parse[1].split('+')[1]) : 0
-            let roll = 0
-            let rollHistory = []
-            for(let i = 0; i < parseInt(occurance); i++){
-              const res = this.randomMinMax(1,parseInt(die))
-              rollHistory.push(res) 
-              roll += res
-            }
-            let result = roll + fixDamage
-            alert(`You did ${result} damage! ( ${rollHistory.join('+ ')} ) ${fixDamage>0 ? '+ '+fixDamage:''} `)
+          if(this.used >= this.slots){
+            alert('You don\'t have any spell slots left for this tier of magic')
           }else{
-            alert(`You did ${occurance} damage!`)
+            let parse = e.target.innerText.split('d')
+            let occurance = parse[0]
+            if(parse[1]){
+              let die = parse[1].split('+')[0]
+              let fixDamage = parseInt(parse[1].split('+')[1])? parseInt(parse[1].split('+')[1]) : 0
+              let roll = 0
+              let rollHistory = []
+              for(let i = 0; i < parseInt(occurance); i++){
+                const res = this.randomMinMax(1,parseInt(die))
+                rollHistory.push(res) 
+                roll += res
+              }
+              let result = roll + fixDamage
+              alert(`You did ${result} damage! ( ${rollHistory.join('+ ')} ) ${fixDamage>0 ? '+ '+fixDamage:''} `)
+            }else{
+              alert(`You did ${occurance} damage!`)
+            }
+            this.$emit('usedSpell',1)
           }
-          this.$emit('usedSpell',1)
         }
       },
       randomMinMax(min: number, max: number): number {
@@ -130,7 +142,7 @@
 
 <template>
   <div class="attack-container ">
-    <div>{{ frequency }}</div>
+    <div style="text-align:center;margin-right:8px">{{ frequency }}</div>
     <div class="attack-name">{{name}}<span class="attack-type">{{class}}</span></div>
     <div class="attack-name">{{time}}</div>
     <div class="attack-range">{{range}}</div>

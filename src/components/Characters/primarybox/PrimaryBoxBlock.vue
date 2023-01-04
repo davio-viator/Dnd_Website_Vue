@@ -2,6 +2,7 @@
   import NavBar from '../../navbar/NavBar.vue';
   import Actions from './PrimaryBoxActions.vue';
   import Spells from './PrimaryBoxSpells.vue';
+  import Inventory from './PrimaryBoxInventory.vue';
 
   import { useCharacter } from '@/stores/CharacterService';
 </script>
@@ -61,6 +62,7 @@
     <div>
       <Actions v-if="selected=='actions'" />
       <Spells v-if="selected=='spells' && isSpellcaster" />
+      <Inventory v-if="selected == 'inventory'"/>
     </div>
   </div>
 </template>

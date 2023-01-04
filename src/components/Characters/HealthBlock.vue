@@ -199,7 +199,8 @@
   }
 
   .title{
-    font-size: 25px;
+    font-size: 20px;
+    text-transform: uppercase;
   }
 
   .footer{
