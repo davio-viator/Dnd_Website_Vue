@@ -8,12 +8,13 @@
   import downArrow from '@/assets/svg/down-arrow.svg'
 
   import NavBar from '@/components/navbar/NavBar.vue';
+  import { useCharacter } from '@/stores/CharacterService'
 </script>
 
 <script type="module" lang="ts">
 
   export default {
-    emits:['valueChange'],
+    emits:['valueChange','adjustCoin'],
     props:{
       base:String,
       total:Number,
@@ -26,44 +27,93 @@
 
     data(){
       return{
+        characterStore:useCharacter(),
         detailOpen:true,
         details:[
           {
             name:"Platinum (pp)",
             convertion:"1pp = 10gp",
             quantite:this.platinum,
-            src:platinumSrc
+            src:platinumSrc,
+            nameComp:'platinum',
+            acronyme:'pp'
           },
           {
             name:"Gold (gp)",
             convertion:"",
             quantite:this.gold,
-            src:goldSrc
+            src:goldSrc,
+            nameComp:'gold',
+            acronyme:'gp'
           },
           {
             name:"Electrum (ep)",
             convertion:"1gp = 2ep",
             quantite:this.electrum,
-            src:electrumSrc
+            src:electrumSrc,
+            nameComp:'electrum',
+            acronyme:'ep'
           },
           {
             name:"Silver (sp)",
             convertion:"1gp = 10sp",
             quantite:this.silver,
-            src:silverSrc
+            src:silverSrc,
+            nameComp:'silver',
+            acronyme:'sp'
           },
           {
             name:"Copper (cp)",
             convertion:"1gp = 100cp",
             quantite:this.copper,
-            src:copperSrc
+            src:copperSrc,
+            nameComp:'copper',
+            acronyme:'cp'
           },
         ]
       }
     },
 
     methods:{
-      
+      adjustCoins(e:any){
+        let adjustArray:Array<any> = [
+          {
+            name:this.$refs.pp[0].name,
+            value:this.$refs.pp[0].value,
+            adding:e.target.name == 'add'
+          },
+          {
+            name:this.$refs.gp[0].name,
+            value:this.$refs.gp[0].value,
+            adding:e.target.name == 'add'
+          },
+          {
+            name:this.$refs.ep[0].name,
+            value:this.$refs.ep[0].value,
+            adding:e.target.name == 'add'
+          },
+          {
+            name:this.$refs.sp[0].name,
+            value:this.$refs.sp[0].value,
+            adding:e.target.name == 'add'
+          },
+          {
+            name:this.$refs.cp[0].name,
+            value:this.$refs.cp[0].value,
+            adding:e.target.name == 'add'
+          },
+          
+        ]
+        this.$emit("adjustCoin",adjustArray)
+        this.clearInputs()
+      },
+      clearInputs(){
+        this.$refs.pp[0].value = null
+        this.$refs.gp[0].value = null
+        this.$refs.ep[0].value = null
+        this.$refs.sp[0].value = null
+        this.$refs.cp[0].value = null
+      }
     },
 
     computed:{
@@ -115,7 +165,13 @@
                 <span class="sub-content">{{detail.convertion}}</span>
               </div>
             </div>
-            <input class="coin-input" type="number" @change="$emit('valueChange',{name:detail.name,value:parseInt($event.target.value)})" :name="'quantite'+detail.name" :value="detail.quantite" >
+            <input 
+              class="coin-input" 
+              type="number" 
+              @change="$emit('valueChange',{name:detail.nameComp,value:parseInt($event.target.value)})" 
+              :name="'quantite'+detail.name" 
+              :value="detail.quantite" 
+              min="0">
           </div>
         </div>
 
@@ -128,10 +184,15 @@
           <div v-for="detail in details" class="flex-row">
             <div class="flex-center">
               <img class="coin-icon-small" :src="detail.src" alt="">
-              <span style="line-height:1.5" class="upper bold">{{ detail.name.split(' ')[1].replace('(','').replace(')','') }}</span>
+              <span style="line-height:1.5" class="upper bold">{{ detail.acronyme}}</span>
             </div>
-            <input class="coin-input-small" type="number"  >
+            <input class="coin-input-small" :ref="detail.acronyme" :name="detail.nameComp" type="number" min=0  >
         </div>
+      </div>
+      <div class="button-container">
+        <button name="add" @click="adjustCoins" class="adjust-input add"><span class="sign">+</span> ADD</button>
+        <button name="remove" @click="adjustCoins" class="adjust-input remove"><span class="sign minus">-</span> REMOVE</button>
+        <button @click="clearInputs" class="adjust-input clear"><span class="sign">X</span> CLEAR</button>
       </div>
     </div>
   </div>
@@ -252,4 +313,59 @@
     text-align: center;
   }
 
+  .button-container{
+    width: 90%;
+    margin: 12px auto;
+    display: flex;
+    justify-content: space-between;
+
+  }
+
+  .adjust-input{
+    cursor:pointer;
+    height: 2rem;
+    width: 5rem;
+    border-radius: 0.375rem;
+    font-weight: bold;
+  }
+
+
+  .adjust-input.add{
+    background-color: #40d250;
+    border: none;
+    color: white;
+  }
+
+  .adjust-input.add:hover{
+    background-color: #34773c;
+    border: none;
+    color: white;
+  }
+
+  .adjust-input.remove{
+    background-color: red;
+    border: none;
+    color: white;
+  }
+
+  .adjust-input.remove:hover{
+    background-color: rgb(146, 24, 24);
+    border: none;
+    color: white;
+  }
+
+  .adjust-input.clear{
+    background-color: white;
+    border: 1px solid red;
+    color: red;
+  }
+
+  .sign{
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .sign.minus{
+    font-size: 16px;
+  }
 </style>

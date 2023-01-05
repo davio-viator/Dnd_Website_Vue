@@ -27,39 +27,39 @@
         id:this.$route.params.id,
         blocks:[
                 {
-                    name:'strength',
-                    modifier:this.randomMinMax(-5,5),
-                    score:this.randomMinMax(0,20)
+                  name:'strength',
+                  modifier:this.randomMinMax(-5,5),
+                  score:this.randomMinMax(0,20)
                 },
                 {
-            name:'dexterity',
-            modifier:this.randomMinMax(-5,5),
-            score:this.randomMinMax(0,20)
+                  name:'dexterity',
+                  modifier:this.randomMinMax(-5,5),
+                  score:this.randomMinMax(0,20)
                 },
                 {
-            name:'constitution',
-            modifier:this.randomMinMax(-5,5),
-            score:this.randomMinMax(0,20)
+                  name:'constitution',
+                  modifier:this.randomMinMax(-5,5),
+                  score:this.randomMinMax(0,20)
                 },
                 {
-            name:'intelligence',
-            modifier:this.randomMinMax(-5,5),
-            score:this.randomMinMax(0,20)
+                  name:'intelligence',
+                  modifier:this.randomMinMax(-5,5),
+                  score:this.randomMinMax(0,20)
                 },
                 {
-            name:'wisdom',
-            modifier:this.randomMinMax(-5,5),
-            score:this.randomMinMax(0,20)
+                  name:'wisdom',
+                  modifier:this.randomMinMax(-5,5),
+                  score:this.randomMinMax(0,20)
                 },
                 {
-            name:'charisma',
-            modifier:this.randomMinMax(-5,5),
-            score:this.randomMinMax(0,20)
+                  name:'charisma',
+                  modifier:this.randomMinMax(-5,5),
+                  score:this.randomMinMax(0,20)
                 },
             ],
         character:useCharacter().character,
         inspiration:useCharacter().character.inspiration,
-        characterStore:useCharacter()
+        characterStore:useCharacter(),
       }
     },
 
@@ -71,11 +71,23 @@
       roll(e:any){
         let initiative:number = parseInt(e.target.value)
         alert(`You rolled ${initiative + this.randomMinMax(1,20)}`)
+        },
+        closeManager(event:any){
+          this.characterStore.displayManager(event)
+          this.characterStore.setManagerCaller('')
         }
     },
 
     computed:{
-
+      isManagerOpen(){
+        let status = this.characterStore
+        console.log(status.managerOpen);
+        return status.managerOpen
+      },
+      manager(){
+        let status = this.characterStore
+        return status.managerCaller
+      }
     },
 
     created(){
@@ -92,8 +104,8 @@
 </script>
 
 <template>
-  <div class="manager">
-    <CharacterManager caller="money"/>
+  <div v-if="isManagerOpen && manager!==''" class="manager">
+    <CharacterManager :caller="manager" />
   </div>
   <div class="container">
 

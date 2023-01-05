@@ -23,9 +23,22 @@ import MoneyManager from './MoneyManager.vue';
         };
     },
     methods: {
-      show(change:any){
+      changeCoinValue(change:any){
         console.log(change);
-        let parsedName:string = change.name.split(' ')[0].toLowerCase()
+        this.characterStore.changeCoinValue(change.name,change.value)
+      },
+      adjustCoin(change:any){
+        console.log(change);
+        change.forEach(elem=>{
+          if(elem.value){
+            const val = parseInt(elem.value)
+            if(elem.adding)this.characterStore.changeCoinValue(elem.name,this.characterStore.getCoinValue(elem.name)+val)
+            else this.characterStore.changeCoinValue(elem.name,this.characterStore.getCoinValue(elem.name)-val)
+          }
+        })
+      },
+      closeManager(){
+        this.characterStore.hideManager()
       }
     },
     computed: {
@@ -49,9 +62,11 @@ import MoneyManager from './MoneyManager.vue';
 
 <template>
   <div class="wrapper">
+    <button @click="closeManager" class="close-button">X</button>
     <MoneyManager 
-      @value-change="(emitValue)=>show(emitValue)"
       v-if="caller == 'money'"
+      @valueChange="(emitValue)=>changeCoinValue(emitValue)"
+      @adjust-coin="(emitValue)=>adjustCoin(emitValue)"
       :total="coinTotal"
       :copper="character.inventory.copper" 
       :silver="character.inventory.silver" 
@@ -65,13 +80,28 @@ import MoneyManager from './MoneyManager.vue';
 <style scoped>
   .wrapper{
     z-index: 20 !important;
-    background-color: #E8DCB8;
+    border: 3px solid red;
+    background-color: white;
     height: calc(100vh - 4.5rem );
-    width: 20rem;
+    width: 25rem;
     border-radius: 0.375rem 0 0 0.375rem ;
     padding: 12px;
     position: absolute;
     top: 4rem;
     right: 0;
+  }
+
+  .close-button{
+    padding: 12px;
+    z-index: 20;
+    color: red;
+    position:absolute;
+    top:0;
+    right:0;
+    background-color:transparent;
+    border:none;
+    cursor:pointer;
+    font-weight: bold;
+    font-size:22px
   }
 </style>

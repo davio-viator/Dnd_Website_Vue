@@ -34,10 +34,7 @@ export async function createUser(data:any) {
 }
 
 export const useCharacter = defineStore('character',() => {
-  function calculateBonus(value:any ){
-    return Math.floor((value-10)/2)
-  }
-  let name:string = 'Odof'
+   let name:string = 'Odof'
   const character = ref(
     {
     stats:[
@@ -457,14 +454,45 @@ export const useCharacter = defineStore('character',() => {
   }
   )
 
+  const managerOpen = ref(false);
+  const managerCaller = ref('');
+
+  function calculateBonus(value:any ){
+    return Math.floor((value-10)/2)
+  }
+
   function setInspiration(){
     character.value.inspiration = !character.value.inspiration
   }
 
-  function changeCoinValue(name:string,value:string){
-    character.value.inventory[name] = value
+
+  function getCoinValue(name:string){
+    console.log(character.value.inventory[name]);
+    return character.value.inventory[name]
   }
 
+  function changeCoinValue(name:string,value:number){
+    character.value.inventory[name] = value
+    console.log(character.value.inventory[name]);
+  }
+
+  function displayManager(origin:any){
+    // console.log(origin);
+    managerOpen.value = true
+  }
+
+  function hideManager(){
+    managerOpen.value = false
+    managerCaller.value = ''
+  }
   
-  return {character,setInspiration,changeCoinValue}
+  
+  function setManagerCaller(caller:string){
+    managerCaller.value = caller
+  }
+  
+  
+  return {character,managerOpen,managerCaller,setInspiration
+    ,changeCoinValue,getCoinValue,displayManager,setManagerCaller
+  ,hideManager}
 })

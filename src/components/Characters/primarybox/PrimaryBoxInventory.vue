@@ -18,6 +18,7 @@
     data() {
         return {
             character: useCharacter().character,
+            characterStore:useCharacter(),
             copper: useCharacter().character.inventory.copper,
             silver: useCharacter().character.inventory.silver,
             electrum: useCharacter().character.inventory.electrum,
@@ -26,7 +27,12 @@
             tabs:['All','equipment']
         };
     },
-    methods: {},
+    methods: {
+      openManager(event:any){
+        this.characterStore.setManagerCaller('money');
+        this.characterStore.displayManager(event)
+      }
+    },
     computed: {},
     created() {
       if(this.character.inventory.hasBackpack)this.tabs.push('backpack')
@@ -46,7 +52,7 @@
 
 <template>
   <div class="wrap">
-    <div class="money-container">
+    <div class="money-container" data-manager-item="true" @click="openManager">
       <div class="money-wrapper" title="platinum pieces" v-if="platinum>0">{{ platinum }} <img class="money-icon" :src="platinumSrc" alt="platinum icon"></div>
       <div class="money-wrapper" title="gold pieces" v-if="gold>0">{{ gold }} <img class="money-icon" :src="goldSrc" alt="gold icon"></div>
       <div class="money-wrapper" title="electrum pieces" v-if="electrum>0">{{ electrum }} <img class="money-icon" :src="electrumSrc" alt="electrum icon"></div>
