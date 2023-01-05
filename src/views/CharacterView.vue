@@ -81,7 +81,6 @@
     computed:{
       isManagerOpen(){
         let status = this.characterStore
-        console.log(status.managerOpen);
         return status.managerOpen
       },
       manager(){

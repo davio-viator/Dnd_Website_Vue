@@ -445,10 +445,82 @@ export const useCharacter = defineStore('character',() => {
       hasBackpack:true,
       hasAlmsBox:true,
       equipment:[
-        
+        {
+          name:'mace',
+          subname:'mace',
+          active:1,
+          weight:4,
+          quantity:-1,
+          cost:5, // in gp
+          notes:'Simple'
+        },
+        {
+          name:'Leather',
+          subname:'Light Armor • Leather',
+          active:1,
+          weight:10,
+          quantity:-1,
+          cost:10,
+          notes:'AC 11'
+        },
+        {
+          name:'Shield',
+          subname:'Shield • Shield',
+          active:1,
+          weight:6,
+          quantity:-1,
+          cost:10,
+          notes:'+2 AC'
+        },
+        {
+          name:'Crossbow, light',
+          subname:'crossbow, light',
+          active:0,
+          weight:5,
+          quantity:-1,
+          cost:25,
+          notes:'Simple, Ammunition, Loading, Range, Two-Handed, Range (80/320)'
+        },
+        {
+          name:'Crossbow Bolts',
+          subname:'gear • ammunition',
+          active:0,
+          weight:1.5,
+          quantity:20,
+          cost:1,
+          notes:'Damage, Combat'
+        },
+        {
+          name:'Amulet',
+          subname:'gear • holy Symbole',
+          active:-1,
+          weight:1,
+          quantity:1,
+          cost:5,
+          notes:'Utility'
+        },
       ],
       backpack:[
-        
+        {
+          name:'Small Knife',
+          subname:'gear • Adventuring Gear',
+          active:-1,
+          weight:0,
+          quantity:1,
+          cost:0,
+          notes:'Utility'
+        },
+      ],
+      almsBox:[
+        {
+          name:'Block of Incense',
+          subname:'gear • Adventuring Gear',
+          active:-1,
+          weight:0,
+          quantity:2,
+          cost:0,
+          notes:'Social, Utility'
+        },
       ]
     }
   }
@@ -490,9 +562,51 @@ export const useCharacter = defineStore('character',() => {
   function setManagerCaller(caller:string){
     managerCaller.value = caller
   }
+
+  function getEquipementInventory(){
+    return character.value.inventory.equipment
+  }
+
+  function getEquipementBackpack(){
+    return character.value.inventory.backpack
+  }
+
+  function getEquipementAlmsBox(){
+    return character.value.inventory.almsBox
+  }
+
+  function updateActiveEquipment(name:string,location:string){
+    character.value.inventory[location].forEach(element => {
+      if(element.name === name){
+        if(element.active >= 0){
+          element.active = element.active == 1 ? 0 : 1
+        }
+      }
+    });
+  }
+
+  function getItemInventory(name:string,location:string){
+    let result:any = null
+    character.value.inventory[location].forEach(element => {
+      if(element.name === name){
+        result = element
+      }
+    });
+    return result;
+  }
+
+  function getItemInventoryWeight(location:string){
+    let sum:number = 0;
+    character.value.inventory[location].forEach(element => {
+      sum+=element.weight
+    });
+    return sum
+  }
   
   
   return {character,managerOpen,managerCaller,setInspiration
     ,changeCoinValue,getCoinValue,displayManager,setManagerCaller
-  ,hideManager}
+  ,hideManager,getEquipementInventory,getEquipementBackpack
+  ,getEquipementAlmsBox,updateActiveEquipment,getItemInventory
+  ,getItemInventoryWeight}
 })
