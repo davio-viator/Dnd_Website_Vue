@@ -548,8 +548,7 @@ export const useCharacter = defineStore('character',() => {
     console.log(character.value.inventory[name]);
   }
 
-  function displayManager(origin:any){
-    // console.log(origin);
+  function displayManager(){
     managerOpen.value = true
   }
 

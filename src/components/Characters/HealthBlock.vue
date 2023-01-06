@@ -62,6 +62,13 @@
         this.characterStore.updateCurrentHP(this.currentHealth)
         this.characterStore.updateTempHP(this.tempHP)
 
+      },
+      openManager(event:any){
+        let tag:string = event.target.localName
+        if(!['input','button'].includes(tag)) {
+          this.characterStore.setManagerCaller('health')
+          this.characterStore.displayManager()
+        }
       }
 
     },
@@ -84,7 +91,7 @@
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="wrapper" @click="openManager">
 
     <div class="inputs">
        <button @click="heal" class="input heal">heal</button>
@@ -92,7 +99,7 @@
        <button @click="damage" class="input damage">damage</button>
     </div>
 
-    <div class="health-container">
+    <div class="health-container" >
 
       <div class="test">
         <span class="title">current</span>

@@ -1,13 +1,9 @@
 <script setup lang="ts">
   import SearchBar from '@/components/SearchBar.vue';
   import { useCharacter } from '@/stores/CharacterService';
-  import copperSrc from '@/assets/svg/copper.svg'
-  import silverSrc from '@/assets/svg/silver.svg'
-  import electrumSrc from '@/assets/svg/electrum.svg'
-  import goldSrc from '@/assets/svg/gold.svg'
-  import platinumSrc from '@/assets/svg/platinum.svg'
-  import NavBar from '@/components/navbar/NavBar.vue';
-import MoneyManager from './MoneyManager.vue';
+
+  import MoneyManager from './MoneyManager.vue';
+  import HealthManager from './HealthManager.vue';
 </script>
 
 <script type="module" lang="ts">
@@ -73,6 +69,10 @@ import MoneyManager from './MoneyManager.vue';
       :electrum="character.inventory.electrum" 
       :gold="character.inventory.gold" 
       :platinum="character.inventory.platinum" 
+    />
+
+    <HealthManager
+      v-if="caller == 'health'"
     />
   </div>
 </template>

@@ -36,7 +36,7 @@
     methods: {
       openManager(event:any){
         this.characterStore.setManagerCaller('money');
-        this.characterStore.displayManager(event)
+        this.characterStore.displayManager()
       },
       
     },

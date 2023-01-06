@@ -4,7 +4,7 @@
 
   import { faker } from '@faker-js/faker';
 
-  import { getAllCards, createCard } from '../services/CardService.js' 
+  import { getAllCards, createCard } from '@/services/CardService.js' 
   import { computed } from '@vue/reactivity';
 </script>
 

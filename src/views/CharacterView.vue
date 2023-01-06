@@ -72,8 +72,8 @@
         let initiative:number = parseInt(e.target.value)
         alert(`You rolled ${initiative + this.randomMinMax(1,20)}`)
         },
-        closeManager(event:any){
-          this.characterStore.displayManager(event)
+        closeManager(){
+          this.characterStore.displayManager()
           this.characterStore.setManagerCaller('')
         },
         updateAc(event:any){
