@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import { useCharacter } from '@/stores/CharacterService';
 </script>
 
 <script type="module" lang="ts">
@@ -14,9 +15,9 @@
     data(){
       return{
         maxHealth:this.max?this.max:42,
-        currentHealth:this.current?this.current:30,
+        currentHealth:this.current?this.current:12,
         tempHP:this.temp?this.temp:null,
-
+        characterStore:useCharacter()
       }
     },
 
@@ -27,6 +28,7 @@
         this.currentHealth += parseInt(value);
         if(this.currentHealth>this.maxHealth)this.currentHealth = this.maxHealth;
         this.$refs.health_input.value = null;
+        this.characterStore.updateCurrentHP(this.currentHealth)
       },
 
       damage(){
@@ -48,14 +50,17 @@
           }
         }
         this.$refs.health_input.value = null;
+        this.characterStore.updateCurrentHP(this.currentHealth)
+        this.characterStore.updateTempHP(this.tempHP)
       },
 
       healthChange(e:any){
         let value = e.target.value
         let name = e.target.name
-        console.log(value,e.target.name);
         if(name == 'health')this.currentHealth = parseInt(value)
         if(name == 'temp') this.tempHP = parseInt(value)
+        this.characterStore.updateCurrentHP(this.currentHealth)
+        this.characterStore.updateTempHP(this.tempHP)
 
       }
 

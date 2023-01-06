@@ -606,11 +606,25 @@ export const useCharacter = defineStore('character',() => {
   function changeCharacterAC(ac:number){
     character.value.armor = ac
   }
+
+  function updateCurrentHP(hpValue:number){
+    character.value.health.current = hpValue
+  }
+
+  function updateMaxHP(hpValue:number){
+    character.value.health.max = hpValue
+  }
+
+  function updateTempHP(hpValue:number){
+    if(hpValue!= null) character.value.health.temp = hpValue
+  }
   
   
   return {character,managerOpen,managerCaller,setInspiration
     ,changeCoinValue,getCoinValue,displayManager,setManagerCaller
-  ,hideManager,getEquipementInventory,getEquipementBackpack
-  ,getEquipementAlmsBox,updateActiveEquipment,getItemInventory
-  ,getItemInventoryWeight,changeCharacterAC}
+    ,hideManager,getEquipementInventory,getEquipementBackpack
+    ,getEquipementAlmsBox,updateActiveEquipment,getItemInventory
+    ,getItemInventoryWeight,changeCharacterAC,updateCurrentHP
+    ,updateMaxHP,updateTempHP
+  }
 })
