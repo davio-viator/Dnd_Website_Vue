@@ -17,7 +17,8 @@
 
     data(){
       return{
-        tabs:['actions','spells','inventory','features & traits',' description','notes','extras'],
+        // tabs:['actions','spells','inventory','features & traits',' description','notes','extras'],
+        tabs:['actions','spells','inventory','features & traits','notes'],
         selected:'',
         isSpellcaster:useCharacter().character.spellcaster
       }

@@ -75,7 +75,12 @@
         closeManager(event:any){
           this.characterStore.displayManager(event)
           this.characterStore.setManagerCaller('')
+        },
+        updateAc(event:any){
+          let value:number = parseInt(event.target.value)
+          if(!Number.isNaN(value)) this.characterStore.changeCharacterAC(value)
         }
+
     },
 
     computed:{
@@ -153,7 +158,8 @@
           <span style="margin-top: 5px;" class="titre">
             Armor
           </span>
-          <span style="margin-top:auto;font-size:25px;font-weight:bold">{{ character.armor }}</span>
+          <!-- <span style="margin-top:auto;font-size:25px;font-weight:bold">{{ character.armor }}</span> -->
+          <input @change="updateAc" @keyup="updateAc" class="armor-class-input" type="number" name="armor class" :value="character.armor" >
           <span style=" margin-top: auto;margin-bottom: 5px;" class="titre">
             Class
           </span>
@@ -266,6 +272,25 @@
     flex-direction: column;
     border: 1px solid red;
     border-radius: 30%;
+  }
+
+  .armor-class-input{
+    margin-top:auto;
+    font-size:25px;
+    font-weight:bold;
+    text-align: center;
+    border:none;
+    padding-left: 18px;
+  }
+
+  .armor-class-input:hover::-webkit-inner-spin-button,
+  .armor-class-input:hover::-webkit-outer-spin-button{
+    visibility: hidden;
+  }
+
+  .armor-class-input:focus::-webkit-inner-spin-button,
+  .armor-class-input:focus::-webkit-outer-spin-button{
+    visibility: visible;
   }
 
   .titre{

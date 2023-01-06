@@ -79,7 +79,7 @@ export const useCharacter = defineStore('character',() => {
       temp:0
     },
     initiative:2,
-    armor:16,
+    armor:17,
     defences:['Lightning'],
     conditions:[],
     savingthrows:{
@@ -602,11 +602,15 @@ export const useCharacter = defineStore('character',() => {
     });
     return sum
   }
+
+  function changeCharacterAC(ac:number){
+    character.value.armor = ac
+  }
   
   
   return {character,managerOpen,managerCaller,setInspiration
     ,changeCoinValue,getCoinValue,displayManager,setManagerCaller
   ,hideManager,getEquipementInventory,getEquipementBackpack
   ,getEquipementAlmsBox,updateActiveEquipment,getItemInventory
-  ,getItemInventoryWeight}
+  ,getItemInventoryWeight,changeCharacterAC}
 })
