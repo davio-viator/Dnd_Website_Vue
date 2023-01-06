@@ -13,8 +13,6 @@
 
     data(){
       return{
-        size:Array(18),
-        bonus:Array(18),
         character:useCharacter().character
       }
     },
@@ -23,13 +21,6 @@
       randomMinMax(min: number, max: number): number {
         let random: number = min + Math.random() * (max + 1 - min);
         return Math.floor(random);
-      },
-      init(){
-        for (let i = 0; i < 18; i++) {
-          let rand:any = this.randomMinMax(-3,8)
-          rand = rand>=0 ? `+${rand}` : rand
-          this.bonus[i] = rand
-        }
       },
       rollSkill(e:any){
         let bonus:any = parseInt(e.target.innerText);
@@ -54,7 +45,6 @@
     },
     
     mounted(){
-      this.init()
     }
 
 

@@ -27,7 +27,10 @@
             gold: useCharacter().character.inventory.gold,
             platinum: useCharacter().character.inventory.platinum,
             tabs:['All','equipment'],
-            tabSelected:''
+            tabSelected:'',
+            displayEquipment:true,
+            displayAlmsBox:true,
+            displayBackpack:true
         };
     },
     methods: {
@@ -41,8 +44,8 @@
     created() {
       if(this.character.inventory.hasAlmsBox)this.tabs.push('alms box')
       if(this.character.inventory.hasBackpack)this.tabs.push('backpack')
-      this.tabs.push('attunement')
-      this.tabs.push('other possessions')
+      // this.tabs.push('attunement')
+      // this.tabs.push('other possessions')
     },
     mounted() {
       // if(this.character.inventory.hasBackpack)this.tabs.push('backpack')
@@ -76,55 +79,76 @@
         <span class="title">notes</span>
       </div>
     <div class="content">
-        <div v-if="tabSelected == 'All' || tabSelected == 'equipment'">
+        <div  style="margin-bottom:2rem" v-if="tabSelected == 'All' || tabSelected == 'equipment'">
           <div class="inventory-info">
             <span class="title">EQUIPMENT<span> ({{ characterStore.getEquipementInventory().length }}) </span></span>  
             <span class="title">{{ characterStore.getItemInventoryWeight('equipment') }} <span style="text-transform:lowercase;color:#A8A8A8">lb</span></span>
           </div>
-          <Item v-for="item in characterStore.getEquipementInventory()"
-            :name="item.name"
-            :subname="item.subname"
-            :active="item.active"
-            :weight="item.weight"
-            :quantity="item.quantity"
-            :cost="item.cost"
-            :notes="item.notes"
-            :location="'equipment'"
-          />
+          <div v-if="displayEquipment">
+            <Item v-for="item in characterStore.getEquipementInventory()"
+              :name="item.name"
+              :subname="item.subname"
+              :active="item.active"
+              :weight="item.weight"
+              :quantity="item.quantity"
+              :cost="item.cost"
+              :notes="item.notes"
+              :location="'equipment'"
+            />
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:1.2rem">
+            <span style="cursor:pointer">+ Add Equipment</span>
+            <span v-if="displayEquipment" @click="displayEquipment = !displayEquipment" style="cursor:pointer">Hide Content</span>
+            <span v-else @click="displayEquipment = !displayEquipment" style="cursor:pointer">Show Content</span>
+          </div>
         </div>
 
-        <div v-if="tabSelected == 'All' || tabSelected == 'alms box'">
+        <div style="margin-bottom:2rem" v-if="tabSelected == 'All' || tabSelected == 'alms box' ">
           <div class="inventory-info">
             <span class="title">ALMS BOX<span> ({{ characterStore.getEquipementAlmsBox().length }}) </span></span>  
             <span class="title">{{ characterStore.getItemInventoryWeight('almsBox') }} <span style="text-transform:lowercase;color:#A8A8A8">lb</span></span>
           </div>
-          <Item v-for="item in characterStore.getEquipementAlmsBox()"
-            :name="item.name"
-            :subname="item.subname"
-            :active="item.active"
-            :weight="item.weight"
-            :quantity="item.quantity"
-            :cost="item.cost"
-            :notes="item.notes"
-            :location="'almsBox'"
-          />
+          <div v-if="displayAlmsBox">
+            <Item v-for="item in characterStore.getEquipementAlmsBox()"
+              :name="item.name"
+              :subname="item.subname"
+              :active="item.active"
+              :weight="item.weight"
+              :quantity="item.quantity"
+              :cost="item.cost"
+              :notes="item.notes"
+              :location="'almsBox'"
+            />
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:1.2rem">
+            <span style="cursor:pointer">+ Add Equipment</span>
+            <span v-if="displayAlmsBox" @click="displayAlmsBox = !displayAlmsBox" style="cursor:pointer">Hide Content</span>
+            <span v-else @click="displayAlmsBox = !displayAlmsBox" style="cursor:pointer">Show Content</span>
+          </div>
         </div>
 
-        <div v-if="tabSelected == 'All' || tabSelected == 'backpack'">
+        <div style="margin-bottom:2rem"  v-if="tabSelected == 'All' || tabSelected == 'backpack'">
           <div class="inventory-info">
             <span class="title">BACKPACK<span> ({{ characterStore.getEquipementBackpack().length }}) </span></span>  
             <span class="title">{{ characterStore.getItemInventoryWeight('backpack') }} <span style="text-transform:lowercase;color:#A8A8A8">lb</span></span>
           </div>
-          <Item v-for="item in characterStore.getEquipementBackpack()"
-            :name="item.name"
-            :subname="item.subname"
-            :active="item.active"
-            :weight="item.weight"
-            :quantity="item.quantity"
-            :cost="item.cost"
-            :notes="item.notes"
-            :location="'backpack'"
-          />
+          <div v-if="displayBackpack">
+            <Item v-for="item in characterStore.getEquipementBackpack()"
+              :name="item.name"
+              :subname="item.subname"
+              :active="item.active"
+              :weight="item.weight"
+              :quantity="item.quantity"
+              :cost="item.cost"
+              :notes="item.notes"
+              :location="'backpack'"
+            />
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:1.2rem">
+            <span style="cursor:pointer">+ Add Equipment</span>
+            <span v-if="displayBackpack" @click="displayBackpack = !displayBackpack" style="cursor:pointer">Hide Content</span>
+            <span v-else @click="displayBackpack = !displayBackpack" style="cursor:pointer">Show Content</span>
+          </div>
         </div>
     </div>
   </div>
