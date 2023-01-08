@@ -40,7 +40,10 @@
     computed:{
       newHp(){
         console.log(this.healValue);
-        return this.character.health.current+this.healValue-this.damageValue 
+        let newHp = this.character.health.current+this.healValue-this.damageValue
+        if(newHp > this.character.health.max) newHp = this.character.health.max
+        if(newHp < 0) newHp = 0
+        return  newHp
       }
     },
 

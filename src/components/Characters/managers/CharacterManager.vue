@@ -92,7 +92,7 @@
   }
 
   .close-button{
-    padding: 12px;
+    padding: 5px 10px;
     z-index: 20;
     color: red;
     position:absolute;
@@ -102,6 +102,12 @@
     border:none;
     cursor:pointer;
     font-weight: bold;
-    font-size:22px
+    font-size:22px;
+    margin: 8px 2px;
+    border-radius: 50%;
+  }
+
+  .close-button:hover{
+    background-color: lightgray;
   }
 </style>
