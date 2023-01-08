@@ -76,7 +76,7 @@
   }
 
   .content{
-    padding: 8px;
+    padding: 8px 12px;
     height: 4.5rem;
 
     text-transform: capitalize;

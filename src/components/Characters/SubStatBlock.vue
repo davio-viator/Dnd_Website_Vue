@@ -76,7 +76,7 @@
   }
 
   .footer{
-    padding-top: 8px;
+    padding-top: 0px;
     text-align: center;
     text-transform: uppercase;
   }
