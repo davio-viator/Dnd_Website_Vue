@@ -53,6 +53,7 @@
 
 <style scoped>
   .wrapper{
+    background-color: white;
     width: 48%;
     height:100%;
     border-radius: 0.375rem;

@@ -71,7 +71,7 @@
 
 <style scoped>
   .wrapper{
-    /* background-color: purple; */
+    background-color: white;
     height: 100%;
 
     padding: 12px 10px;
@@ -85,13 +85,13 @@
     /* color:white; */
     text-transform: uppercase;
     display: grid;
-    grid-template-columns: 3rem 3rem 7rem 1rem;
+    grid-template-columns: 3rem 3rem 8rem 1rem;
     margin-bottom: 1rem;
   }
 
   .content{
     display: grid;
-    grid-template-columns: 3rem 3rem 7.5rem 1rem;
+    grid-template-columns: 3rem 3rem 8.5rem 1rem;
 
     text-transform: capitalize;
     height: 2.5rem;

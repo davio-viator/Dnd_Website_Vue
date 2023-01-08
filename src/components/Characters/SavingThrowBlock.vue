@@ -66,7 +66,7 @@
 
 <style scoped>
   .wrapper{
-    /* background-color: yellow; */
+    background-color: white;
     border: 1px solid red;
     border-radius: 0.375rem;
     text-align: center;

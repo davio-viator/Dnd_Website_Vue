@@ -545,6 +545,7 @@ export const useCharacter = defineStore('character',() => {
 
   function changeCoinValue(name:string,value:number){
     character.value.inventory[name] = value
+    if(character.value.inventory[name]<0) character.value.inventory[name] = 0
     console.log(character.value.inventory[name]);
   }
 

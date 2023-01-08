@@ -65,7 +65,7 @@
 
 <style scoped>
   .wrapper{
-    /* background-color: green; */
+    background-color: white;
     margin-top: 15px;
     height: 25rem;
 

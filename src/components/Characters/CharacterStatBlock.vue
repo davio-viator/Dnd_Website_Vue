@@ -56,6 +56,7 @@
 
 <style scoped>
   .wrapper-stat{
+    background-color: white;
     text-align: center;
     border-radius: 0.375rem;
     width: calc(600px / 6 - 5px);
@@ -75,7 +76,7 @@
     text-transform: uppercase;
     font-size: 10px;
     font-weight: bold;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px;Chev4lD0due285 */
   }
 
   .bonus{

@@ -108,71 +108,74 @@
 </script>
 
 <template>
-  <div v-if="isManagerOpen && manager!==''" class="manager">
-    <CharacterManager :caller="manager" />
-  </div>
-  <div class="container">
+  <div style="background-image: url(https://www.dndbeyond.com/avatars/61/484/636453131399186965.jpeg);margin-top:-32px">
 
-    <div class="statblock-container a">
-      <StatBlock 
-        v-for="i in character.stats"
-        :name="i.name"
-        :modifier="i.bonus"
-        :score="i.score"
-      />
+    <div v-if="isManagerOpen && manager!==''" class="manager">
+      <CharacterManager :caller="manager" />
     </div>
-
-    <div class="passives b">
-      <SavingThrows/>
-      <Sense/>
-      <Proficiency/>
-    </div>
-
-    <div class="skill c">
-      <Skill/>
-    </div>
-
-      <div class="substats d">
-        <SubStat title="proficiency" :content="character.proficiency+''" footer="bonus"/>
-        <SubStat title="walking" :content="character.speed" footer="speed" speed/>
+    <div class="container">
+  
+      <div class="statblock-container a">
+        <StatBlock 
+          v-for="i in character.stats"
+          :name="i.name"
+          :modifier="i.bonus"
+          :score="i.score"
+        />
       </div>
-
-      <div class="g health-block">
-        <div class="inspiration">
-          <div @click="characterStore.setInspiration()" class="box" :class="{'checked':character.inspiration}">
-
+  
+      <div class="passives b">
+        <SavingThrows/>
+        <Sense/>
+        <Proficiency/>
+      </div>
+  
+      <div class="skill c">
+        <Skill/>
+      </div>
+  
+        <div class="substats d">
+          <SubStat title="proficiency" :content="character.proficiency+''" footer="bonus"/>
+          <SubStat title="walking" :content="character.speed" footer="speed" speed/>
+        </div>
+  
+        <div class="g health-block">
+          <div class="inspiration">
+            <div @click="characterStore.setInspiration()" class="box" :class="{'checked':character.inspiration}">
+  
+            </div>
+            <span style="position:absolute;bottom:0;padding-left:5px;padding-bottom:4px">INSPIRATION</span>
           </div>
-          <span style="position:absolute;bottom:0;padding-left:5px;padding-bottom:4px">INSPIRATION</span>
+          <HealthBlock :max="character.health.max" :current="character.health.current" :temp="character.health.temp"/>
         </div>
-        <HealthBlock :max="character.health.max" :current="character.health.current" :temp="character.health.temp"/>
-      </div>
-
-      <div class="initiative-armor e">
-
-        <div class="initiative-box">
-          <span>INITIATIVE</span>
-          <input class="initiative" @click="roll" type="button" :value="character.initiative > 0 ? '+'+character.initiative : '-'+character.initiative">
+  
+        <div class="initiative-armor e">
+  
+          <div class="initiative-box">
+            <span>INITIATIVE</span>
+            <input class="initiative" @click="roll" type="button" :value="character.initiative > 0 ? '+'+character.initiative : '-'+character.initiative">
+          </div>
+  
+          <div class="armor-box">
+            <span style="margin-top: 5px;" class="titre">
+              Armor
+            </span>
+            <!-- <span style="margin-top:auto;font-size:25px;font-weight:bold">{{ character.armor }}</span> -->
+            <input @change="updateAc" @keyup="updateAc" class="armor-class-input" type="number" name="armor class" :value="character.armor" >
+            <span style=" margin-top: auto;margin-bottom: 5px;" class="titre">
+              Class
+            </span>
+          </div>
         </div>
-
-        <div class="armor-box">
-          <span style="margin-top: 5px;" class="titre">
-            Armor
-          </span>
-          <!-- <span style="margin-top:auto;font-size:25px;font-weight:bold">{{ character.armor }}</span> -->
-          <input @change="updateAc" @keyup="updateAc" class="armor-class-input" type="number" name="armor class" :value="character.armor" >
-          <span style=" margin-top: auto;margin-bottom: 5px;" class="titre">
-            Class
-          </span>
+  
+        <div class="status h">
+          <StatusBlock :defences="character.defences" :conditions="character.conditions" />
         </div>
-      </div>
-
-      <div class="status h">
-        <StatusBlock :defences="character.defences" :conditions="character.conditions" />
-      </div>
-
-      <div class="primary-box i">
-        <PrimaryBox />
-      </div>
+  
+        <div class="primary-box i">
+          <PrimaryBox />
+        </div>
+    </div>
   </div>
 </template>
 
@@ -266,6 +269,7 @@
   }
 
   .armor-box{
+    background-color: white;
     text-align: center;
     width: 48%;
     display: flex;

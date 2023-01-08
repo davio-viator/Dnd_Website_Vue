@@ -49,7 +49,7 @@
   .wrapper{
     margin-top: 15px;
     padding-left: 2rem;
-    /* background-color: blue; */
+    background-color: white;
     height: 12rem;
     display: flex;
     flex-direction: column;

@@ -104,6 +104,7 @@
           },
           
         ]
+        console.log(adjustArray,e.target.name)
         this.$emit("adjustCoin",adjustArray)
         this.clearInputs()
       },
@@ -148,7 +149,7 @@
         <div class="total">
           <div><span class="bold">Total </span> (in <span class="bold">gp</span>)</div>
           <div class="flex">
-            <span style="margin-top: 1px;">{{ Math.floor(total) }}</span>
+            <span style="margin-top: 1px;">{{ total?.toFixed(2) }}</span>
             <div class="flex">
               <img class="coin-icon-small" :src="goldSrc" alt="gold icon">
               <span v-if="detailOpen" class="coin-icon-small" @click="detailOpen = !detailOpen"><img :src="upArrow" alt="up arrow"></span>
