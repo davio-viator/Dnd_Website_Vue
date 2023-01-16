@@ -28,9 +28,9 @@
         let roll:number = this.randomMinMax(1,20);
         let result:number = roll+bonus
 
-        if (roll == 1) alert('You rolled a natural 1!!! result is '+result+' for '+name)
-        else if(roll<20)alert('You rolled '+result+' for '+name)
-        else if (roll == 20) alert('You rolled a natural 20!!! result is '+result+' for '+name)
+        if (roll == 1) alert(`You rolled a natural 1!!! result is ${result} (${roll} + ${bonus}) for ${name}`)
+        else if(roll<20)alert(`You rolled ${result} (${roll} + ${bonus}) for ${name}`)
+        else if (roll == 20) alert(`You rolled a natural 20!!! result is ${result} (${roll} + ${bonus}) for ${name}`)
       }
     },
 

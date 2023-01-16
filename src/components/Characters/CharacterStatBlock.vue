@@ -19,7 +19,17 @@
     },
 
     methods:{
-      
+      randomMinMax(min: number, max: number): number {
+        let random: number = min + Math.random() * (max + 1 - min);
+        return Math.floor(random);
+      },
+      rollStat(){
+        let roll:number = this.randomMinMax(1,20);
+        let result:number = roll+this.modifier;
+        if(roll == 20) alert(`You rolled a natural 20 for a result of ${result} (${roll} + ${this.modifier})`);
+        else if(roll == 1) alert(`You rolled a natural 1 for a result of ${result} (${roll} + ${this.modifier})`);
+        else alert(`You rolled a ${result} (${roll} + ${this.modifier})`);
+      }
     },
 
     computed:{
@@ -44,7 +54,7 @@
 <template>
   <div class="wrapper-stat">
 
-    <div class="content">
+    <div @click="rollStat" class="content clickable">
       <span class="name">{{ name }}</span>
       <span class="bonus" style="font-weight: bold;">{{bonus}}</span>
     </div>
@@ -71,12 +81,20 @@
     height: 50%;
   }
 
+  .clickable{
+    cursor: pointer;
+  }
+  .clickable:hover{
+    background-color: #ced9e0;
+    border-radius: 0.375rem 0.375rem 0 0;
+  }
+
   .name{
     color:gray;
     text-transform: uppercase;
     font-size: 10px;
     font-weight: bold;
-    /* margin-bottom: 5px;Chev4lD0due285 */
+    /* margin-bottom: 5px;*/
   }
 
   .bonus{
