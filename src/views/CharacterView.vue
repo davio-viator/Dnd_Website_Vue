@@ -91,7 +91,17 @@
       manager(){
         let status = this.characterStore
         return status.managerCaller
+      },
+      maxHealth(){
+        return this.character.health.max
+      },
+      currentHealth(){
+        return this.character.health.current
+      },
+      tempHealth(){
+        return this.character.health.temp
       }
+
     },
 
     created(){
@@ -146,7 +156,7 @@
             </div>
             <span style="position:absolute;bottom:0;padding-left:5px;padding-bottom:4px">INSPIRATION</span>
           </div>
-          <HealthBlock :max="character.health.max" :current="character.health.current" :temp="character.health.temp"/>
+          <HealthBlock :max="maxHealth" :current="currentHealth" :temp="tempHealth" />
         </div>
   
         <div class="initiative-armor e">

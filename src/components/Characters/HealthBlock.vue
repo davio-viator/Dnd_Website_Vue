@@ -103,19 +103,19 @@
 
       <div class="test">
         <span class="title">current</span>
-        <input class="health-input" type="number" @change="healthChange" name="health" min="0" :max="maxHealth" :value="currentHealth">
+        <input class="health-input" type="number" @change="healthChange" name="health" min="0" :max="max" :value="current">
       </div>
 
       <span class="title">/</span>
 
       <div class="test">
         <span class="title">max</span>
-        <input class="health-input" type="number" readonly :value="maxHealth">
+        <input class="health-input" type="number" readonly :value="max">
       </div>
 
       <div class="test">
         <span class="title">temp</span>
-        <input class="health-input" type="number" placeholder="--" @change="healthChange" name="temp" min="0" :value="tempHP">
+        <input class="health-input" type="number" placeholder="--" @change="healthChange" name="temp" min="0" :value="temp">
       </div>
 
     </div>
