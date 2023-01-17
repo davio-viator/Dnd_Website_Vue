@@ -24,7 +24,7 @@
         characterStore:useCharacter(),
         character:useCharacter().character,
         healValue:0,
-        damageValue:0
+        damageValue:0,
       }
     },
 
@@ -58,7 +58,8 @@
         if(newHp > this.character.health.max) newHp = this.character.health.max
         if(newHp < 0) newHp = 0
         return  newHp
-      }
+      },
+
     },
 
     created(){
@@ -87,7 +88,7 @@
       </div>
       <div class="manager-header-element">
         <span class="title">TEMP HP</span>
-        <input ref="tempValue" class="manager-input-small" type="number" name="temp-hp" :value="character.health.temp">
+        <input ref="tempValue" class="manager-input-small" type="number" name="temp-hp" v-model="character.health.temp">
       </div>
     </div>
 
@@ -116,15 +117,18 @@
 
     </div>
 
-    <div class="modifier">
-      <div style="text-align:center" class="title">OVERRIDE MAX HP</div>
-      <div class="box-inputs small">
-        <input ref="maxValue" class="box-inputs-outline" type="number"  @change="overrideMaxHp" @keyup="overrideMaxHp" min=0 :value="character.health.max">
-      </div>
-    </div>
-
     <div @click="apply" class="apply-button">
       Apply
+    </div>
+    
+    <div style="border-bottom: 1px solid #D8D8D8;"></div>
+
+    <div class="modifier">
+      <div style="text-align:center;margin-top:1rem" class="title">OVERRIDE MAX HP</div>
+      <div class="box-inputs small">
+        <input ref="maxValue" class="box-inputs-outline" type="number"  
+        @change="overrideMaxHp" @keyup="overrideMaxHp" min=0 v-model="character.health.max">
+      </div>
     </div>
 
   </div>
@@ -274,6 +278,7 @@
     padding: 12px 0;
     border-radius: 0.375rem;   
     cursor: pointer;
+    margin-bottom: 1rem;
   }
 
   .apply-button:hover{
