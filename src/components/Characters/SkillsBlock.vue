@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import { faker } from '@faker-js/faker';
   import { useCharacter } from '@/stores/CharacterService'; 
 </script>
 
@@ -8,7 +7,7 @@
   export default {
     
     props:{
-
+      base:String
     },
 
     data(){
@@ -56,7 +55,7 @@
         <input class="skill-radio" readonly type="checkbox" :checked="elem.proficient">
         <span style="text-transform:uppercase">{{ elem.modifier }}</span>
         <span style="border-bottom:1px solid #d8d8d8">{{ elem.skill }}</span>
-        <span class="bonus clickable" :data-name="elem.skill" @click="rollSkill" style="">{{ elem.bonus >= 0 ? '+'+elem.bonus : '-'+elem.bonus }}</span>
+        <span class="bonus clickable" :data-name="elem.skill" @click="rollSkill">{{ elem.bonus >= 0 ? '+'+elem.bonus : '-'+elem.bonus }}</span>
       </div>
     </div>
   </div>

@@ -8,6 +8,7 @@
   import HealthBlock from '@/components/Characters/HealthBlock.vue';
   import StatusBlock from '@/components/Characters/StatusBlock.vue';
   import PrimaryBox from '@/components/Characters/primarybox/PrimaryBoxBlock.vue';
+  import CharacterHeader from '@/components/Characters/CharacterHeader.vue';
 
   import { useCharacter } from '@/stores/CharacterService';
   import { useDisplayNote } from '@/stores/counter';
@@ -82,11 +83,16 @@
 </script>
 
 <template>
-  <div style="background-image: url(https://www.dndbeyond.com/avatars/61/484/636453131399186965.jpeg);margin-top:-32px">
+  <div class="character-header">
+    <CharacterHeader/>
+  </div>
+  <div style="background-image: url(https://www.dndbeyond.com/avatars/61/484/636453131399186965.jpeg);margin-top:0px">
 
     <div v-if="isManagerOpen && manager!==''" class="manager">
       <CharacterManager :caller="manager" />
     </div>
+
+
     <div class="container">
   
       <div class="statblock-container a">
@@ -171,6 +177,10 @@
       "b c i i i"
       "b c i i i";
     align-items: start;
+  }
+
+  .character-header{
+    height: 6rem;
   }
 
   .statblock-container{
