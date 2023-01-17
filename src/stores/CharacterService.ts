@@ -64,7 +64,7 @@ export const useCharacter = defineStore('character',() => {
         bonus: calculateBonus(7)
       },
       {
-        name:'dexterity',
+        name:'charisma',
         score: 11,
         bonus: calculateBonus(11)
       }
@@ -83,12 +83,36 @@ export const useCharacter = defineStore('character',() => {
     defences:['Lightning'],
     conditions:[],
     savingthrows:{
-      strength:1,
-      dexterity:2,
-      constitution:2,
-      intelligence:0,
-      wisdom:6,
-      charisma:4
+      strength:{
+        name:"str",
+        proficient:true,
+        mod:3
+      },
+      intelligence: {
+        name:"int",
+        proficient:false,
+        mod:1
+      },
+      dexterity:{
+        name:"dex",
+        proficient:true,
+        mod:4
+      },
+      wisdom:{
+        name:"wis",
+        proficient:false,
+        mod:-2
+      },
+      constitution:{
+        name:"con",
+        proficient:false,
+        mod:2
+      },
+      charisma:{
+        name:"cha",
+        proficient:false,
+        mod:0
+      }
     },
     senses:{
       passive_perception:18,

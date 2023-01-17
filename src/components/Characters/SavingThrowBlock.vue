@@ -22,27 +22,51 @@
 
     computed:{
       str(){
-        return this.character.savingthrows.strength>0 ? '+'+this.character.savingthrows.strength : '-'+ this.character.savingthrows.strength
+        let proficient = this.character.savingthrows.strength.proficient;
+        let mod = this.character.savingthrows.strength.mod
+        let proficiency = this.character.proficiency;
+        if(proficient) return mod >= 0 ? '+'+(mod + proficiency) : (mod + proficiency);
+        else return mod >= 0 ? '+'+mod : mod;
       },
       int(){
-        return this.character.savingthrows.intelligence>0 ? '+'+this.character.savingthrows.intelligence : '-'+ this.character.savingthrows.intelligence
+        let proficient = this.character.savingthrows.intelligence.proficient;
+        let mod = this.character.savingthrows.intelligence.mod
+        let proficiency = this.character.proficiency;
+        if(proficient) return mod >= 0 ? '+'+(mod + proficiency) : (mod + proficiency);
+        else return mod >= 0 ? '+'+mod : mod;
       },
       dex(){
-        return this.character.savingthrows.dexterity>0 ? '+'+this.character.savingthrows.dexterity : '-'+ this.character.savingthrows.dexterity
+        let proficient = this.character.savingthrows.dexterity.proficient;
+        let mod = this.character.savingthrows.dexterity.mod
+        let proficiency = this.character.proficiency;
+        if(proficient) return mod >= 0 ? '+'+(mod + proficiency) : (mod + proficiency);
+        else return mod >= 0 ? '+'+mod : mod;
       },
       wis(){
-        return this.character.savingthrows.wisdom>0 ? '+'+this.character.savingthrows.wisdom : '-'+ this.character.savingthrows.wisdom
+        let proficient = this.character.savingthrows.wisdom.proficient;
+        let mod = this.character.savingthrows.wisdom.mod
+        let proficiency = this.character.proficiency;
+        if(proficient) return mod >= 0 ? '+'+(mod + proficiency) : (mod + proficiency);
+        else return mod >= 0 ? '+'+mod : mod;
       },
       con(){
-        return this.character.savingthrows.constitution>0 ? '+'+this.character.savingthrows.constitution : '-'+ this.character.savingthrows.constitution
+        let proficient = this.character.savingthrows.constitution.proficient;
+        let mod = this.character.savingthrows.constitution.mod
+        let proficiency = this.character.proficiency;
+        if(proficient) return mod >= 0 ? '+'+(mod + proficiency) : (mod + proficiency);
+        else return mod >= 0 ? '+'+mod : mod;
       },
       cha(){
-        return this.character.savingthrows.charisma>0 ? '+'+this.character.savingthrows.charisma : '-'+ this.character.savingthrows.charisma
+        let proficient = this.character.savingthrows.charisma.proficient;
+        let mod = this.character.savingthrows.charisma.mod
+        let proficiency = this.character.proficiency;
+        if(proficient) return mod >= 0 ? '+'+(mod + proficiency) : (mod + proficiency);
+        else return mod >= 0 ? '+'+mod : mod;
       }
     },
 
     created(){
-
+      console.log(this);
     },
 
     mounted(){
@@ -55,12 +79,11 @@
 
 <template>
   <div class="wrapper">
-    <div><span>str </span>{{ str }}</div>
-    <div><span>int </span>{{ int }}</div>
-    <div><span>dex </span>{{ dex }}</div>
-    <div><span>wis </span>{{ wis }}</div>
-    <div><span>con </span>{{ con }}</div>
-    <div><span>cha </span>{{ cha }}</div>
+    <div class="border" v-for="item in character.savingthrows">
+      <span class="proficient-icon" :class="{'proficient':item.proficient}"></span>
+      <span class="bold">{{ item.name }} </span>
+      <span class="mod">{{ this[item.name] }}</span>
+    </div>
   </div>
 </template>
 
@@ -72,13 +95,56 @@
     text-align: center;
 
     display: grid;
+    grid-gap: 0px 15px ;
     grid-template-columns: auto auto;
     
     /* height: 15rem; */
     height: calc(12rem);
     min-width: 100%;
 
-    padding-top: 35px;
+    padding: 0 22px;
+
+    /* padding-top: 35px; */
     /* width: calc(90vw / 4); */
+  }
+
+  .border{
+    display: grid;
+    grid-template-columns: 0 auto auto;
+    
+    padding-top: 20px;
+    background-image: url('../../assets/svg/border-saving.svg');
+    background-repeat: no-repeat;
+    background-position: 0px 10px;
+  }
+
+  .proficient-icon{
+    background-color: #fff;
+    border: 1px dotted #838383;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    position: relative;
+    top:5%;
+    left:-5px;
+  }
+
+  .proficient-icon.proficient{
+    background-color: black;
+  }
+
+  .bold{
+    font-weight: bold;
+    font-size: 15px;
+    text-align: right;
+    margin-top: 1px;
+    text-transform: uppercase;
+  }
+
+  .mod{
+    font-size: 20px;
+    text-align: right;
+    margin-right:8px;
+    line-height: 0.7;
   }
 </style>
