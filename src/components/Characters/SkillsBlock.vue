@@ -13,19 +13,16 @@
 
     data(){
       return{
-        character:useCharacter().character
+        character:useCharacter().character,
+        characterStore:useCharacter()
       }
     },
 
     methods:{
-      randomMinMax(min: number, max: number): number {
-        let random: number = min + Math.random() * (max + 1 - min);
-        return Math.floor(random);
-      },
       rollSkill(e:any){
         let bonus:any = parseInt(e.target.innerText);
         let name:string = e.target.dataset.name;
-        let roll:number = this.randomMinMax(1,20);
+        let roll:number = this.characterStore.rollD20();
         let result:number = roll+bonus
 
         if (roll == 1) alert(`You rolled a natural 1!!! result is ${result} (${roll} + ${bonus}) for ${name}`)
@@ -35,10 +32,6 @@
     },
 
     computed:{
-      bonu(){
-        let rand:Number = this.randomMinMax(-3,8)
-        return rand>=0 ? `+${rand}` : rand
-      }
     },
 
     created(){

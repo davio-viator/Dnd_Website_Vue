@@ -553,6 +553,30 @@ export const useCharacter = defineStore('character',() => {
   const managerOpen = ref(false);
   const managerCaller = ref('');
 
+  function randomMinMax(min: number, max: number): number {
+    let random: number = min + Math.random() * (max + 1 - min);
+    return Math.floor(random);
+  }
+
+  function rollD20(){
+    return randomMinMax(1,20);
+  }
+  function rollD12(){
+    return randomMinMax(1,12);
+  }
+  function rollD10(){
+    return randomMinMax(1,10);
+  }
+  function rollD8(){
+    return randomMinMax(1,8);
+  }
+  function rollD6(){
+    return randomMinMax(1,6);
+  }
+  function rollD4(){
+    return randomMinMax(1,4);
+  }
+
   function calculateBonus(value:any ){
     return Math.floor((value-10)/2)
   }
@@ -649,6 +673,7 @@ export const useCharacter = defineStore('character',() => {
     ,hideManager,getEquipementInventory,getEquipementBackpack
     ,getEquipementAlmsBox,updateActiveEquipment,getItemInventory
     ,getItemInventoryWeight,changeCharacterAC,updateCurrentHP
-    ,updateMaxHP,updateTempHP
+    ,updateMaxHP,updateTempHP,rollD20,rollD12,rollD10,rollD8
+    ,rollD6,rollD4
   }
 })

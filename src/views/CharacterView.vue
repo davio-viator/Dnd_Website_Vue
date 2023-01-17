@@ -25,38 +25,6 @@
     data(){
       return{
         id:this.$route.params.id,
-        blocks:[
-                {
-                  name:'strength',
-                  modifier:this.randomMinMax(-5,5),
-                  score:this.randomMinMax(0,20)
-                },
-                {
-                  name:'dexterity',
-                  modifier:this.randomMinMax(-5,5),
-                  score:this.randomMinMax(0,20)
-                },
-                {
-                  name:'constitution',
-                  modifier:this.randomMinMax(-5,5),
-                  score:this.randomMinMax(0,20)
-                },
-                {
-                  name:'intelligence',
-                  modifier:this.randomMinMax(-5,5),
-                  score:this.randomMinMax(0,20)
-                },
-                {
-                  name:'wisdom',
-                  modifier:this.randomMinMax(-5,5),
-                  score:this.randomMinMax(0,20)
-                },
-                {
-                  name:'charisma',
-                  modifier:this.randomMinMax(-5,5),
-                  score:this.randomMinMax(0,20)
-                },
-            ],
         character:useCharacter().character,
         inspiration:useCharacter().character.inspiration,
         characterStore:useCharacter(),
@@ -64,13 +32,9 @@
     },
 
     methods:{
-        randomMinMax(min: number, max: number) {
-            let random: number = min + Math.random() * (max + 1 - min);
-            return Math.floor(random);
-        },
       roll(e:any){
         let initiative:number = parseInt(e.target.value)
-        alert(`You rolled ${initiative + this.randomMinMax(1,20)}`)
+        alert(`You rolled ${initiative + this.characterStore.rollD20()}`)
         },
         closeManager(){
           this.characterStore.displayManager()

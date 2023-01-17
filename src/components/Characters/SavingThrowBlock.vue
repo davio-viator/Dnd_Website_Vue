@@ -12,12 +12,22 @@
 
     data(){
       return{
-        character:useCharacter().character
+        character:useCharacter().character,
+        characterStore:useCharacter()
       }
     },
 
     methods:{
-      
+      rollSavingThrow(e:any,item:any){
+        let mod = item.mod;
+        let proficiency = item.proficient ? this.character.proficiency : 0;
+        let value = mod+proficiency
+        let roll = this.characterStore.rollD20();
+        let result = roll + value;
+        if(roll == 20) alert(`You rolled a natural 20!!! result is ${result} (${roll} + ${value})`)
+        else if(roll == 1) alert(`You rolled a natural 1!!! result is ${result} (${roll} + ${value})`)
+        else alert(`You rolled a ${result} (${roll} + ${value})`)
+      }
     },
 
     computed:{
@@ -66,7 +76,6 @@
     },
 
     created(){
-      console.log(this);
     },
 
     mounted(){
@@ -82,7 +91,7 @@
     <div class="border" v-for="item in character.savingthrows">
       <span class="proficient-icon" :class="{'proficient':item.proficient}"></span>
       <span class="bold">{{ item.name }} </span>
-      <span class="mod">{{ this[item.name] }}</span>
+      <span @click="rollSavingThrow($event,item)" class="mod clickable">{{ this[item.name] }}</span>
     </div>
   </div>
 </template>
@@ -110,7 +119,7 @@
 
   .border{
     display: grid;
-    grid-template-columns: 0 auto auto;
+    grid-template-columns: 30% 38% auto;
     
     padding-top: 20px;
     background-image: url('../../assets/svg/border-saving.svg');
@@ -136,15 +145,28 @@
   .bold{
     font-weight: bold;
     font-size: 15px;
-    text-align: right;
+    text-align: left;
     margin-top: 1px;
     text-transform: uppercase;
   }
 
   .mod{
     font-size: 20px;
-    text-align: right;
-    margin-right:8px;
-    line-height: 0.7;
+    text-align: center;
+    /* margin-right:8px; */
+    line-height: 1.7;
+  }
+
+  .clickable{
+    cursor: pointer;
+    border-radius: 50%;
+    width: 100%;
+    height: 75%;
+    margin-top: -9px;
+  }
+
+  .clickable:hover{
+
+    background-color: #ced9e0;
   }
 </style>
