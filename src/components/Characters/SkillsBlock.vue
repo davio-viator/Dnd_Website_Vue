@@ -27,6 +27,9 @@
         if (roll == 1) alert(`You rolled a natural 1!!! result is ${result} (${roll} + ${bonus}) for ${name}`)
         else if(roll<20)alert(`You rolled ${result} (${roll} + ${bonus}) for ${name}`)
         else if (roll == 20) alert(`You rolled a natural 20!!! result is ${result} (${roll} + ${bonus}) for ${name}`)
+      },
+      updateSkillProficiency(elem:any){
+        this.characterStore.updateSkillProficiency(elem.skill)
       }
     },
 
@@ -52,10 +55,12 @@
 
     <div>
       <div v-for="(elem,i) in character.skills" class="content">
-        <input class="skill-radio" readonly type="checkbox" :checked="elem.proficient">
+        <input class="skill-radio" @click="updateSkillProficiency(elem)" disabled type="checkbox" :checked="elem.proficient">
         <span style="text-transform:uppercase">{{ elem.modifier }}</span>
         <span style="border-bottom:1px solid #d8d8d8">{{ elem.skill }}</span>
-        <span class="bonus clickable" :data-name="elem.skill" @click="rollSkill">{{ elem.bonus >= 0 ? '+'+elem.bonus : '-'+elem.bonus }}</span>
+
+        <span v-if="elem.proficient" class="bonus clickable" :data-name="elem.skill" @click="rollSkill">{{ elem.bonus+character.proficiency >= 0 ? '+'+(elem.bonus+character.proficiency) : (elem.bonus+character.proficiency) }}</span>
+        <span v-else class="bonus clickable" :data-name="elem.skill" @click="rollSkill">{{ elem.bonus >= 0 ? '+'+elem.bonus : elem.bonus }}</span>
       </div>
     </div>
   </div>
@@ -97,7 +102,7 @@
     height: 10px;
     padding: 0 !important;
     margin-left: 13px;
-    margin-bottom: 2px;
+    margin-top: 5px;
     background-color: white;
     border-radius: 50%;
     vertical-align: middle;

@@ -160,109 +160,109 @@ export const useCharacter = defineStore('character',() => {
           skill:'acrobatics',
           proficient:false,
           modifier:'dex',
-          bonus:2
+          bonus:4
         },
         {
           skill:'Animal handling',
           proficient:false,
           modifier:'wis',
-          bonus:3
+          bonus:-2
         },
         {
           skill:'arcana',
           proficient:true,
           modifier:'int',
-          bonus:3
+          bonus:+1
         },
         {
           skill:'Athletics',
           proficient:false,
           modifier:'str',
-          bonus:1
+          bonus:+3
         },
         {
           skill:'deception',
           proficient:false,
           modifier:'cha',
-          bonus:2
+          bonus:0
         },
         {
           skill:'history',
           proficient:true,
           modifier:'int',
-          bonus:3
+          bonus:1
         },
         {
           skill:'insight',
           proficient:false,
           modifier:'wis',
-          bonus:2
+          bonus:-2
         },
         {
           skill:'intimidation',
           proficient:false,
           modifier:'cha',
-          bonus:1
+          bonus:0
         },
         {
           skill:'investigation',
           proficient:false,
           modifier:'int',
-          bonus:0
+          bonus:1
         },
         {
           skill:'medecine',
           proficient:true,
           modifier:'wis',
-          bonus:6
+          bonus:-2
         },
         {
           skill:'nature',
           proficient:false,
           modifier:'int',
-          bonus:0
+          bonus:1
         },
         {
           skill:'perception',
           proficient:false,
           modifier:'wis',
-          bonus:3
+          bonus:-2
         },
         {
           skill:'performance',
           proficient:false,
           modifier:'cha',
-          bonus:1
+          bonus:0
         },
         {
           skill:'persuasion',
           proficient:false,
           modifier:'cha',
-          bonus:1
+          bonus:0
         },
         {
           skill:'religion',
           proficient:true,
           modifier:'int',
-          bonus:3
+          bonus:1
         },
         {
           skill:'sleight of hand',
           proficient:false,
-          modifier:'dew',
-          bonus:2
+          modifier:'dex',
+          bonus:4
         },
         {
           skill:'stealth',
           proficient:false,
           modifier:'dex',
-          bonus:2
+          bonus:4
         },
         {
           skill:'survival',
           proficient:false,
           modifier:'wis',
-          bonus:3
+          bonus:-2
         }      
       ],
       actions:{
@@ -728,6 +728,15 @@ export const useCharacter = defineStore('character',() => {
       if(character.value.spells[element]?.used) character.value.spells[element].used = 0 
     });
   }
+
+  function updateSkillProficiency(name:any){
+    character.value.skills.forEach((element:any,index:number) => {
+      if(element.skill === name){
+        character.value.skills[index].proficient = !character.value.skills[index].proficient
+        return
+      }
+    });
+  }
   
   
   return {character,managerOpen,managerCaller,setInspiration
@@ -736,6 +745,6 @@ export const useCharacter = defineStore('character',() => {
     ,getEquipementAlmsBox,updateActiveEquipment,getItemInventory
     ,getItemInventoryWeight,changeCharacterAC,updateCurrentHP
     ,updateMaxHP,updateTempHP,rollD20,rollD12,rollD10,rollD8
-    ,rollD6,rollD4,longRest,shortRest
+    ,rollD6,rollD4,longRest,shortRest,updateSkillProficiency
   }
 })
