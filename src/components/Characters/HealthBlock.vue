@@ -23,25 +23,25 @@
 
     methods:{
       heal(){
-        let value = this.$refs.health_input.value;
-        if(value=='') value = 0
-        this.currentHealth += parseInt(value);
-        if(this.currentHealth>this.maxHealth)this.currentHealth = this.maxHealth;
-        this.$refs.health_input.value = null;
+        let refValue = ((this.$refs['health_input'] as any).value as string) 
+        let value = refValue == '' ? 0 : Number.parseInt(refValue) ;
+        this.currentHealth += value;
+        if(this.currentHealth > this.maxHealth)this.currentHealth = this.maxHealth;
+        (this.$refs['health_input'] as any).value = null;
         this.characterStore.updateCurrentHP(this.currentHealth)
       },
 
       damage(){
-        let value = this.$refs.health_input.value;
-        if(value=='') value = 0
+        let refValue = ((this.$refs['health_input'] as any).valus as string)
+        let value = refValue == '' ? 0 : Number.parseInt(refValue) ;
 
-        if(this.tempHP <= 0){
-          this.currentHealth -= parseInt(value);
-          if(this.currentHealth<0)this.currentHealth = 0
-          this.$refs.health_input.value = null
+        if((this.tempHP as number)  <= 0){
+          this.currentHealth -= value;
+          if(this.currentHealth < 0)this.currentHealth = 0;
+          (this.$refs['health_input'] as any).value = null
         }
-        else if(this.tempHP > 0){
-          let newTemp = this.tempHP-parseInt(value)
+        else if((this.tempHP as number) > 0){
+          let newTemp = (this.tempHP as number) - value
           if(newTemp > 0) this.tempHP = newTemp
           else{
             this.tempHP = null;
@@ -49,9 +49,9 @@
             this.currentHealth = newHp
           }
         }
-        this.$refs.health_input.value = null;
+        (this.$refs['health_input'] as any).value = null;
         this.characterStore.updateCurrentHP(this.currentHealth)
-        this.characterStore.updateTempHP(this.tempHP)
+        this.characterStore.updateTempHP((this.tempHP as number))
       },
 
       healthChange(e:any){
@@ -60,7 +60,7 @@
         if(name == 'health')this.currentHealth = parseInt(value)
         if(name == 'temp') this.tempHP = parseInt(value)
         this.characterStore.updateCurrentHP(this.currentHealth)
-        this.characterStore.updateTempHP(this.tempHP)
+        this.characterStore.updateTempHP((this.tempHP as number))
 
       },
       openManager(event:any){

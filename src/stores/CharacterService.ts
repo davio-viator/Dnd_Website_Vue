@@ -13,7 +13,7 @@ import sphere from '../assets/svg/sphere.svg'
 import radiant from '../assets/svg/radiant.svg'
 import healing from '../assets/svg/healing.svg'
 
-const xpForLevel = {
+const xpForLevel:any = {
   2:300,
   3:900,
   4:2700,
@@ -56,7 +56,7 @@ export async function createUser(data:any) {
 
 export const useCharacter = defineStore('character',() => {
   let name:string = 'Odof'
-  const character = ref(
+  const character:any = ref(
     {
       name:"Odof",
       sex:"male",
@@ -66,7 +66,7 @@ export const useCharacter = defineStore('character',() => {
       level:getLevel(),
       totalXp:6500,
       currentXp:2567,
-      xpToNextLevel:xpForLevel[getLevel()+1],
+      xpToNextLevel:xpForLevel[getNextLevel()],
       stats:[
         {
           name:'strength',
@@ -587,6 +587,10 @@ export const useCharacter = defineStore('character',() => {
     return 5;
   }
 
+  function getNextLevel(){
+    return getLevel()+1;
+  }
+
   function randomMinMax(min: number, max: number): number {
     let random: number = min + Math.random() * (max + 1 - min);
     return Math.floor(random);
@@ -658,7 +662,7 @@ export const useCharacter = defineStore('character',() => {
   }
 
   function updateActiveEquipment(name:string,location:string){
-    character.value.inventory[location].forEach(element => {
+    character.value.inventory[location].forEach((element: { name: string; active: number }) => {
       if(element.name === name){
         if(element.active >= 0){
           element.active = element.active == 1 ? 0 : 1
@@ -669,7 +673,7 @@ export const useCharacter = defineStore('character',() => {
 
   function getItemInventory(name:string,location:string){
     let result:any = null
-    character.value.inventory[location].forEach(element => {
+    character.value.inventory[location].forEach((element: { name: string }) => {
       if(element.name === name){
         result = element
       }
@@ -679,7 +683,7 @@ export const useCharacter = defineStore('character',() => {
 
   function getItemInventoryWeight(location:string){
     let sum:number = 0;
-    character.value.inventory[location].forEach(element => {
+    character.value.inventory[location].forEach((element: { weight: number }) => {
       sum+=element.weight
     });
     return sum
