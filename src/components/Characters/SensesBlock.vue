@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { useCharacter } from '@/stores/CharacterService';
+  import border from '@/assets/svg/border-sense.svg'
 </script>
 
 <script type="module" lang="ts">
@@ -38,9 +39,20 @@
 
 <template>
   <div class="wrapper">
-    <div><span class="bubble">{{ character.senses.passive_perception }}</span> <div class="sense">Passive WIS (perception)</div></div>
-    <div><span class="bubble">{{ character.senses.passive_investigation }}</span> <div class="sense">Passive INT (investigation)</div></div>
-    <div><span class="bubble">{{ character.senses.passive_insight }}</span> <div class="sense">Passive WIS (insight)</div></div>
+    <div class="border">
+      <span class="bubble">{{ character.senses.passive_perception }}</span> 
+      <span class="sense">Passive WIS (perception)</span>
+    </div>
+
+    <div class="border">
+      <span class="bubble">{{ character.senses.passive_investigation }}</span> 
+      <div class="sense">Passive INT (investigation)</div>
+    </div>
+
+    <div class="border">
+      <span class="bubble">{{ character.senses.passive_insight }}</span> 
+      <div class="sense">Passive WIS (insight)</div>
+    </div>
   </div>
 </template>
 
@@ -48,7 +60,7 @@
 
   .wrapper{
     margin-top: 15px;
-    padding-left: 2rem;
+    padding-left: 1rem;
     background-color: white;
     height: 12rem;
     display: flex;
@@ -61,22 +73,33 @@
     min-width: 100%;
   }
 
+  .border{
+    display: grid;
+    grid-template-columns: 45px auto;   
+    padding-top: 20px;
+    background-image: url('../../assets/svg/border-sense.svg');
+    background-repeat: no-repeat;
+    background-position: 0px 15px;
+    width: 95%;
+    margin-top: -15px;
+  }
+
 .sense{
-  background-color: white;
-  padding: 5px 0;
-  
-  border-color: red;
-  border-width: 1px 1px 1px 0px;
-  border-style: solid;
+  padding: 5px 8px;
+  font-weight: bold;
+  font-size: 14px;
+
   display: inline-block;
-  width: 80%;
 }
 
   .bubble{
-    background-color: white;
-    padding: 5px;
-    border-radius: 50%;
-    border: 1px solid red;
+    /* background-color: white; */
+    padding: 5px 0;
+    padding-left: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    /* border-radius: 50%; */
+    /* border: 1px solid red; */
   }
 
   .test{

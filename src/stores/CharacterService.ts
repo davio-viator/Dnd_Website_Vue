@@ -723,6 +723,7 @@ export const useCharacter = defineStore('character',() => {
   }
 
   function longRest(){
+    shortRest();
     character.value.health.current = character.value.health.max
     Object.keys(character.value.spells).forEach(element => {
       if(character.value.spells[element]?.used) character.value.spells[element].used = 0 

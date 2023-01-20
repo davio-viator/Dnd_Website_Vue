@@ -13,7 +13,8 @@
     data(){
       return{
         character:useCharacter().character,
-        characterStore:useCharacter()
+        characterStore:useCharacter(),
+        self:this
       }
     },
 
@@ -91,7 +92,7 @@
     <div class="border" v-for="item in character.savingthrows">
       <span class="proficient-icon" :class="{'proficient':item.proficient}"></span>
       <span class="bold">{{ item.name }} </span>
-      <span @click="rollSavingThrow($event,item)" class="mod clickable">{{ this[item.name] }}</span>
+      <span @click="rollSavingThrow($event,item)" class="mod clickable">{{ self[item.name] }}</span>
     </div>
   </div>
 </template>
