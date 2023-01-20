@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="306" height="406" viewBox="0 0 306 406" xml:space="preserve">
+<desc>Created with Fabric.js 3.6.6</desc>
+<defs>
+</defs>
+<g transform="matrix(1 0 0 1 515.5 244.91)" style=""  >
+		<text xml:space="preserve" font-family="'Open Sans', sans-serif" font-size="20" font-style="normal" font-weight="normal" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1; white-space: pre;" ><tspan x="-65" y="-6.83" style="white-space: pre; ">Lorem </tspan><tspan x="0.59" y="-6.83" style="font-style: italic; font-weight: bold; ">ipsum</tspan><tspan x="-65" y="19.39" style="white-space: pre; ">dolor </tspan><tspan x="-10.28" y="19.39" style="font-family: 'Impact'; fill: rgb(255,0,0); ">sit</tspan><tspan x="8.61" y="19.39" style="white-space: pre; "> amet</tspan></text>
+</g>
+<g transform="matrix(1 0 0 1 225.5 75.5)"  >
+<linearGradient id="SVGID_72" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1 0 0 1 -45 -25)"  x1="0" y1="0" x2="90" y2="0">
+<stop offset="0%" style="stop-color:rgb(255,0,0);stop-opacity: 1"/>
+<stop offset="100%" style="stop-color:rgb(255,165,0);stop-opacity: 1"/>
+</linearGradient>
+<rect style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: url(#SVGID_72); fill-rule: nonzero; opacity: 1;"  x="-45" y="-25" rx="0" ry="0" width="90" height="50" />
+</g>
+<g transform="matrix(1 0 0 1 505.5 365.5)"  >
+<linearGradient id="SVGID_73" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1 0 0 1 -65 -65)"  x1="0" y1="0" x2="130" y2="130">
+<stop offset="0%" style="stop-color:rgb(209,80,255);stop-opacity: 1"/>
+<stop offset="100%" style="stop-color:rgb(0,0,255);stop-opacity: 1"/>
+</linearGradient>
+<circle style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: url(#SVGID_73); fill-rule: nonzero; opacity: 1;"  cx="0" cy="0" r="65" />
+</g>
+<g transform="matrix(1 0 0 1 405 100)"  >
+	<image style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;"  xlink:href="https://placekitten.com/110/150" x="-55" y="-75" width="110" height="150"></image>
+</g>
+<g transform="matrix(1.08 0 0 1.18 153 202)"  >
+<g style=""   >
+		<g transform="matrix(1 0 0 1 0.5 0)"  >
+<polygon style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(254,254,254); fill-rule: nonzero; opacity: 1;"  points="-131.5,167 131.5,167 131.5,-167 -131.5,-167 -131.5,167 " />
+</g>
+		<g transform="matrix(1 0 0 1 0 0)"  >
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(197,49,49); fill-rule: nonzero; opacity: 1;"  transform=" translate(-139, -169)" d="M 278 6.39 V 4.47 h -6.14 V 0 h -2.68 s -1.06 1.54 -3.91 1.54 H 12.73 C 9.88 1.54 8.82 0 8.82 0 H 6.14 V 4.47 H 0 V 6.39 c 2.53 0 2.67 4.14 2.67 4.14 V 324.91 S 2.53 329 0 329 V 331 H 6.14 v 7 H 8.82 V 3.31 H 269.18 V 334.69 H 8.82 V 338 s 1.06 -1.54 3.91 -1.54 H 265.27 c 2.84 0 3.9 1.52 3.91 1.54 h 2.68 v -7 H 278 V 329 c -2.53 0 -2.67 -4.13 -2.67 -4.13 V 10.53 s 0.14 -4.14 2.67 -4.14 Z M 6.27 324.91 H 4.14 V 12.12 H 6.27 Z m 267.79 0.48 h -2.12 V 12.61 h 2.12 Z" stroke-linecap="round" />
+</g>
+</g>
+</g>
+</svg>
