@@ -8,8 +8,14 @@
         default:{ecology:'',strength:'',weakness:''}
       },
       ecology:String,
-      strength:String,
-      weakness:String
+      strength:{
+        type:String,
+        default:''
+      },
+      weakness:{
+        type:String,
+        default:''
+      }
     },
 
     data(){
@@ -25,8 +31,9 @@
     computed:{
       strengthParsed(){
         let returnValue:String = ""
-        let strengthArray:Array<string> = this.strength?.split(',')
-        if(strengthArray){
+        let strengthArray:Array<string> = this.strength.split(',')
+        console.log(strengthArray && strengthArray[0] !== '');
+        if(strengthArray.length >= 1 && strengthArray[0]){
           strengthArray.forEach(element=>{
             let current:String =''
             if(element?.startsWith(' ')) element = element?.replace(' ','')
@@ -39,9 +46,9 @@
       },
       weaknessParsed(){
         let returnValue:String = ""
-        let strengthArray:Array<string> = this.weakness?.split(',')
-        if(strengthArray){
-          strengthArray.forEach(element=>{
+        let weaknessArray:Array<string> = this.weakness?.split(',')
+        if(weaknessArray.length >= 1 && weaknessArray[0]){
+          weaknessArray.forEach(element=>{
             let current:String =''
             if(element.startsWith(' ')) element = element.replace(' ','')
             current = element
@@ -103,7 +110,10 @@
     height: 9.75rem;
     resize: none;
     padding-left: 8px;
-    padding-right:8px
+    padding-right:8px;
+
+    font-family: revert;
+    font-size: 15px;
   }
   .text-area:focus{
     outline: 0;

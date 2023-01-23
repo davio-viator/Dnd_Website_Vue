@@ -6,7 +6,10 @@
       name:String,
       rank:String,
       imgSrc:String,
-      keywords:Array<String>
+      keywords:{
+        type:Array<String>,
+        default:[]
+      }
     },
 
     data(){
@@ -44,9 +47,12 @@
     <!--<div class="content">-->
       <img class="card-image" :src=imageUrl alt="card's image">
     <!--</div>-->
+    <div class="bubble">
+      <div>toughness: <span></span></div>
+    </div>
     <div class="footer">
       <ul class="footer-ul">
-        <li class="card-text footer-text" v-if="(keywords?.length>=1 && keywords[0]!=='')" v-for="keyword in keywords">{{keyword}}</li>
+        <li class="card-text footer-text" v-if="(keywords.length>=1 && keywords[0]!=='')" v-for="keyword in keywords">{{keyword}}</li>
         <li v-else class="card-text footer-text">Card's attribute</li>
       </ul>
     </div>
@@ -64,7 +70,7 @@
     text-transform: capitalize;
     min-width: 15rem;
     max-width: 25rem;
-    height: 2.5rem;
+    height: 3.5rem;
     border-radius: 5px 5px 0 0;
     background-color: black;
     display: flex;
@@ -85,15 +91,19 @@
   .card-image{
     object-fit: fill;
     width: 25rem;
-    height:32rem;
+    height:29.5rem;
     border-style: solid;
     border-width: 0px 5px;
     border-color: black;
   }
+
+  .bubble{
+    display: none;
+  }
   .footer{
     min-width: 15rem;
     max-width: 25rem;
-    height: 3rem;
+    height: 4.5rem;
     border-radius: 0 0 5px 5px;
     background-color: black;
     display: flex;
