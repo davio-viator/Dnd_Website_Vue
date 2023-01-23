@@ -56,7 +56,7 @@
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="wrapper outer-border">
     <nav>
       <NavBar @selected="(tabSelected)=>selected = tabSelected" :tabs="realTabs"/>
     </nav>
@@ -69,12 +69,23 @@
 </template>
 
 <style scoped>
+
+  .outer-border{
+    z-index: 100;
+    background-image: url('@/assets/svg/primary-box-border.svg'); 
+    background-repeat: no-repeat;
+    object-fit: fill;
+    background-position: 0px -2px;
+    /* background-size: 100px 95px; */
+  }
+
   .wrapper{
     width: 100%;
     height: 100%;
 
     background-color: white;
-    border: 1px solid red;
-    border-radius: 0.375rem;
+    border: 1px solid transparent;
+    border-radius: 2rem;
+    padding: 0px 13px;
   }
 </style>

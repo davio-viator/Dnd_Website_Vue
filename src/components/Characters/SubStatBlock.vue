@@ -44,7 +44,7 @@
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="wrapper outer-border">
     <div class="title" :class="{'speed':speed}"><h3>{{title}}</h3></div>
     <div class="bonus"><h2>{{parsedContent}}</h2></div>
     <div class="footer"><h3>{{footer}}</h3></div>
@@ -52,12 +52,21 @@
 </template>
 
 <style scoped>
+
+  .outer-border{
+    height: 100%;
+    background-image: url('@/assets/svg/sub-stat-border.svg'); 
+    background-repeat: no-repeat;
+    object-fit: fill;
+    background-position: -0px -2px;
+  }
+
   .wrapper{
-    background-color: white;
+    /* background-color: white; */
     width: 48%;
     height:100%;
     border-radius: 0.375rem;
-    border: 1px solid red;
+    /* border: 1px solid red; */
   }
 
   .title{

@@ -8,13 +8,15 @@
     
     props:{
       name:String,
-      modifier:Number,
+      modifier:{
+        type:Number,
+        default:0
+      },
       score:Number,
     },
 
     data(){
       return{
-        
       }
     },
 
@@ -52,26 +54,40 @@
 </script>
 
 <template>
-  <div class="wrapper-stat">
-
-    <div @click="rollStat" class="content clickable">
-      <span class="name">{{ name }}</span>
-      <span class="bonus" style="font-weight: bold;">{{bonus}}</span>
+  <div class="outer-border">
+    <div class="wrapper-stat">
+  
+      <div @click="rollStat" class="content ">
+        <span class="name">{{ name }}</span>
+        <span class="bonus clickable" style="font-weight: bold;">{{bonus}}</span>
+      </div>
+  
+      <div class="score">{{score}}</div>
+  
     </div>
-
-    <div class="score">{{score}}</div>
-
   </div>
 </template>
 
 <style scoped>
+
+  .outer-border{
+    z-index: 10;
+    background-image: url('@/assets/svg/stats-border.svg'); 
+    background-repeat: no-repeat;
+    object-fit: fill;
+    background-position: 4px 2px;
+    /* background-size: 300px 192; */
+  }
+
   .wrapper-stat{
-    background-color: white;
+    /* background-color: white; */
+    /* border: 1px solid red; */
+    /* padding: 0px 11px; */
+    padding-top:4px;
     text-align: center;
     border-radius: 0.375rem;
     width: calc(600px / 6 - 5px);
     height: 100%;
-    border: 1px solid red;
   }
 
   .content{
@@ -92,7 +108,7 @@
   .name{
     color:gray;
     text-transform: uppercase;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: bold;
     /* margin-bottom: 5px;*/
   }
@@ -101,6 +117,9 @@
     margin: auto;
     font-size: 25px;
     font-weight: bold;
+
+    padding-top: 3px;
+    width: 93%;
   }
 
   .score {
@@ -116,5 +135,8 @@
     padding-top: calc(25% - 12px);
     margin: auto;
     height: 50%;
+    width: 80%;
+
+    padding-top: 18px;
   }
 </style>

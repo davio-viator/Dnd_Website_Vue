@@ -91,7 +91,7 @@
 </script>
 
 <template>
-  <div class="wrapper" @click="openManager">
+  <div class="wrapper outer-border" @click="openManager">
 
     <div class="inputs">
        <button @click="heal" class="input heal">heal</button>
@@ -126,29 +126,39 @@
 </template>
 
 <style scoped>
+
+  .outer-border{
+    background-image: url('@/assets/svg/health-border.svg'); 
+    background-repeat: no-repeat;
+    object-fit: fill;
+    background-position: -8px -2px;
+    background-size: 512px 104px;
+  }
+
   .wrapper{
     padding-left: 8px;
-    background-color: aqua;
-    background-color: white;
+    /* background-color: aqua;
+    background-color: white; */
     height: 100%;
     width: 80%;
 
     border-radius: 0.375rem;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 
     text-align: center;
 
     display: flex;
+    justify-content: center ;
   }
 
   .inputs{
-    padding: 5px 0;
+    padding: 8px 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     text-transform: uppercase;
 
-    width: 33%;
+    width: 25%;
   }
 
   .input{
@@ -189,7 +199,7 @@
   }
 
   .health-container{
-    padding: 0px 8px;
+    padding: 5px 2px;
     width: 66%;
 
     display:flex;
@@ -219,6 +229,8 @@
     padding: 0;
     position: absolute;
     bottom:0;
-    left: calc(50% - 40px)
+    left: calc(50% - 40px);
+    padding-bottom: 5px;
   }
+
 </style>

@@ -48,34 +48,46 @@
 </script>
 
 <template>
-  <div class="wrapper">
-    <div class="header">
-      <span>Prof</span><span>mod</span><span>skill</span><span>bonus</span>
-    </div>
-
-    <div>
-      <div v-for="(elem,i) in character.skills" class="content">
-        <input class="skill-radio" @click="updateSkillProficiency(elem)" disabled type="checkbox" :checked="elem.proficient">
-        <span style="text-transform:uppercase">{{ elem.modifier }}</span>
-        <span style="border-bottom:1px solid #d8d8d8">{{ elem.skill }}</span>
-
-        <span v-if="elem.proficient" class="bonus clickable" :data-name="elem.skill" @click="rollSkill">{{ elem.bonus+character.proficiency >= 0 ? '+'+(elem.bonus+character.proficiency) : (elem.bonus+character.proficiency) }}</span>
-        <span v-else class="bonus clickable" :data-name="elem.skill" @click="rollSkill">{{ elem.bonus >= 0 ? '+'+elem.bonus : elem.bonus }}</span>
+  <div class="outer-border">
+    <div class="wrapper">
+      <div class="header">
+        <span class="bold">Prof</span><span class="bold">mod</span><span class="bold">skill</span><span class="bold">bonus</span>
+      </div>
+  
+      <div>
+        <div v-for="(elem,i) in character.skills" class="content">
+          <input class="skill-radio" @click="updateSkillProficiency(elem)" disabled type="checkbox" :checked="elem.proficient">
+          <span style="text-transform:uppercase">{{ elem.modifier }}</span>
+          <span style="border-bottom:1px solid #d8d8d8">{{ elem.skill }}</span>
+  
+          <span v-if="elem.proficient" class="bonus clickable" :data-name="elem.skill" @click="rollSkill">{{ elem.bonus+character.proficiency >= 0 ? '+'+(elem.bonus+character.proficiency) : (elem.bonus+character.proficiency) }}</span>
+          <span v-else class="bonus clickable" :data-name="elem.skill" @click="rollSkill">{{ elem.bonus >= 0 ? '+'+elem.bonus : elem.bonus }}</span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+
+  .outer-border{
+    height: 100%;
+    background-image: url('@/assets/svg/skills-border-fitting.svg'); 
+    background-repeat: no-repeat;
+    object-fit: fill;
+    /* background-position: -5px -3px; */
+    /* background-size: 300px 192; */
+  }
+
   .wrapper{
-    background-color: white;
+    /* background-color: white; */
     height: 100%;
 
     padding: 12px 10px;
     min-width: 100%;
     border-radius: 0.375rem;
 
-    border: 1px solid red;
+    /* border: 1px solid red; */
   }
   
   .header{
@@ -83,12 +95,19 @@
     text-transform: uppercase;
     display: grid;
     grid-template-columns: 3rem 3rem 8rem 1rem;
-    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-left: 0.8rem;
+    font-size: 12px;
+  }
+
+  .bold{
+    font-weight: bold;
   }
 
   .content{
     display: grid;
-    grid-template-columns: 3rem 3rem 8.5rem 1rem;
+    grid-template-columns: 3.5rem 3rem 8rem 1rem;
 
     text-transform: capitalize;
     height: 2.5rem;

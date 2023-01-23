@@ -88,19 +88,30 @@
 </script>
 
 <template>
-  <div class="wrapper">
-    <div class="border" v-for="item in character.savingthrows">
-      <span class="proficient-icon" :class="{'proficient':item.proficient}"></span>
-      <span class="bold">{{ item.name }} </span>
-      <span @click="rollSavingThrow($event,item)" class="mod clickable">{{ self[item.name] }}</span>
+  <div class="outer-border">
+    <div class="wrapper">
+      <div class="border" v-for="item in character.savingthrows">
+        <span class="proficient-icon" :class="{'proficient':item.proficient}"></span>
+        <span class="bold">{{ item.name }} </span>
+        <span @click="rollSavingThrow($event,item)" class="mod clickable">{{ self[item.name] }}</span>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+
+  .outer-border{
+    background-image: url('@/assets/svg/small-fitting-border.svg'); 
+    background-repeat: no-repeat;
+    object-fit: fill;
+    background-position: -2px -4px;
+    background-size: 300px 192;
+  }
+
   .wrapper{
-    background-color: white;
-    border: 1px solid red;
+    /* background-color: white; */
+    /* border: 1px solid red; */
     border-radius: 0.375rem;
     text-align: center;
 
