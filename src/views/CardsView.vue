@@ -4,20 +4,29 @@
 
   import { faker } from '@faker-js/faker';
 
-  import { getAllCards, createCard } from '@/services/CardService.js' 
+  import { getAllCards, createCard } from '@/services/CardService' 
   import { computed } from '@vue/reactivity';
 </script>
 
 <script module lang="ts">
+type Card = {
+  name:string,
+  rank:string,
+  keywords:string[],
+  content:Object,
+  url:string
+} 
+
   export default{
     data() {
       return {
-        cardArray:[],
+        cardArray:([] as Card[]),
         numberOfCard:0,
         cardTitle:'Hey i\'m the note\'s title',
         cardContent:'Hey i\'m the note\'s content',
         noteOpenned:false,
-        pending:true
+        pending:true,
+        test: {},
       }
     }
     ,methods:{
@@ -25,11 +34,11 @@
         let iteration:Number = parseInt(faker.random.numeric(2));
         iteration = 3;
         for (let i = 0; i < iteration; i++) {
-          let name:String = faker.name.fullName();
-          let rank:String = faker.helpers.arrayElement(["∅","F","E-","E","E+","D-","D","D+","C-","C","C+","B-","B","B+","A-","A","A+","A++","S","S+"])
-          let keywords:String[] = faker.random.words(5).split(' ')
+          let name:string = faker.name.fullName();
+          let rank:string = faker.helpers.arrayElement(["∅","F","E-","E","E+","D-","D","D+","C-","C","C+","B-","B","B+","A-","A","A+","A++","S","S+"])
+          let keywords:string[] = faker.random.words(5).split(' ')
           let content:Object = {ecology:faker.lorem.text(),strength:faker.random.words(8).replaceAll(' ',','),weakness:faker.random.words(8).replaceAll(' ',',')}
-          let url:String = faker.helpers.arrayElement(
+          let url:string = faker.helpers.arrayElement(
             [
               "https://cdn.discordapp.com/attachments/321941760911736833/1027320724806975589/Jack-O27_Childish_Jump.webp",
               "https://cdn.discordapp.com/attachments/321941760911736833/1024787851688288316/telecharge_4.gif",
@@ -39,12 +48,14 @@
               "https://pbs.twimg.com/media/FeEhntpVIAAAs7t?format=jpg&name=medium"
             ]
           )
-        let Card:Array = []
-          Card['name'] = name
-          Card['rank'] = rank
-          Card['keywords'] = keywords
-          Card['content'] = content
-          Card['url'] = url
+        let Card:Card = {
+          name:name,
+          rank:rank,
+          keywords:keywords,
+          content:content,
+          url:url,
+        }
+          
           this.cardArray.push(Card)
         }
       },
@@ -77,17 +88,21 @@
         console.log(this.cardArray);
       },
       initDb(){
-        getAllCards()
-        .then((res: never[]): void => {
-          this.cardArray = res
-          this.pending = false
-        })
+        let x = getAllCards()
+        .subscribe({next:(cardArrayForAminCuzHesAnnoying)=>{
+            console.log(cardArrayForAminCuzHesAnnoying);
+            this.cardArray = cardArrayForAminCuzHesAnnoying.data as Card[]
+            this.pending = false
+          },error:(err)=>{
+            
+          }})
+          console.log(this.pending,this.cardArray);
       },
       fillDb(){
         for (let i = 0; i < 25; i++) {
           this.addCardServer()          
         }
-      }
+      },
     }
 
     ,created(){
@@ -105,7 +120,7 @@
   <button @click="fillDb">Add card to the database ? currently {{cardArray.length}} cards</button>
   <div v-if="!pending">
     <div :class="{'card-container note-open-card':noteOpenned,'card-container note-close-card':!noteOpenned}">
-      <CardVue @noteDisplayed="(emitNoteDisplayed)=>noteOpenned = emitNoteDisplayed" @noteTitle="(emitNoteTitle)=>cardTitle = emitNoteTitle" v-for="card in cardArray" :name="card['name']" :rank="card['rank']" :keywords="card['keywords']" :content="card['content']" :src="card['url']" :edition="!Boolean" ></CardVue>
+      <CardVue v-for="card in cardArray" @noteDisplayed="(emitNoteDisplayed)=>noteOpenned = emitNoteDisplayed" @noteTitle="(emitNoteTitle)=>cardTitle = emitNoteTitle"  :name="card['name']" :rank="card['rank']" :keywords="card['keywords']" :content="card['content']" :src="card['url']" :edition="!Boolean" ></CardVue>
     </div>
   </div>
   <div v-else class="loading">

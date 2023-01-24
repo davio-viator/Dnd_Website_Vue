@@ -124,6 +124,7 @@
     min-width: 100%;
 
     padding: 0 22px;
+    padding-top: 5px;
 
     /* padding-top: 35px; */
     /* width: calc(90vw / 4); */

@@ -16,7 +16,7 @@
   export default {
     emits:['valueChange','adjustCoin'],
     props:{
-
+      base:String
     },
 
     data(){
@@ -25,6 +25,7 @@
         character:useCharacter().character,
         healValue:0,
         damageValue:0,
+        self:this
       }
     },
 
@@ -32,7 +33,7 @@
       test(event:any){
         if(event.target == this.$refs.healInput) this.damageValue = 0
         else if( event.target == this.$refs.damageInput)this.damageValue = 0
-        console.log(this.$refs.healInput.value,this.$refs.damageInput.value);
+        console.log((this.$refs['healInput'] as any).value,(this.$refs['damageInput'] as any).value);
         // console.log(event.target.value,this.healValue);
       },
       overrideMaxHp(event:any){
@@ -40,9 +41,9 @@
         // this.characterStore.updateMaxHP(parseInt(event.target.value));
       },
       apply(){
-        let current:number = parseInt(this.newHp);
-        let max:number = parseInt(this.$refs.maxValue?.value);
-        let temp:number = parseInt(this.$refs.tempValue?.value);
+        let current:number = parseInt((this['newHp'] as any));
+        let max:number = parseInt((this.$refs['maxValue'] as any).value);
+        let temp:number = parseInt((this.$refs['tempValue']as any).value );
         this.characterStore.updateCurrentHP(current);
         this.characterStore.updateMaxHP(max);
         this.characterStore.updateTempHP(temp);
@@ -52,7 +53,7 @@
     },
 
     computed:{
-      newHp(){
+      newHp() {
         console.log(this.healValue);
         let newHp = this.character.health.current+this.healValue-this.damageValue
         if(newHp > this.character.health.max) newHp = this.character.health.max

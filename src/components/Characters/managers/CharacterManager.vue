@@ -25,7 +25,7 @@
       },
       adjustCoin(change:any){
         console.log(change);
-        change.forEach(elem=>{
+        change.forEach((elem: { value: string; adding: any; name: string; })=>{
           if(elem.value){
             const val = parseInt(elem.value)
             if(elem.adding)this.characterStore.changeCoinValue(elem.name,this.characterStore.getCoinValue(elem.name)+val)

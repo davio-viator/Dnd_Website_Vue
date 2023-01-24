@@ -10,7 +10,10 @@
     "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "axios": "^1.2.3",
+    "axios-observable": "^2.0.0",
     "pinia": "^2.0.28",
+    "rxjs": "^7.8.0",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },

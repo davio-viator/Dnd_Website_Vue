@@ -86,7 +86,7 @@
   <div class="character-header">
     <CharacterHeader/>
   </div>
-  <div style="background-image: url(https://www.dndbeyond.com/avatars/61/484/636453131399186965.jpeg);margin-top:0px">
+  <div style="background-image: url(https://www.dndbeyond.com/avatars/61/484/636453131399186965.jpeg);margin-top:0px;padding-top:1px">
 
     <div v-if="isManagerOpen && manager!==''" class="manager">
       <CharacterManager :caller="manager" />

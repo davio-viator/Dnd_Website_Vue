@@ -35,7 +35,7 @@ const router = createRouter({
     {
       path: '/character/:id',
       name: 'character-view',
-      component: () => import('../views/CharacterView.vue')
+      component: () => import('@/views/CharacterView.vue')
     }
   ]
 })

@@ -21,11 +21,11 @@
         return {
             character: useCharacter().character,
             characterStore:useCharacter(),
-            copper: useCharacter().character.inventory.copper,
-            silver: useCharacter().character.inventory.silver,
-            electrum: useCharacter().character.inventory.electrum,
-            gold: useCharacter().character.inventory.gold,
-            platinum: useCharacter().character.inventory.platinum,
+            // copper: useCharacter().character.inventory.copper,
+            // silver: useCharacter().character.inventory.silver,
+            // electrum: useCharacter().character.inventory.electrum,
+            // gold: useCharacter().character.inventory.gold,
+            // platinum: useCharacter().character.inventory.platinum,
             tabs:['All','equipment'],
             tabSelected:'',
             displayEquipment:true,
@@ -40,7 +40,14 @@
       },
       
     },
-    computed: {},
+    computed: {
+      platinum(){return useCharacter().character.inventory.platinum },
+      gold(){return useCharacter().character.inventory.gold},
+      electrum(){return useCharacter().character.inventory.electrum},
+      silver(){return useCharacter().character.inventory.silver},
+      copper(){return useCharacter().character.inventory.copper}
+
+    },
     created() {
       if(this.character.inventory.hasAlmsBox)this.tabs.push('alms box')
       if(this.character.inventory.hasBackpack)this.tabs.push('backpack')

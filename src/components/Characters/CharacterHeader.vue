@@ -133,9 +133,10 @@
   }
 
   .button-container{
-    position: relative;
+    /* position: relative; */
+    /* top: 40%; */
     display: flex;
-    top: 40%;
+    margin-top: 2.5rem;
   }
 
   .rest-button{

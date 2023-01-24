@@ -71,7 +71,6 @@
 <style scoped>
 
   .outer-border{
-    z-index: 100;
     background-image: url('@/assets/svg/primary-box-border.svg'); 
     background-repeat: no-repeat;
     object-fit: fill;
