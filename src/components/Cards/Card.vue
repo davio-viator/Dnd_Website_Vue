@@ -26,7 +26,8 @@
       edition:Boolean,
       ecology:String,
       strength:String,
-      weakness:String
+      weakness:String,
+      id:Number
     },
 
     data(){
@@ -48,6 +49,9 @@
         getAllUsers().then((res: any[]) => {
         res.map((item: any)=>this.users.push((item as never)))
       })
+      },
+      getNote(){
+
       }
     },
 

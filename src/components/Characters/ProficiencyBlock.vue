@@ -41,25 +41,25 @@
     <div class="wrapper">
       <div class="content">
         <div class="title">armor</div>
-        {{ character.proficiencyies.armors.join(', ')  }}
+        {{ character.proficiencies.armors.join(', ')  }}
       </div>
       <hr>
 
       <div class="content">
         <div class="title">weapons</div>
-        {{ character.proficiencyies.weapons.join(', ')  }}
+        {{ character.proficiencies.weapons.join(', ')  }}
       </div>
       <hr>
       
       <div class="content">
         <div class="title">tool</div>
-        {{ character.proficiencyies.tools.join(', ').length > 0 ? character.proficiencyies.tools.join(',') : 'None'}}
+        {{ character.proficiencies.tools.join(', ').length > 0 ? character.proficiencies.tools.join(',') : 'None'}}
       </div>
       <hr>
 
       <div class="content">
         <div class="title">languages</div>
-        {{ character.proficiencyies.languages.join(', ')  }}
+        {{ character.proficiencies.languages.join(', ')  }}
       </div>
     </div>
   </div>

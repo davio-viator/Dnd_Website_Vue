@@ -149,7 +149,7 @@ export const useCharacter = defineStore('character',() => {
         passive_investigation:15,
         passive_insight:13
       },
-      proficiencyies:{
+      proficiencies:{
         armors:['heavy armor','light armor','medium armor','shield'],
         weapons:['simple weapons'],
         tools:[],

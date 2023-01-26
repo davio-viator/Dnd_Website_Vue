@@ -5,11 +5,12 @@
   import { faker } from '@faker-js/faker';
 
   import { getAllCards, createCard } from '@/services/CardService' 
-  import { computed } from '@vue/reactivity';
+import { debounce, type MonoTypeOperatorFunction, type ObservableInput } from 'rxjs';
 </script>
 
 <script module lang="ts">
 type Card = {
+  id?:number,
   name:string,
   rank:string,
   keywords:string[],
@@ -26,47 +27,19 @@ type Card = {
         cardContent:'Hey i\'m the note\'s content',
         noteOpenned:false,
         pending:true,
-        test: {},
+        skip:9,
+        take:6
       }
     }
     ,methods:{
-      init(){
-        let iteration:Number = parseInt(faker.random.numeric(2));
-        iteration = 3;
-        for (let i = 0; i < iteration; i++) {
-          let name:string = faker.name.fullName();
-          let rank:string = faker.helpers.arrayElement(["∅","F","E-","E","E+","D-","D","D+","C-","C","C+","B-","B","B+","A-","A","A+","A++","S","S+"])
-          let keywords:string[] = faker.random.words(5).split(' ')
-          let content:Object = {ecology:faker.lorem.text(),strength:faker.random.words(8).replaceAll(' ',','),weakness:faker.random.words(8).replaceAll(' ',',')}
-          let url:string = faker.helpers.arrayElement(
-            [
-              "https://cdn.discordapp.com/attachments/321941760911736833/1027320724806975589/Jack-O27_Childish_Jump.webp",
-              "https://cdn.discordapp.com/attachments/321941760911736833/1024787851688288316/telecharge_4.gif",
-              "https://cdn.mos.cms.futurecdn.net/XmsMoNkgpTcnP4DjQzKMhJ.jpg",
-              "https://i.pinimg.com/originals/ba/a2/7a/baa27a58a45aae675b89c5b8b59b056c.png",
-              "https://pbs.twimg.com/media/FeCLslBUYAEdkRV?format=jpg&name=4096x4096",
-              "https://pbs.twimg.com/media/FeEhntpVIAAAs7t?format=jpg&name=medium"
-            ]
-          )
-        let Card:Card = {
-          name:name,
-          rank:rank,
-          keywords:keywords,
-          content:content,
-          url:url,
-        }
-          
-          this.cardArray.push(Card)
-        }
-      },
       addCardServer(){
         let iteration:Number = parseInt(faker.random.numeric(2));
         iteration = 1;
-        let name:String = faker.name.fullName();
-        let rank:String = faker.helpers.arrayElement(["∅","F","E-","E","E+","D-","D","D+","C-","C","C+","B-","B","B+","A-","A","A+","A++","S","S+"])
-        let keywords:String[] = faker.random.words(5).split(' ')
+        let name:string = faker.name.fullName();
+        let rank:string = faker.helpers.arrayElement(["∅","F","E-","E","E+","D-","D","D+","C-","C","C+","B-","B","B+","A-","A","A+","A++","S","S+"])
+        let keywords:string[] = faker.random.words(5).split(' ')
         let content:Object = {ecology:faker.lorem.text(),strength:faker.random.words(8).replaceAll(' ',','),weakness:faker.random.words(8).replaceAll(' ',',')}
-        let url:String = faker.helpers.arrayElement(
+        let url:string = faker.helpers.arrayElement(
           [
             "https://cdn.discordapp.com/attachments/321941760911736833/1027320724806975589/Jack-O27_Childish_Jump.webp",
             "https://cdn.discordapp.com/attachments/321941760911736833/1024787851688288316/telecharge_4.gif",
@@ -76,7 +49,7 @@ type Card = {
             "https://pbs.twimg.com/media/FeEhntpVIAAAs7t?format=jpg&name=medium"
           ]
         )
-        let card = {
+        let card:Card = {
           name:name,
           rank:rank,
           keywords:keywords,
@@ -88,25 +61,59 @@ type Card = {
         console.log(this.cardArray);
       },
       initDb(){
-        let x = getAllCards()
-        .subscribe({next:(cardArrayForAminCuzHesAnnoying)=>{
-            console.log(cardArrayForAminCuzHesAnnoying);
-            this.cardArray = cardArrayForAminCuzHesAnnoying.data as Card[]
+        let x = getAllCards(0,9)
+        .subscribe({next:(cardArrayForAminCuzHesAnAnnoyingBastardThatPissesMeOff)=>{
+            this.cardArray = this.parseCardDb(cardArrayForAminCuzHesAnAnnoyingBastardThatPissesMeOff.data as any[])
             this.pending = false
           },error:(err)=>{
             
           }})
-          console.log(this.pending,this.cardArray);
       },
       fillDb(){
         for (let i = 0; i < 25; i++) {
           this.addCardServer()          
         }
       },
+      parseCardDb(dbCard:any[]){
+        dbCard.forEach(element => {
+          element.keywords = (element.keywords as any).split(',')
+          element.url = (element as any).card_image
+          element.id = element.card_id
+          delete (element as any).card_image
+          delete (element as any).card_id
+        });
+        return dbCard;
+      },
+      handleScroll(event: any){
+        let winHeight = window.innerHeight;
+        let scroll = event.target.documentElement.scrollTop
+        let height = event.target.documentElement.scrollHeight     
+        if(winHeight+scroll >= height && scroll > 100 ){
+          getAllCards(this.skip,this.take)
+          .subscribe({next:(cardArrayForAminCuzHesAnAnnoyingBastardThatPissesMeOff)=>{
+            const size = (cardArrayForAminCuzHesAnAnnoyingBastardThatPissesMeOff.data.length);
+            if(size > 0){
+              const newCards:Card[] = this.parseCardDb(cardArrayForAminCuzHesAnAnnoyingBastardThatPissesMeOff.data as any[])
+              this.cardArray = [].concat((this.cardArray as never[]),newCards as never[])
+              this.pending = false
+              this.skip += this.take
+            }
+          },error:(err)=>{
+            
+          }})
+        }
+      }
     }
 
     ,created(){
-      this.initDb()
+
+    },
+    mounted(){
+      this.initDb();
+      window.addEventListener('scroll',this.handleScroll);
+    },
+    beforeUnmount(){
+      window.removeEventListener('scroll', this.handleScroll);
     }
     ,computed:{
       numberOfCards(){
@@ -117,10 +124,21 @@ type Card = {
 </script>
 
 <template>
-  <button @click="fillDb">Add card to the database ? currently {{cardArray.length}} cards</button>
+  <button v-if="false" @click="fillDb">Add (+25) cards to the database ? currently {{cardArray.length}} cards</button>
   <div v-if="!pending">
     <div :class="{'card-container note-open-card':noteOpenned,'card-container note-close-card':!noteOpenned}">
-      <CardVue v-for="card in cardArray" @noteDisplayed="(emitNoteDisplayed)=>noteOpenned = emitNoteDisplayed" @noteTitle="(emitNoteTitle)=>cardTitle = emitNoteTitle"  :name="card['name']" :rank="card['rank']" :keywords="card['keywords']" :content="card['content']" :src="card['url']" :edition="!Boolean" ></CardVue>
+      <CardVue 
+        v-for="card in cardArray" 
+        @noteDisplayed="(emitNoteDisplayed)=>noteOpenned = emitNoteDisplayed" 
+        @noteTitle="(emitNoteTitle)=>cardTitle = emitNoteTitle"  
+        :id="card['id']"
+        :name="card['name']" 
+        :rank="card['rank']" 
+        :keywords="card['keywords']" 
+        :content="card['content']" 
+        :src="card['url']" 
+        :edition="!Boolean" >
+      </CardVue>
     </div>
   </div>
   <div v-else class="loading">
