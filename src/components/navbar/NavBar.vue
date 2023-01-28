@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+  import { getRef, setRef } from '@/services/Utils';
 </script>
 
 <script type="module" lang="ts">
@@ -20,11 +20,10 @@
     methods:{
       checkInput(e:any){
         this.tabs?.forEach((elem,index)=>{
-          this.$refs['item'+index][0].classList.remove(('tab-active'))
+          getRef('item'+index,'classList',this.$refs).remove('tab-active')
         })
-        this.$refs[e.target.id][0].classList.add('tab-active')
-
-        this.$emit('selected',this.$refs[e.target.id][0].dataset.name)
+        getRef(e.target.id,'classList',this.$refs).add('tab-active')
+        this.$emit('selected',getRef(e.target.id,'dataset',this.$refs).name);
       }
     },
 
@@ -37,7 +36,7 @@
     },
 
     mounted(){
-      this.$emit('selected',this.tabs[2])
+      this.$emit('selected',(this as any)['tabs'][0])
     }
 
 
@@ -54,7 +53,7 @@
         v-for="(tab,i) in tabs" :id="'item'+i" 
         @click="checkInput" 
         class="tab idle" 
-        :class="{'tab-active':i==2,'sub':sub}"
+        :class="{'tab-active':i==0,'sub':sub}"
         :data-name="tab">
           {{ tab }}
       </div>

@@ -5,7 +5,7 @@
 
   import { useDisplayNote } from '@/stores/counter';
 
-  import { getAllUsers, createUser } from '../../services/UserService'
+  import { getAllUsers, createUser } from '@/services/UserService'
 </script>
 
 <script type="module" lang="ts">
@@ -26,7 +26,8 @@
       edition:Boolean,
       ecology:String,
       strength:String,
-      weakness:String
+      weakness:String,
+      id:Number
     },
 
     data(){
@@ -46,8 +47,11 @@
       },
       getUsers(){
         getAllUsers().then((res: any[]) => {
-        res.map((item: any)=>this.users.push(item))
+        res.map((item: any)=>this.users.push((item as never)))
       })
+      },
+      getNote(){
+
       }
     },
 
@@ -79,13 +83,13 @@
     </div>
     <div v-if="edition" class="editor-container">
       <CardEditorVue
-        @imgSrc="(url:any)=>src = url" 
-        @name="(emitName:any)=> name = emitName"
-        @rank="(emitRank:any)=> rank = emitRank"
-        @keywords="(emitKeywords:any)=> keywords = emitKeywords.split(',')"
-        @ecology="(emitEcology:any)=>ecology = emitEcology"
-        @strength="(emitStrength:any)=>strength = emitStrength"
-        @weakness="(emitWeakness:any)=>weakness = emitWeakness"
+        @imgSrc="(url:any)=>(src as string) = url" 
+        @name="(emitName:any)=> (name as string) = emitName"
+        @rank="(emitRank:any)=> (rank as string) = emitRank"
+        @keywords="(emitKeywords:any)=> (keywords as string[]) = emitKeywords.split(',')"
+        @ecology="(emitEcology:any)=>(ecology as any) = emitEcology"
+        @strength="(emitStrength:any)=>(strength as string) = emitStrength"
+        @weakness="(emitWeakness:any)=>(weakness as string) = emitWeakness"
       ></CardEditorVue>
     </div>
   </div>

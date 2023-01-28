@@ -8,6 +8,7 @@
   import HealthBlock from '@/components/Characters/HealthBlock.vue';
   import StatusBlock from '@/components/Characters/StatusBlock.vue';
   import PrimaryBox from '@/components/Characters/primarybox/PrimaryBoxBlock.vue';
+  import CharacterHeader from '@/components/Characters/CharacterHeader.vue';
 
   import { useCharacter } from '@/stores/CharacterService';
   import { useDisplayNote } from '@/stores/counter';
@@ -25,38 +26,6 @@
     data(){
       return{
         id:this.$route.params.id,
-        blocks:[
-                {
-                  name:'strength',
-                  modifier:this.randomMinMax(-5,5),
-                  score:this.randomMinMax(0,20)
-                },
-                {
-                  name:'dexterity',
-                  modifier:this.randomMinMax(-5,5),
-                  score:this.randomMinMax(0,20)
-                },
-                {
-                  name:'constitution',
-                  modifier:this.randomMinMax(-5,5),
-                  score:this.randomMinMax(0,20)
-                },
-                {
-                  name:'intelligence',
-                  modifier:this.randomMinMax(-5,5),
-                  score:this.randomMinMax(0,20)
-                },
-                {
-                  name:'wisdom',
-                  modifier:this.randomMinMax(-5,5),
-                  score:this.randomMinMax(0,20)
-                },
-                {
-                  name:'charisma',
-                  modifier:this.randomMinMax(-5,5),
-                  score:this.randomMinMax(0,20)
-                },
-            ],
         character:useCharacter().character,
         inspiration:useCharacter().character.inspiration,
         characterStore:useCharacter(),
@@ -64,13 +33,9 @@
     },
 
     methods:{
-        randomMinMax(min: number, max: number) {
-            let random: number = min + Math.random() * (max + 1 - min);
-            return Math.floor(random);
-        },
       roll(e:any){
         let initiative:number = parseInt(e.target.value)
-        alert(`You rolled ${initiative + this.randomMinMax(1,20)}`)
+        alert(`You rolled ${initiative + this.characterStore.rollD20()}`)
         },
         closeManager(){
           this.characterStore.displayManager()
@@ -91,7 +56,17 @@
       manager(){
         let status = this.characterStore
         return status.managerCaller
+      },
+      maxHealth(){
+        return this.character.health.max
+      },
+      currentHealth(){
+        return this.character.health.current
+      },
+      tempHealth(){
+        return this.character.health.temp
       }
+
     },
 
     created(){
@@ -108,11 +83,16 @@
 </script>
 
 <template>
-  <div style="background-image: url(https://www.dndbeyond.com/avatars/61/484/636453131399186965.jpeg);margin-top:-32px">
+  <div class="character-header">
+    <CharacterHeader/>
+  </div>
+  <div style="background-image: url(https://www.dndbeyond.com/avatars/61/484/636453131399186965.jpeg);margin-top:0px;padding-top:1px">
 
     <div v-if="isManagerOpen && manager!==''" class="manager">
       <CharacterManager :caller="manager" />
     </div>
+
+
     <div class="container">
   
       <div class="statblock-container a">
@@ -146,7 +126,7 @@
             </div>
             <span style="position:absolute;bottom:0;padding-left:5px;padding-bottom:4px">INSPIRATION</span>
           </div>
-          <HealthBlock :max="character.health.max" :current="character.health.current" :temp="character.health.temp"/>
+          <HealthBlock :max="maxHealth" :current="currentHealth" :temp="tempHealth" />
         </div>
   
         <div class="initiative-armor e">
@@ -162,7 +142,7 @@
             </span>
             <!-- <span style="margin-top:auto;font-size:25px;font-weight:bold">{{ character.armor }}</span> -->
             <input @change="updateAc" @keyup="updateAc" class="armor-class-input" type="number" name="armor class" :value="character.armor" >
-            <span style=" margin-top: auto;margin-bottom: 5px;" class="titre">
+            <span style="padding:0;margin-bottom: 15px;" class="titre">
               Class
             </span>
           </div>
@@ -199,6 +179,10 @@
     align-items: start;
   }
 
+  .character-header{
+    height: 6rem;
+  }
+
   .statblock-container{
     display: flex;
     flex-direction: row;
@@ -228,14 +212,19 @@
     background-color: none;
     width: 18%;
     border-radius: 0.375rem;
+
+    background-image: url('@/assets/svg/inspiration-border.svg'); 
+    background-repeat: no-repeat;
+    object-fit: fill;
+    background-position: 14px 12px;
+    background-size: 82px;
   }
 
   .box{
     background-color: white ;
-    border-style: solid;
-    border-width: 1px 1px 1px 1px;
     border-radius: 0.75em;
-    border-color: red;
+    border: 1px solid red;
+    border-color: transparent;
     margin: auto;
     margin-top: 1.6rem;
     height: 39px;
@@ -266,25 +255,42 @@
     display: flex;
     flex-direction: column;
     text-align: center;
+    z-index: 10;
+
+    height: 100%;
+    background-image: url('@/assets/svg/initiative-border.svg'); 
+    background-repeat: no-repeat;
+    object-fit: fill;
+    background-position: 22px 23px;
+    background-size: 100px;
   }
 
   .armor-box{
-    background-color: white;
+    /* background-color: white; */
     text-align: center;
     width: 48%;
     display: flex;
     flex-direction: column;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     border-radius: 30%;
+
+    background-image: url('@/assets/svg/armor-border.svg'); 
+    background-repeat: no-repeat;
+    object-fit: fill;
+    background-position: 22px -0px;
+    background-size: 100px 95px;
   }
 
   .armor-class-input{
-    margin-top:auto;
-    font-size:25px;
+    /* margin-top:auto; */
+    font-size:23px;
     font-weight:bold;
     text-align: center;
     border:none;
     padding-left: 18px;
+    width: 45%;
+    margin-left: 2.5rem;
+    background-color: transparent;
   }
 
   .armor-class-input:hover::-webkit-inner-spin-button,
@@ -300,18 +306,20 @@
   .titre{
     text-transform: uppercase;
     color: gray;
+    padding-top: 8px;
+    font-size:14px
   }
 
   .initiative{
-    width: 50%;
-    margin-left: 25%;
+    width: 45%;
+    margin-left: 28%;
     margin-top: 1rem;
     font-size: 22px;
     padding: 5px 0px;
     border-radius: 0.500rem;
     background-color: white;
     border: 1px solid #bfccd6;
-    outline: 1px solid red;
+    /* outline: 1px solid red; */
     outline-offset: 8px;
     cursor: pointer;
   }

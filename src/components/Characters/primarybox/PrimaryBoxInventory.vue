@@ -21,11 +21,11 @@
         return {
             character: useCharacter().character,
             characterStore:useCharacter(),
-            copper: useCharacter().character.inventory.copper,
-            silver: useCharacter().character.inventory.silver,
-            electrum: useCharacter().character.inventory.electrum,
-            gold: useCharacter().character.inventory.gold,
-            platinum: useCharacter().character.inventory.platinum,
+            // copper: useCharacter().character.inventory.copper,
+            // silver: useCharacter().character.inventory.silver,
+            // electrum: useCharacter().character.inventory.electrum,
+            // gold: useCharacter().character.inventory.gold,
+            // platinum: useCharacter().character.inventory.platinum,
             tabs:['All','equipment'],
             tabSelected:'',
             displayEquipment:true,
@@ -40,7 +40,14 @@
       },
       
     },
-    computed: {},
+    computed: {
+      platinum(){return useCharacter().character.inventory.platinum },
+      gold(){return useCharacter().character.inventory.gold},
+      electrum(){return useCharacter().character.inventory.electrum},
+      silver(){return useCharacter().character.inventory.silver},
+      copper(){return useCharacter().character.inventory.copper}
+
+    },
     created() {
       if(this.character.inventory.hasAlmsBox)this.tabs.push('alms box')
       if(this.character.inventory.hasBackpack)this.tabs.push('backpack')
@@ -96,7 +103,7 @@
               :location="'equipment'"
             />
           </div>
-          <div style="display:flex;justify-content:space-between;margin-top:1.2rem">
+          <div class="footer">
             <span style="cursor:pointer">+ Add Equipment</span>
             <span v-if="displayEquipment" @click="displayEquipment = !displayEquipment" style="cursor:pointer">Hide Content</span>
             <span v-else @click="displayEquipment = !displayEquipment" style="cursor:pointer">Show Content</span>
@@ -120,7 +127,7 @@
               :location="'almsBox'"
             />
           </div>
-          <div style="display:flex;justify-content:space-between;margin-top:1.2rem">
+          <div class="footer">
             <span style="cursor:pointer">+ Add Equipment</span>
             <span v-if="displayAlmsBox" @click="displayAlmsBox = !displayAlmsBox" style="cursor:pointer">Hide Content</span>
             <span v-else @click="displayAlmsBox = !displayAlmsBox" style="cursor:pointer">Show Content</span>
@@ -144,7 +151,7 @@
               :location="'backpack'"
             />
           </div>
-          <div style="display:flex;justify-content:space-between;margin-top:1.2rem">
+          <div class="footer">
             <span style="cursor:pointer">+ Add Equipment</span>
             <span v-if="displayBackpack" @click="displayBackpack = !displayBackpack" style="cursor:pointer">Hide Content</span>
             <span v-else @click="displayBackpack = !displayBackpack" style="cursor:pointer">Show Content</span>
@@ -203,6 +210,13 @@
     width: 40%;
     display: flex;
     justify-content: space-between;
+  }
+
+  .footer{
+    display:flex;
+    justify-content:space-between;
+    margin-top:1.2rem;
+    padding-right: 0.5rem;
   }
   
 </style>

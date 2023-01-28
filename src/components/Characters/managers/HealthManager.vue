@@ -16,7 +16,7 @@
   export default {
     emits:['valueChange','adjustCoin'],
     props:{
-
+      base:String
     },
 
     data(){
@@ -24,27 +24,43 @@
         characterStore:useCharacter(),
         character:useCharacter().character,
         healValue:0,
-        damageValue:0
+        damageValue:0,
+        self:this
       }
     },
 
     methods:{
       test(event:any){
         if(event.target == this.$refs.healInput) this.damageValue = 0
-        else if( event.target == this.$refs.damageInput) this.healValue = 0
-        console.log(this.$refs.healInput.value,this.$refs.damageInput.value);
+        else if( event.target == this.$refs.damageInput)this.damageValue = 0
+        console.log((this.$refs['healInput'] as any).value,(this.$refs['damageInput'] as any).value);
         // console.log(event.target.value,this.healValue);
+      },
+      overrideMaxHp(event:any){
+        console.log(event.target.value);
+        // this.characterStore.updateMaxHP(parseInt(event.target.value));
+      },
+      apply(){
+        let current:number = parseInt((this['newHp'] as any));
+        let max:number = parseInt((this.$refs['maxValue'] as any).value);
+        let temp:number = parseInt((this.$refs['tempValue']as any).value );
+        this.characterStore.updateCurrentHP(current);
+        this.characterStore.updateMaxHP(max);
+        this.characterStore.updateTempHP(temp);
+        this.damageValue = 0;
+        this.healValue = 0;
       }
     },
 
     computed:{
-      newHp(){
+      newHp() {
         console.log(this.healValue);
         let newHp = this.character.health.current+this.healValue-this.damageValue
         if(newHp > this.character.health.max) newHp = this.character.health.max
         if(newHp < 0) newHp = 0
         return  newHp
-      }
+      },
+
     },
 
     created(){
@@ -73,7 +89,7 @@
       </div>
       <div class="manager-header-element">
         <span class="title">TEMP HP</span>
-        <input class="manager-input-small" type="number" name="temp-hp" :value="character.health.temp">
+        <input ref="tempValue" class="manager-input-small" type="number" name="temp-hp" v-model="character.health.temp">
       </div>
     </div>
 
@@ -96,11 +112,26 @@
       </div>
 
       <div style="display: flex;flex-direction: column; justify-content: space-evenly;">
-        <button class="buttons plus"></button>
-        <button class="buttons minus"></button>
+        <button @click="damageValue = 0;healValue++" class="buttons plus"></button>
+        <button @click="healValue = 0;damageValue++" class="buttons minus"></button>
       </div>
 
     </div>
+
+    <div @click="apply" class="apply-button">
+      Apply
+    </div>
+    
+    <div style="border-bottom: 1px solid #D8D8D8;"></div>
+
+    <div class="modifier">
+      <div style="text-align:center;margin-top:1rem" class="title">OVERRIDE MAX HP</div>
+      <div class="box-inputs small">
+        <input ref="maxValue" class="box-inputs-outline" type="number"  
+        @change="overrideMaxHp" @keyup="overrideMaxHp" min=0 v-model="character.health.max">
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -222,7 +253,38 @@
     font-size: 25px;
   }
 
+  .box-inputs-outline{
+    width: 100%;
+    text-align: center;
+    font-size: 25px;
+    border-radius: 0.375rem;
+  }
 
+  .modifiers{
+    margin: auto;
+  }
+
+  .box-inputs.small{
+    margin: auto;
+    width: 30%;
+  }
+
+  .apply-button{
+    width:30%;
+    margin:8px auto;
+    background-color: white;
+    text-align: center;
+    text-transform: uppercase;
+    border: 1px solid #C8C8C8;
+    padding: 12px 0;
+    border-radius: 0.375rem;   
+    cursor: pointer;
+    margin-bottom: 1rem;
+  }
+
+  .apply-button:hover{
+    background-color: #ced9e0;
+  }
 
 
 

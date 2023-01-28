@@ -18,7 +18,16 @@
   export default {
     data() {
       return {
-        links:[{name:'Home',url:'/home'},{name:'About',url:'/about'},{name:'Cards',url:'/'}, {name:'card creator',url:'/create-card'},{name:'Characters',url:'/characters'}],
+        links:[
+          {name:'Home',url:'/home'},
+          {name:'About',url:'/about'},
+          {name:'Cards',url:'/'}, 
+          {name:'card creator',url:'/create-card'},
+          {name:'Characters',url:'/characters'},
+          {name:'Login',url:'/login'},
+          {name:'Registration',url:'/registration'},
+          {name:'Logout',url:'/logout'},
+        ],
         content:{
           ecology:"",
           strength:"",
@@ -107,105 +116,4 @@
     transform: translateX(0);
     opacity: 1;
   }
-
-  /* .card-container{
-    display: grid;
-    grid-template-columns: auto auto auto;
-  }
-  
-  .note-open-card{
-    margin-right: 20rem;
-
-    animation-name:note-open;
-    animation-duration:0.5s;
-    animation-timing-function: ease-in-out;
-  }
-
-  .note-close-card{
-    animation-name:note-close;
-    animation-duration:0.5s;
-    animation-timing-function: ease-in-out;
-  }
-
-  @keyframes note-open {
-    0%   {
-      margin-right: 0;
-    }
-    100% {
-      margin-right: 20rem;
-    }
-  }
-
-  @keyframes note-close {
-    0%   {
-      margin-right: 20rem;
-    }
-    100% {
-      margin-right: 0;
-    }
-  } 
-  */
-
-
-  /* header {
-    line-height: 1.5;
-    max-height: 100vh;
-  }
-
-  .logo {
-    display: block;
-    margin: 0 auto 2rem;
-  }
-
-  nav {
-    width: 100%;
-    font-size: 12px;
-    text-align: center;
-    margin-top: 2rem;
-  }
-
-  nav a.router-link-exact-active {
-    color: var(--color-text);
-  }
-
-  nav a.router-link-exact-active:hover {
-    background-color: transparent;
-  }
-
-  nav a {
-    display: inline-block;
-    padding: 0 1rem;
-    border-left: 1px solid var(--color-border);
-  }
-
-  nav a:first-of-type {
-    border: 0;
-  }
-
-  @media (min-width: 1024px) {
-    header {
-      display: flex;
-      place-items: center;
-      padding-right: calc(var(--section-gap) / 2);
-    }
-
-    .logo {
-      margin: 0 2rem 0 0;
-    }
-
-    header .wrapper {
-      display: flex;
-      place-items: flex-start;
-      flex-wrap: wrap;
-    }
-
-    nav {
-      text-align: left;
-      margin-left: -1rem;
-      font-size: 1rem;
-
-      padding: 1rem 0;
-      margin-top: 1rem;
-    }
-  } */
 </style>

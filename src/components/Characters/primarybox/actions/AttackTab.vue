@@ -32,9 +32,9 @@
     },
 
     mounted(){
-      this.attacks.forEach(elem =>  {
-        if(!elem.bonus)this.regular.push(elem)
-        else if(elem.bonus)this.bonus.push(elem)
+      this.attacks.forEach((elem: { bonus: any; }) =>  {
+        if(!elem.bonus)this.regular.push(elem as never)
+        else if(elem.bonus)this.bonus.push(elem as never)
       })
     }
 
@@ -51,15 +51,15 @@
 
     <Attack 
       v-for="(attack,i) in regular"
-      :icon="attack.icon"
-      :name="attack.name"
-      :attack_type="attack.attack_type"
-      :range="attack.range"
-      :range_type="attack.range_type"
-      :hit_dc="attack.hit_dc+''"
-      :damage="attack.damage"
-      :damage_icon="attack.damage_icon"
-      :notes="attack.notes"
+      :icon="attack['icon']"
+      :name="attack['name']"
+      :attack_type="attack['attack_type']"
+      :range="attack['range']"
+      :range_type="attack['range_type']"
+      :hit_dc="attack['hit_dc']+''"
+      :damage="attack['damage']"
+      :damage_icon="attack['damage_icon']"
+      :notes="attack['notes']"
     />
 
     <div v-if="focused" >
@@ -69,15 +69,15 @@
 
       <Attack 
       v-for="(attack,i) in bonus"
-      :icon="attack.icon"
-      :name="attack.name"
-      :attack_type="attack.attack_type"
-      :range="attack.range"
-      :range_type="attack.range_type"
-      :hit_dc="attack.hit_dc+''"
-      :damage="attack.damage"
-      :damage_icon="attack.damage_icon"
-      :notes="attack.notes"
+      :icon="attack['icon']"
+      :name="attack['name']"
+      :attack_type="attack['attack_type']"
+      :range="attack['range']"
+      :range_type="attack['range_type']"
+      :hit_dc="attack['hit_dc']+''"
+      :damage="attack['damage']"
+      :damage_icon="attack['damage_icon']"
+      :notes="attack['notes']"
     />
       
     </div>

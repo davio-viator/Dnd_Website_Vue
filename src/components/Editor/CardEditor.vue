@@ -99,7 +99,7 @@
 
     
       <label>Upload your own image</label>
-      <label @change="uploadImage"  for="file" class="upload-style">
+      <label @change="uploadImage"  for="file">
         <span class="button">Upload image</span>
         <span class="upload-text">{{fileName || "No file chosen"}}</span>
         <input type="file" accept=".png,;apng,.jpeg,.jpg,.webp,.gif" multiple=false class="file-upload" name="file" id="file">
@@ -132,11 +132,6 @@
   }
   .file-upload{
     display: none;
-  }
-  .upload-style{
-    /* display: flex; */
-    /* flex-direction: row !important; */
-    /* justify-content: center; */
   }
   .button {
     height: 2.5rem;

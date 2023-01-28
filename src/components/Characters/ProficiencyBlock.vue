@@ -37,52 +37,62 @@
 </script>
 
 <template>
-  <div class="wrapper">
-    <div class="content">
-      <div class="title">armor</div>
-      {{ character.proficiencyies.armors.join(', ')  }}
-    </div>
-    <hr>
+  <div class="border">
+    <div class="wrapper">
+      <div class="content">
+        <div class="title">armor</div>
+        {{ character.proficiencies.armors.join(', ')  }}
+      </div>
+      <hr>
 
-    <div class="content">
-      <div class="title">weapons</div>
-      {{ character.proficiencyies.weapons.join(', ')  }}
-    </div>
-    <hr>
-    
-    <div class="content">
-      <div class="title">tool</div>
-      {{ character.proficiencyies.tools.join(', ').length > 0 ? character.proficiencyies.tools.join(',') : 'None'}}
-    </div>
-    <hr>
+      <div class="content">
+        <div class="title">weapons</div>
+        {{ character.proficiencies.weapons.join(', ')  }}
+      </div>
+      <hr>
+      
+      <div class="content">
+        <div class="title">tool</div>
+        {{ character.proficiencies.tools.join(', ').length > 0 ? character.proficiencies.tools.join(',') : 'None'}}
+      </div>
+      <hr>
 
-    <div class="content">
-      <div class="title">languages</div>
-      {{ character.proficiencyies.languages.join(', ')  }}
+      <div class="content">
+        <div class="title">languages</div>
+        {{ character.proficiencies.languages.join(', ')  }}
+      </div>
     </div>
-</div>
+  </div>
 </template>
 
 <style scoped>
-  .wrapper{
-    background-color: white;
+
+  .border{
+    background-image: url('@/assets/svg/proficiencies-border.svg');
+    background-repeat: no-repeat;
+    object-fit: fill;
+    background-position: -0px 0px;
+    background-size: 300px 400px;
+  }
+
+  .wrapper{    
+    padding: 0 20px;
     margin-top: 15px;
     height: 25rem;
 
     min-width: 100%;
     border-radius: 0.375rem;
-
-    border: 1px solid red;
   }
 
   .content{
-    padding: 8px 12px;
-    height: 4.5rem;
+    padding: 15px 0px;
+    height: 5.5rem;
 
     text-transform: capitalize;
   }
 
   .title{
     text-transform: uppercase;
+    color: #585858;
   }
 </style>

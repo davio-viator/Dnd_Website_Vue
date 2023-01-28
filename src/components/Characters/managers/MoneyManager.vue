@@ -9,6 +9,8 @@
 
   import NavBar from '@/components/navbar/NavBar.vue';
   import { useCharacter } from '@/stores/CharacterService'
+
+  import {getRef, setRef} from '@/services/Utils'
 </script>
 
 <script type="module" lang="ts">
@@ -70,7 +72,8 @@
             nameComp:'copper',
             acronyme:'cp'
           },
-        ]
+        ],
+        self:this
       }
     },
 
@@ -78,28 +81,28 @@
       adjustCoins(e:any){
         let adjustArray:Array<any> = [
           {
-            name:this.$refs.pp[0].name,
-            value:this.$refs.pp[0].value,
+            name:getRef('pp','name',this.$refs),
+            value:getRef('pp','value',this.$refs),
             adding:e.target.name == 'add'
           },
           {
-            name:this.$refs.gp[0].name,
-            value:this.$refs.gp[0].value,
+            name:getRef('gp','name',this.$refs),
+            value:getRef('gp','value',this.$refs),
             adding:e.target.name == 'add'
           },
           {
-            name:this.$refs.ep[0].name,
-            value:this.$refs.ep[0].value,
+            name:getRef('ep','name',this.$refs),
+            value:getRef('ep','value',this.$refs),
             adding:e.target.name == 'add'
           },
           {
-            name:this.$refs.sp[0].name,
-            value:this.$refs.sp[0].value,
+            name:getRef('sp','name',this.$refs),
+            value:getRef('sp','value',this.$refs),
             adding:e.target.name == 'add'
           },
           {
-            name:this.$refs.cp[0].name,
-            value:this.$refs.cp[0].value,
+            name:getRef('cp','name',this.$refs),
+            value:getRef('cp','value',this.$refs),
             adding:e.target.name == 'add'
           },
           
@@ -109,18 +112,19 @@
         this.clearInputs()
       },
       clearInputs(){
-        this.$refs.pp[0].value = null
-        this.$refs.gp[0].value = null
-        this.$refs.ep[0].value = null
-        this.$refs.sp[0].value = null
-        this.$refs.cp[0].value = null
+        setRef('pp','value',null,this.$refs);
+        setRef('gp','value',null,this.$refs);
+        setRef('ep','value',null,this.$refs);
+        setRef('sp','value',null,this.$refs);
+        setRef('cp','value',null,this.$refs);
       }
     },
 
     computed:{
       detailsComp(){
-        this.details.forEach(elem => {
-          elem.quantite = this[elem.name.split(' ')[0].toLowerCase()]
+        this.details.forEach((elem:any) => {
+          let name:string = elem.name.split(' ')[0].toLowerCase(); 
+          elem.quantite = (this as any)[name];
         })
 
         return this.details
@@ -169,7 +173,7 @@
             <input 
               class="coin-input" 
               type="number" 
-              @change="$emit('valueChange',{name:detail.nameComp,value:parseInt($event.target.value)})" 
+              @change="$emit('valueChange',{name:detail.nameComp,value:parseInt(($event['target'] as any).value)})" 
               :name="'quantite'+detail.name" 
               :value="detail.quantite" 
               min="0">

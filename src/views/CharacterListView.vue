@@ -67,7 +67,7 @@
                     class: cclass,
                     school: school
                 };
-                this.characters.push(character);
+                this.characters.push(character as never);
             }
         },
         randomMinMax(min: number, max: number) {
@@ -99,12 +99,12 @@
         <CharacterCardVue 
           v-for="(char,index) in characters"
           :key="index"
-          :firstname="char.firstname"  
-          :lastname="char.lastname"
-          :level="char.level"
-          :race="char.race"
-          :class="char.class"
-          :school="char.school"
+          :firstname="char['firstname']"  
+          :lastname="char['lastname']"
+          :level="char['level']"
+          :race="char['race']"
+          :class="char['class']"
+          :school="char['school']"
           :id="index"
           >
         </CharacterCardVue>

@@ -28,15 +28,15 @@
     created() {
     },
     mounted() {
-      this.attacks.forEach(element => {
+      this.attacks.forEach((element: { bonus: any; }) => {
         if (element.bonus){
-          this.bonus_actions.push(element)
+          this.bonus_actions.push(element as never)
           this.hasAttacks = true
         }
       });
-      this.actions.forEach(element => {
+      this.actions.forEach((element: { bonus: any; }) => {
         if (element.bonus) {
-          this.bonus_actions.push(element)
+          this.bonus_actions.push(element as never)
           this.hasActions = true
         }
       });
@@ -44,7 +44,7 @@
         this.spells[element].spells.forEach((elem: { bonus: boolean; name: string; }) => {
           if(elem.bonus){
             console.log(elem.name,element.split(' ')[0]);
-            this.spelltextArray.push(`${elem.name} (${element.split(' ')[0]})`)
+            this.spelltextArray.push((`${elem.name} (${element.split(' ')[0]})` as never))
           }
         })
       });

@@ -23,25 +23,25 @@
 
     methods:{
       heal(){
-        let value = this.$refs.health_input.value;
-        if(value=='') value = 0
-        this.currentHealth += parseInt(value);
-        if(this.currentHealth>this.maxHealth)this.currentHealth = this.maxHealth;
-        this.$refs.health_input.value = null;
+        let refValue = ((this.$refs['health_input'] as any).value as string) 
+        let value = refValue == '' ? 0 : Number.parseInt(refValue) ;
+        this.currentHealth += value;
+        if(this.currentHealth > this.maxHealth)this.currentHealth = this.maxHealth;
+        (this.$refs['health_input'] as any).value = null;
         this.characterStore.updateCurrentHP(this.currentHealth)
       },
 
       damage(){
-        let value = this.$refs.health_input.value;
-        if(value=='') value = 0
+        let refValue = ((this.$refs['health_input'] as any).valus as string)
+        let value = refValue == '' ? 0 : Number.parseInt(refValue) ;
 
-        if(this.tempHP <= 0){
-          this.currentHealth -= parseInt(value);
-          if(this.currentHealth<0)this.currentHealth = 0
-          this.$refs.health_input.value = null
+        if((this.tempHP as number)  <= 0){
+          this.currentHealth -= value;
+          if(this.currentHealth < 0)this.currentHealth = 0;
+          (this.$refs['health_input'] as any).value = null
         }
-        else if(this.tempHP > 0){
-          let newTemp = this.tempHP-parseInt(value)
+        else if((this.tempHP as number) > 0){
+          let newTemp = (this.tempHP as number) - value
           if(newTemp > 0) this.tempHP = newTemp
           else{
             this.tempHP = null;
@@ -49,9 +49,9 @@
             this.currentHealth = newHp
           }
         }
-        this.$refs.health_input.value = null;
+        (this.$refs['health_input'] as any).value = null;
         this.characterStore.updateCurrentHP(this.currentHealth)
-        this.characterStore.updateTempHP(this.tempHP)
+        this.characterStore.updateTempHP((this.tempHP as number))
       },
 
       healthChange(e:any){
@@ -60,7 +60,7 @@
         if(name == 'health')this.currentHealth = parseInt(value)
         if(name == 'temp') this.tempHP = parseInt(value)
         this.characterStore.updateCurrentHP(this.currentHealth)
-        this.characterStore.updateTempHP(this.tempHP)
+        this.characterStore.updateTempHP((this.tempHP as number))
 
       },
       openManager(event:any){
@@ -91,7 +91,7 @@
 </script>
 
 <template>
-  <div class="wrapper" @click="openManager">
+  <div class="wrapper outer-border" @click="openManager">
 
     <div class="inputs">
        <button @click="heal" class="input heal">heal</button>
@@ -103,19 +103,19 @@
 
       <div class="test">
         <span class="title">current</span>
-        <input class="health-input" type="number" @change="healthChange" name="health" min="0" :max="maxHealth" :value="currentHealth">
+        <input class="health-input" type="number" @change="healthChange" name="health" min="0" :max="max" :value="current">
       </div>
 
       <span class="title">/</span>
 
       <div class="test">
         <span class="title">max</span>
-        <input class="health-input" type="number" readonly :value="maxHealth">
+        <input class="health-input" type="number" readonly :value="max">
       </div>
 
       <div class="test">
         <span class="title">temp</span>
-        <input class="health-input" type="number" placeholder="--" @change="healthChange" name="temp" min="0" :value="tempHP">
+        <input class="health-input" type="number" placeholder="--" @change="healthChange" name="temp" min="0" :value="temp">
       </div>
 
     </div>
@@ -126,29 +126,39 @@
 </template>
 
 <style scoped>
+
+  .outer-border{
+    background-image: url('@/assets/svg/health-border.svg'); 
+    background-repeat: no-repeat;
+    object-fit: fill;
+    background-position: -8px -2px;
+    background-size: 512px 104px;
+  }
+
   .wrapper{
     padding-left: 8px;
-    background-color: aqua;
-    background-color: white;
+    /* background-color: aqua;
+    background-color: white; */
     height: 100%;
     width: 80%;
 
     border-radius: 0.375rem;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 
     text-align: center;
 
     display: flex;
+    justify-content: center ;
   }
 
   .inputs{
-    padding: 5px 0;
+    padding: 8px 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     text-transform: uppercase;
 
-    width: 33%;
+    width: 25%;
   }
 
   .input{
@@ -189,7 +199,7 @@
   }
 
   .health-container{
-    padding: 0px 8px;
+    padding: 5px 2px;
     width: 66%;
 
     display:flex;
@@ -219,6 +229,8 @@
     padding: 0;
     position: absolute;
     bottom:0;
-    left: calc(50% - 40px)
+    left: calc(50% - 40px);
+    padding-bottom: 5px;
   }
+
 </style>

@@ -19,19 +19,19 @@
 
     data(){
       return{
-        characterStore:useCharacter()
+        characterStore:useCharacter(),
       }
     },
 
     methods:{
       click(e:any){
-        this.characterStore.updateActiveEquipment(this.name,this.location)
+        this.characterStore.updateActiveEquipment((this as any)['name'],(this as any)['location'])
       },
     },
 
     computed:{
       isActive(){
-        let x = this.characterStore.getItemInventory(this.name,this.location) 
+        let x = this.characterStore.getItemInventory((this as any)['name'],(this as any)['location']) 
         console.log(this.name,this.location,x);
         return x.active
       }
@@ -53,16 +53,16 @@
 <template>
   <div class="wrap">
    <div class="test">
-    <span v-if="active>=0"> <div @click="click" class="checkbox" :class="{'used':isActive==1}"></div></span>
+    <span v-if="(active as number)>=0"> <div @click="click" class="checkbox" :class="{'used':isActive==1}"></div></span>
     <span class="empty" style="margin-left:8px;" v-else>--</span>
     <div style="display:flex;flex-direction:column">
       <span>{{ name }}</span>
       <span style="font-size:12px;color:#A8A8A8">{{ subname }}</span>
     </div>
-    <span>{{ weight }}</span>
-    <span v-if="quantity > 0">{{ quantity }}</span>
+    <span>{{ weight }} <span class="weight-text">lb</span></span>
+    <span v-if="(quantity as number) > 0">{{ quantity }}</span>
     <span class="empty" v-else>{{ '--' }}</span>
-    <span v-if="cost > 0">{{ cost }}</span>
+    <span v-if="(cost as number) > 0">{{ cost }}</span>
     <span class="empty" v-else>{{ '--' }}</span>
     <span>{{ notes }}</span>
    </div>
@@ -103,5 +103,10 @@
 
   .empty{
     font-weight: bold;
+  }
+
+  .weight-text{
+    font-size: 13px;
+    color: #888888;
   }
 </style>

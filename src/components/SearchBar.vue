@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { placeholder } from '@babel/types';
-
+import { getRef, setRef  } from '@/services/Utils';
 
 </script>
 
@@ -27,8 +27,13 @@ import type { placeholder } from '@babel/types';
     methods:{
       clearInput(){
         this.$emit('searchTerm','')
-        this.$refs.input.value = ''
+        setRef('input','value','',this.$refs)
+
         this.used = false
+      },
+      emitSearchTerm(event:any){
+        this.$emit('searchTerm',event.target.value);
+        this.used = event.target.value.length>0;
       }
     },
 
@@ -60,14 +65,14 @@ import type { placeholder } from '@babel/types';
       <div v-if="icon" :class="{'small':small}" class="search-icon"></div>
       <div v-if="used" @click="clearInput" class="clear">clear x</div>
       <div :class="{'small':small}" class="input-container">
-        <input ref="input" :class="{'small':small}" @keyup="this.$emit('searchTerm',$event.target.value);used=$event.target.value.length>0" class="searchbar" type="text" name="searchbar" id="searchbar" :placeholder="placeholderCalc">
+        <input ref="input" :class="{'small':small}" @keyup="emitSearchTerm" class="searchbar" type="text" name="searchbar" id="searchbar" :placeholder="placeholderCalc">
         <select 
           v-if="order" class="selector" 
           v-model="sortOrder" 
           @change="$emit('orderSort',sortOrder)" 
           name="test" 
           id="test">
-          <option  v-for="option in options" :value="option.value">{{option.text}}</option>
+          <option  v-for="option in options" :value="(option as any).value">{{(option as any).text}}</option>
         </select>
       </div>
     </div>

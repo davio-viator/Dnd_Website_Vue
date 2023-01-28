@@ -35,8 +35,18 @@ const router = createRouter({
     {
       path: '/character/:id',
       name: 'character-view',
-      component: () => import('../views/CharacterView.vue')
-    }
+      component: () => import('@/views/CharacterView.vue')
+    },
+    {
+      path: '/registration',
+      name: 'registration-view',
+      component: () => import('@/views/RegistrationView.vue')
+    },
+    {
+      path: '/login',
+      name: 'login-view',
+      component: () => import('@/views/LoginView.vue')
+    },
   ]
 })
 

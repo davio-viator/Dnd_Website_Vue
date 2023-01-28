@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import { getRef, setRef  } from '@/services/Utils';
+
+</script>
+
 <script lang="ts">
   export default {
   data() {
@@ -25,7 +30,7 @@
      
   },
   mounted(){
-    this.$refs.inputRef.focus()
+    (this.$refs as any).inputRef.focus()
   }
 }
 </script>
