@@ -23,14 +23,11 @@
         userStore:useUser(),
         loggedIn:false,
         links:[
-          {name:'Home',url:'/home'},
-          {name:'About',url:'/about'},
-          {name:'Cards',url:'/'}, 
-          {name:'card creator',url:'/create-card'},
-          {name:'Characters',url:'/characters'},
-          {name:'Login',url:'/login'},
-          {name:'Registration',url:'/registration'},
-          {name:'Logout',url:'/logout'},
+          {name:'Home',url:'/home',routeName:'home'},
+          {name:'About',url:'/about',routeName:'about'},
+          {name:'Cards',url:'/',routeName:'cards'}, 
+          {name:'card creator',url:'/create-card',routeName:'card creator'},
+          {name:'Characters',url:'/characters',routeName:'characters list'},
         ],
         content:{
           ecology:"",
@@ -63,6 +60,20 @@
         let title = useDisplayNote().title
         this.cardTitle = title;
         return this.cardTitle
+      },
+      linksArray(){
+        if(this.userStore.loggedIn){
+          this.links.push(
+            {name:'Logout',url:'/logout',routeName:'none'}
+          )
+        }
+        else {
+          this.links.push(
+            {name:'Login',url:'/login',routeName:'login-view'},
+            {name:'Registration',url:'/registration',routeName:'registration-view'},
+          )
+        }
+        return this.links
       }
     }
   }
@@ -76,7 +87,7 @@
         lastname="viator" 
         username="SpiritSonic" 
         iconSrc="https://cdn.discordapp.com/attachments/321941760911736833/1027320724806975589/Jack-O27_Childish_Jump.webp"
-        :urls=links>
+        :urls=linksArray>
       </TheHeaderVue>
       <RouterView/>
       <div ref="note" :class="{'note-container note-open-note':noteIsOpen,'note-container note-close-note':!noteIsOpen}">

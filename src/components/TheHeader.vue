@@ -1,4 +1,9 @@
-<script lang="ts">
+<script setup lang="ts">
+  import { useUser } from '@/stores/UserStore';
+  import { storeToRefs } from 'pinia'
+</script>
+
+<script type="module" lang="ts">
 
   export default {
     
@@ -12,12 +17,14 @@
     
     data(){
       return{
-
+        userStore:useUser()
       }
     },
 
-    methods:{
-
+    methods: {
+      changeUrl(link:any){
+        this.$router.push({name:link.routeName})
+      }
     },
 
     computed:{
@@ -29,19 +36,18 @@
 
 
   }
-
 </script>
 
 <template>
   <div class="container">
     <div class="user-info left">
-      <span class="user-info-text firstname">{{firstname}} </span>
-      <span class="user-info-text lastname"> {{lastname}}</span>
+      <span class="user-info-text firstname">{{userStore.user?.firstname || firstname}} </span>
+      <span class="user-info-text lastname"> {{userStore.user?.lastname || lastname}}</span>
     </div>
     <div class="user-info right">
-      <a class="user-info-text links" :href=link?.url v-for="link in urls">{{link?.name}}</a>
-      <span class="user-info-text username">{{username}}</span>
-      <img class="user-icon" :src=iconSrc alt="user icon">
+      <button class="user-info-text links" @click="changeUrl(link)" :href=link?.url v-for="link in urls">{{link?.name}}</button>
+      <span class="user-info-text username">{{userStore.user?.username || username}}</span>
+      <img class="user-icon" :src=" userStore.user?.iconSrc || iconSrc" alt="user icon">
     </div>
   </div>
 </template>
@@ -84,6 +90,9 @@
     margin-left: 1rem;
   }
   .links{
+    all: unset;
+    cursor: pointer;
+    color: white;
     font-style: italic;
     text-decoration: none;
     text-transform: capitalize;

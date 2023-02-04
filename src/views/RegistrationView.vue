@@ -24,6 +24,8 @@
         password:'',
         verif_password:'',
         status:'',
+        firstname:'',
+        lastname:'',
         errorMessage:"Couldn't create the user",
         error:false,
         userStore:useUser()
@@ -48,8 +50,9 @@
         const validity = event.target.form.checkValidity() 
         if(validity){
           event.preventDefault();
-          console.log(this);
           let data:any = {
+            firstname:this.firstname,
+            lastname:this.lastname,
             username:this.username,
             email:this.email,
             password:this.password,
@@ -62,8 +65,8 @@
               console.log(res);
               this.userStore.setLogin(true)
               localStorage.setItem("jwt_token",res.data.token)
-              location.href = '/'
-              
+              this.userStore.setUser(res.data.user)
+              this.$router.push({name:'cards'})           
             })
             .catch(err => {
               console.log(err);
@@ -103,6 +106,17 @@
           username
           <input class="element-input" type="text" required v-model="username" placeholder="Enter your username here" name="username" >
         </label>
+
+        <label class="element" for="fullname">
+          <div style="display: grid; grid-template-columns: auto auto;">
+            firstname / lastname
+            <div style="margin-left: 15.2rem;display: flex; flex-direction: row;justify-content: space-between;">
+              <input style="margin-left: 0;width: 48%;" class="element-input" type="text" v-model="firstname" placeholder="Kevin" name="fullname" >
+              <input style="margin-left: 0;width: 48%;" class="element-input" type="text" v-model="lastname" placeholder="Tigher" name="fullname" >
+            </div>
+          </div>
+        </label>
+
         <label class="element" for="email">
           email address
           <input class="element-input" type="email" required v-model="email" placeholder="kevin32@email?com" name="email" >

@@ -38,7 +38,8 @@
               console.log(res.data)
               localStorage.setItem('jwt_token',res.data.token);
               this.userStore.setLogin(true)
-              // window.location.href = '/'
+              this.userStore.setUser(res.data.user)
+              this.$router.push({name:'cards'})
             })
             .catch(err => {
               this.error = true

@@ -52,20 +52,22 @@ const router = createRouter({
 })
 
 router.beforeEach(async(to,from,next) => {
-  console.log("to: ",to.name)
-  const isLoggedIn = await useUser().isLoggedIn();
-  console.log(isLoggedIn)
-  // if(!isLoggedIn) return '/login'
-  if((!isLoggedIn && to.name !== 'login-view' && to.name !=='registration-view') ){
+  let isLoggedIn
+  try {
+    isLoggedIn = await useUser().isLoggedIn();
+    
+  } catch (error) {
+    isLoggedIn = false
+  }
+  const isGointoLogin = to.name === 'login-view'
+  const isGointoRegistration = to.name ==='registration-view'
+  if((!isLoggedIn && !isGointoLogin && !isGointoRegistration) ){
     console.log('login')
     next( {name: 'login-view'} )
   }
   else {
-  console.log('next')
     next()
   }
-  // const isLoggedIn = await useUser().isLoggedIn();
-  // if(!isLoggedIn) return '/login'
 })
 
 export default router
