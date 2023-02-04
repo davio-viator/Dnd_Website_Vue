@@ -3,6 +3,7 @@
   import cross from '@/assets/svg/cross.svg'
 
   import  { createUser } from '@/services/UserService'
+  import  {useUser} from '@/stores/UserStore'
 </script>
 
 <script type="module" lang="ts">
@@ -24,7 +25,8 @@
         verif_password:'',
         status:'',
         errorMessage:"Couldn't create the user",
-        error:false
+        error:false,
+        userStore:useUser()
       }
     },
 
@@ -58,13 +60,15 @@
           createUser(data)
             .then(res => {
               console.log(res);
-              if(res.status === 400){
-                this.error = true
-                this.errorMessage = res.message
-              }
+              this.userStore.setLogin(true)
+              localStorage.setItem("jwt_token",res.data.token)
+              location.href = '/'
+              
             })
             .catch(err => {
               console.log(err);
+              this.error = true;
+              this.errorMessage = err.response.data.message
             });
         }
       }
@@ -272,7 +276,7 @@
     left: calc(50% - 15vw);
     height: 12vh;
     width: 30vw;
-    background-color: red;
+    background-color: brown;
     color: white;
     border-radius: 1.5rem;
     text-align: center;

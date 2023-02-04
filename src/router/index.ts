@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { useUser } from '@/stores/UserStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,6 +49,23 @@ const router = createRouter({
       component: () => import('@/views/LoginView.vue')
     },
   ]
+})
+
+router.beforeEach(async(to,from,next) => {
+  console.log("to: ",to.name)
+  const isLoggedIn = await useUser().isLoggedIn();
+  console.log(isLoggedIn)
+  // if(!isLoggedIn) return '/login'
+  if((!isLoggedIn && to.name !== 'login-view' && to.name !=='registration-view') ){
+    console.log('login')
+    next( {name: 'login-view'} )
+  }
+  else {
+  console.log('next')
+    next()
+  }
+  // const isLoggedIn = await useUser().isLoggedIn();
+  // if(!isLoggedIn) return '/login'
 })
 
 export default router

@@ -3,6 +3,7 @@
   import cross from '@/assets/svg/cross.svg'
 
   import  { loginUser } from '@/services/UserService'
+  import { useUser } from '@/stores/UserStore';
 </script>
 
 <script type="module" lang="ts">
@@ -18,29 +19,30 @@
         email:'',
         password:'',
         errorMessage:"",
-        error:false
+        error:false,
+        userStore:useUser()
       }
     },
 
     methods:{
-      loginUser(event:any){
-        const validity = event.target.form.checkValidity() 
+      loginUserFn(event:any){
+        const validity = event.target.form.checkValidity() ;
         if(validity){
           event.preventDefault();
-          console.log(this);
           let data:any = {
             email:this.email,
             password:this.password
           }
           loginUser(data)
             .then(res => {
-              console.log(res);
-              if(res.status === 400){
-                this.error = true
-                this.errorMessage = res.message
-              }
+              console.log(res.data)
+              localStorage.setItem('jwt_token',res.data.token);
+              this.userStore.setLogin(true)
+              // window.location.href = '/'
             })
             .catch(err => {
+              this.error = true
+              this.errorMessage = err.response.data.message
               console.log(err);
             });
         }
@@ -54,7 +56,7 @@
     },
 
     created(){
-
+      
     },
 
     mounted(){
@@ -80,7 +82,7 @@
           password
           <input class="element-input" type="password" required v-model="password" placeholder="********" name="password" >
         </label>
-        <button type="submit" @click="loginUser" class="validation-button">Login</button>
+        <button type="submit" @click="loginUserFn" class="validation-button">Login</button>
       </form>
       </div>
     </div>

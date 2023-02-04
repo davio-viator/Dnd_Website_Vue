@@ -12,12 +12,16 @@
   import { useDisplayNote } from '@/stores/counter';
   import { useCharacter } from '@/stores/CharacterService';
 
+  import { useUser, useCounterStore } from '@/stores/UserStore'
+
 </script>
 
 <script type="module" lang="ts">
   export default {
     data() {
       return {
+        userStore:useUser(),
+        loggedIn:false,
         links:[
           {name:'Home',url:'/home'},
           {name:'About',url:'/about'},
@@ -48,7 +52,7 @@
 
     },
     mounted(){
-      
+     
     }
     ,computed:{
       noteIsOpen(){
