@@ -14,6 +14,7 @@
 
   import { useUser, useCounterStore } from '@/stores/UserStore'
 
+  import DefaultUser from '@/assets/images/default-avatar.png'
 </script>
 
 <script type="module" lang="ts">
@@ -23,8 +24,6 @@
         userStore:useUser(),
         loggedIn:false,
         links:[
-          {name:'Home',url:'/home',routeName:'home'},
-          {name:'About',url:'/about',routeName:'about'},
           {name:'Cards',url:'/',routeName:'cards'}, 
           {name:'card creator',url:'/create-card',routeName:'card creator'},
           {name:'Characters',url:'/characters',routeName:'characters list'},
@@ -63,11 +62,27 @@
       },
       linksArray(){
         if(this.userStore.loggedIn){
+          this.links.forEach((element,index) => {                     
+          })
+          for (let i = 0; i < this.links.length; i++) {
+            if(this.links[i].name === 'Login' || this.links[i].name === 'Registration'){
+              this.links.splice(i,1)
+              i--
+            }            
+          }
+
           this.links.push(
-            {name:'Logout',url:'/logout',routeName:'none'}
+            {name:'Logout',url:'/logout',routeName:'logout-view'}
           )
         }
         else {
+          for (let i = 0; i < this.links.length; i++) {
+            if(this.links[i].name === 'Logout'){
+              this.links.splice(i,1)
+              i--
+            }            
+          }
+
           this.links.push(
             {name:'Login',url:'/login',routeName:'login-view'},
             {name:'Registration',url:'/registration',routeName:'registration-view'},
@@ -83,10 +98,10 @@
 <template>  
     <div class="wrapper">     
       <TheHeaderVue 
-        firstname="davio" 
-        lastname="viator" 
-        username="SpiritSonic" 
-        iconSrc="https://cdn.discordapp.com/attachments/321941760911736833/1027320724806975589/Jack-O27_Childish_Jump.webp"
+        firstname="" 
+        lastname="" 
+        username="" 
+        :iconSrc="DefaultUser"
         :urls=linksArray>
       </TheHeaderVue>
       <RouterView/>

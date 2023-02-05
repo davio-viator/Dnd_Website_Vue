@@ -30,11 +30,22 @@
     computed:{
       localInfoUser(){
         return {
-          firstnameCom:localStorage.getItem('firstname'),
-          lastnameCom:localStorage.getItem('lastname'),
-          usernameCom:localStorage.getItem('username'),
-          iconCom:localStorage.getItem('icon'),
+          firstname:localStorage.getItem('firstname'),
+          lastname:localStorage.getItem('lastname'),
+          username:localStorage.getItem('username'),
+          icon:localStorage.getItem('icon'),
         }
+      },
+      storeInfoUser(){
+        return{
+          firstname:this.userStore.user?.firstname,
+          lastname:this.userStore.user?.lastname,
+          username:this.userStore.user?.username,
+          icon:this.userStore.user?.icon,
+        }
+      },
+      links(){
+        return this.urls
       }
     },
 
@@ -48,13 +59,13 @@
 <template>
   <div class="container">
     <div class="user-info left">
-      <span class="user-info-text firstname">{{userStore.user?.firstname || localInfoUser.firstnameCom || firstname}} </span>
-      <span class="user-info-text lastname"> {{userStore.user?.lastname || localInfoUser.lastnameCom || lastname}}</span>
+      <span class="user-info-text firstname">{{storeInfoUser.firstname || localInfoUser.firstname || firstname}} </span>
+      <span class="user-info-text lastname"> {{storeInfoUser.lastname || localInfoUser.lastname || lastname}}</span>
     </div>
     <div class="user-info right">
-      <button class="user-info-text links" @click="changeUrl(link)" :href=link?.url v-for="link in urls">{{link?.name}}</button>
-      <span class="user-info-text username">{{userStore.user?.username || localInfoUser.usernameCom || username}}</span>
-      <img class="user-icon" :src=" userStore.user?.icon || localInfoUser.iconCom || iconSrc" alt="user icon">
+      <button class="user-info-text links" @click="changeUrl(link)" :href=link?.url v-for="link in links">{{link?.name}}</button>
+      <span class="user-info-text username">{{storeInfoUser.username || localInfoUser.username || username}}</span>
+      <img class="user-icon" :src=" storeInfoUser.icon || localInfoUser.icon || iconSrc" alt="user icon">
     </div>
   </div>
 </template>

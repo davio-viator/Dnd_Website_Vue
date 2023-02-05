@@ -48,14 +48,19 @@ const router = createRouter({
       name: 'login-view',
       component: () => import('@/views/LoginView.vue')
     },
+    {
+      path: '/logout',
+      name: 'logout-view',
+      component: () => import('@/views/LogoutView.vue')
+    },
   ]
 })
 
 router.beforeEach(async(to,from,next) => {
   let isLoggedIn
   try {
-    isLoggedIn = await useUser().isLoggedIn();
-    
+    isLoggedIn = await useUser().isLoggedIn();   
+
   } catch (error) {
     isLoggedIn = false
   }
@@ -64,6 +69,10 @@ router.beforeEach(async(to,from,next) => {
   if((!isLoggedIn && !isGointoLogin && !isGointoRegistration) ){
     console.log('login')
     next( {name: 'login-view'} )
+  }
+  else if(isLoggedIn && (isGointoLogin || isGointoRegistration)){
+    console.log('already logged in')
+    next({name: 'cards'})
   }
   else {
     next()

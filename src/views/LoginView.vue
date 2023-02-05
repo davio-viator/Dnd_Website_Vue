@@ -49,7 +49,7 @@
             .catch(err => {
               this.error = true
               this.errorMessage = err.response.data.message
-              console.log(err);
+              console.error(err.response.data.message);
             });
         }
       }

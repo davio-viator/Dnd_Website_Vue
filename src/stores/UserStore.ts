@@ -25,10 +25,8 @@ export const useUser = defineStore('user', () => {
   function verifyLogin(){
     const token:string = localStorage.getItem("jwt_token") as string;
     if(!!token) {
-      console.log("yay")
       loggedIn.value = true
     }else{
-      console.log("non")
       loggedIn.value = false
     }
   }
@@ -42,7 +40,6 @@ export const useUser = defineStore('user', () => {
         }
       })
     }else{
-      console.log("first")
       return new Promise(reject => {
       reject(false)
       })
@@ -57,9 +54,18 @@ export const useUser = defineStore('user', () => {
     loggedIn.value = value
   }
 
+  function removeUser(){
+    user.value = ({
+      loggedIn:false,
+      username:'',
+      icon:''
+    } as User)
+    setLogin(false)
+  }
+
 
   return { 
-    loggedIn,user ,isLoggedIn,setLogin,setUser
+    loggedIn,user ,isLoggedIn,setLogin,setUser,removeUser
   }
 
 })
