@@ -39,8 +39,9 @@
               localStorage.setItem('jwt_token',res.data.token);
               localStorage.setItem('icon',res.data.user.icon);
               localStorage.setItem('username',res.data.user.username);
-              localStorage.setItem('firstname',res.data.user.firstname);
-              localStorage.setItem('lastname',res.data.user.lastname);
+              console.log(res.data.user)
+              if(res.data.user.firstname !== null)localStorage.setItem('firstname',res.data.user.firstname);
+              if(res.data.user.lastname !== null)localStorage.setItem('lastname',res.data.user.lastname);
               localStorage.setItem('user_id',res.data.user.id)
               this.userStore.setLogin(true)
               this.userStore.setUser(res.data.user)
@@ -82,7 +83,7 @@
       <form>
         <label class="element" for="email">
           email address
-          <input class="element-input" type="email" required v-model="email" placeholder="kevin32@email?com" name="email" >
+          <input class="element-input" type="email" required v-model="email" placeholder="kevin32@email.com" name="email" >
         </label>      
         <label class="element" for="password">
           password
