@@ -12,12 +12,6 @@ type Card = {
   url:string
 } 
 
-axios.interceptors.response.use(response =>{
-  return response;
-},
-error=>{
-  throw new Error
-})
 
 export function getAllCards(skip:number = 0, takes:number = 6) : Observable<AxiosResponse<Card[]>>{
   // return axiosO.get<Card[]>(`${url}/api/cards`).pipe(

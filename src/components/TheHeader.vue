@@ -28,7 +28,14 @@
     },
 
     computed:{
-
+      localInfoUser(){
+        return {
+          firstnameCom:localStorage.getItem('firstname'),
+          lastnameCom:localStorage.getItem('lastname'),
+          usernameCom:localStorage.getItem('username'),
+          iconCom:localStorage.getItem('icon'),
+        }
+      }
     },
 
     mounted(){
@@ -41,13 +48,13 @@
 <template>
   <div class="container">
     <div class="user-info left">
-      <span class="user-info-text firstname">{{userStore.user?.firstname || firstname}} </span>
-      <span class="user-info-text lastname"> {{userStore.user?.lastname || lastname}}</span>
+      <span class="user-info-text firstname">{{userStore.user?.firstname || localInfoUser.firstnameCom || firstname}} </span>
+      <span class="user-info-text lastname"> {{userStore.user?.lastname || localInfoUser.lastnameCom || lastname}}</span>
     </div>
     <div class="user-info right">
       <button class="user-info-text links" @click="changeUrl(link)" :href=link?.url v-for="link in urls">{{link?.name}}</button>
-      <span class="user-info-text username">{{userStore.user?.username || username}}</span>
-      <img class="user-icon" :src=" userStore.user?.iconSrc || iconSrc" alt="user icon">
+      <span class="user-info-text username">{{userStore.user?.username || localInfoUser.usernameCom || username}}</span>
+      <img class="user-icon" :src=" userStore.user?.icon || localInfoUser.iconCom || iconSrc" alt="user icon">
     </div>
   </div>
 </template>
@@ -78,10 +85,12 @@
     margin-top: auto;
   }
   .user-icon{
-    width: 56px;
-    padding: 0.5rem;
-    max-width: 100%;
-    height: auto;
+    aspect-ratio: 1/1;
+    height: 70px;
+    /* width: 56px; */
+    padding: 0.25rem;
+    /* max-width: 100%; */
+    border-radius: 50%;
   }
   .username{
     margin: auto;

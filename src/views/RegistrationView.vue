@@ -18,6 +18,7 @@
       return{
         fileName:'',
         imgSrc: '',
+        imgFile:'',
         linkUrl:'',
         username:'',
         email:'',
@@ -40,6 +41,7 @@
           let reader = new FileReader();
           reader.onload = (event:any)=>{
             this.imgSrc = event.target.result
+            this.imgFile = e.target.files[0]
             this.$emit('imgSrc',event.target.result)
             this.linkUrl = ''
           }
@@ -48,6 +50,7 @@
       },
       registerUser(event:any){
         const validity = event.target.form.checkValidity() 
+        console.log((this.imgFile || this.linkUrl || defaultAvatar))
         if(validity){
           event.preventDefault();
           let data:any = {
@@ -57,7 +60,7 @@
             email:this.email,
             password:this.password,
             verify_password:this.verif_password,
-            icon:(this.imgSrc || this.linkUrl || defaultAvatar),
+            icon:(this.imgFile || this.linkUrl || defaultAvatar),
             status:this.status
           }
           createUser(data)
@@ -66,6 +69,11 @@
               this.userStore.setLogin(true)
               localStorage.setItem("jwt_token",res.data.token)
               this.userStore.setUser(res.data.user)
+              localStorage.setItem('icon',res.data.user.icon);
+              localStorage.setItem('username',res.data.user.username);
+              localStorage.setItem('firstname',res.data.user.firstname);
+              localStorage.setItem('lastname',res.data.user.lastname);
+              localStorage.setItem('user_id',res.data.user.id)
               this.$router.push({name:'cards'})           
             })
             .catch(err => {
@@ -107,14 +115,12 @@
           <input class="element-input" type="text" required v-model="username" placeholder="Enter your username here" name="username" >
         </label>
 
-        <label class="element" for="fullname">
-          <div style="display: grid; grid-template-columns: auto auto;">
+        <label class="element"  style="display:flex; justify-content: space-between;">
             firstname / lastname
-            <div style="margin-left: 15.2rem;display: flex; flex-direction: row;justify-content: space-between;">
-              <input style="margin-left: 0;width: 48%;" class="element-input" type="text" v-model="firstname" placeholder="Kevin" name="fullname" >
-              <input style="margin-left: 0;width: 48%;" class="element-input" type="text" v-model="lastname" placeholder="Tigher" name="fullname" >
+            <div class="element-input">
+              <input style="margin-left: 0;width: 48%" class="element-input" type="text" v-model="firstname" placeholder="Kevin" name="firstname" >
+              <input style="margin-left: 0.85vw;width: 48%;" class="element-input" type="text" v-model="lastname" placeholder="Tigher" name="lastname" >
             </div>
-          </div>
         </label>
 
         <label class="element" for="email">
@@ -133,7 +139,7 @@
         </label>
         <div class="upload-container">
           <label @change="uploadImage"  for="file">
-            <img class="user-icon" :src="imgSrc || linkUrl || defaultAvatar" alt="">
+            <img class="user-icon" :src="imgSrc|| linkUrl || defaultAvatar" alt="">
             <span class="button">Upload image</span>
             <span class="upload-text">{{fileName || "No file chosen"}}</span>
             <input type="file" accept=".png,;apng,.jpeg,.jpg,.webp,.gif" multiple=false class="file-upload element-ingput" name="file" id="file">

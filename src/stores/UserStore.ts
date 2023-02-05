@@ -1,14 +1,13 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios';
-// import Axios from 'axios';
 
 const url: string = 'http://localhost:3080/api/v1'
 
 interface User {
   loggedIn:boolean,
   username:string,
-  iconSrc:string,
+  icon:string,
   firstname?:string,
   lastname?:string
 };
@@ -18,7 +17,7 @@ export const useUser = defineStore('user', () => {
   const user = ref({
     loggedIn:false,
     username:'',
-    iconSrc:''
+    icon:''
   } as User)
 
   verifyLogin()

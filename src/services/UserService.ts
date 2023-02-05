@@ -10,13 +10,16 @@ export async function getAllUsers() {
 }
 
 export async function createUser(data :any) :Promise<any>{
-  // const response = await fetch(`${url}/user`, {
-  //     method: 'POST',
-  //     headers: {'Content-Type': 'application/json'},
-  //     body: JSON.stringify(data)
-  //   })
-
-  return axios.post(`${url}/user`,data)
+  let formData = new FormData();
+  Object.keys(data).forEach(element => {
+    formData.append(element,data[element])
+  });
+  formData.append('imgFile',data.icon)
+  return axios.post(`${url}/user`,formData,{
+    "headers" : {
+      "content-type":"Content-Type: multipart/form-data"
+    }
+  })
     
   // return await response.json();
 }

@@ -30,3 +30,5 @@ coverage
 *.env
 *deploy.sh
 *vue.config.js
+
+**/public
