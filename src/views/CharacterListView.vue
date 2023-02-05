@@ -2,14 +2,27 @@
   import CharacterCardVue from '@/components/Characters/CharacterCard.vue';
   import SearchBar from '@/components/SearchBar.vue';
   import { faker } from '@faker-js/faker';
+  import { useUser } from '@/stores/UserStore';
 </script>
 
 <script type="module" lang="ts">
 
+interface Character {
+  id:number,
+  firstname: string,
+  lastname: string,
+  level: number,
+  race: string,
+  classes: string[],
+  classLevel?:number[] ,
+  school?: string[],
+  characterIcon?:string
+}
+
   export default {
     data() {
         return {
-            characters: [],
+            characters: ([] as Character[]),
             options:[
               {
                 value:"A",
@@ -45,7 +58,8 @@
                 text:"Modified: Oldest"
               },
 
-            ]
+            ],
+            userStore:useUser()
         };
     },
     methods: {
@@ -53,22 +67,33 @@
             let iteration: Number = parseInt(faker.random.numeric(2));
             iteration = 15;
             for (let i = 0; i < iteration; i++) {
-                let firstname: String = faker.name.firstName();
-                let lastname: String = faker.name.lastName();
-                let level: Number = this.randomMinMax(1, 20);
-                let race: String = faker.helpers.arrayElement(["Aarakocra ", "Dragonborn ", "Hill Dwarf ", "Mountain Dwarf ", "High Elf ", "Wood Elf ", "Eladrin Elf (Variant) ", "Air Genasi ", "Earth Genasi ", "Fire Genasi ", "Water Genasi ", "Rock Gnome ", "Deep Gnome", "Goliath", "Half-Elf", "Half-Orc", "Lightfoot Halfling", "Stout Halfling", "Human", "Variant Human", "Tiefling", "Vairiant Aasimar"]);
-                let cclass: String = "cleric";
-                let school: String = faker.helpers.arrayElement(["Death Domain", "nature Domain", "knowledge Domain", "light Domain", "war Domain", "trickery Domain", "life Domain", "forge Domain", "tempest Domain", "grave Domain", "arcana Domain", "peace Domain", "order Domain", "twilight Domain", ""]);
-                let character = {
+                let firstname: string = faker.name.firstName();
+                let lastname: string = faker.name.lastName();
+                let level: number = this.randomMinMax(1, 20);
+                let race: string = faker.helpers.arrayElement(["Aarakocra ", "Dragonborn ", "Hill Dwarf ", "Mountain Dwarf ", "High Elf ", "Wood Elf ", "Eladrin Elf (Variant) ", "Air Genasi ", "Earth Genasi ", "Fire Genasi ", "Water Genasi ", "Rock Gnome ", "Deep Gnome", "Goliath", "Half-Elf", "Half-Orc", "Lightfoot Halfling", "Stout Halfling", "Human", "Variant Human", "Tiefling", "Vairiant Aasimar"]);
+                let cclass: string[] = ["cleric"];
+                let school: string[] = [faker.helpers.arrayElement(["Death Domain", "nature Domain", "knowledge Domain", "light Domain", "war Domain", "trickery Domain", "life Domain", "forge Domain", "tempest Domain", "grave Domain", "arcana Domain", "peace Domain", "order Domain", "twilight Domain", ""])];
+                let character:Character = {
+                    id:i,
                     firstname: firstname,
                     lastname: lastname,
                     level: level,
                     race: race,
-                    class: cclass,
+                    classes: cclass,
                     school: school
                 };
-                this.characters.push(character as never);
+                this.characters.push(character);
             }
+        },
+        async initCharactersDb(){
+          const response = await this.userStore.getCharacters()
+          try {
+            const characters = response.data.characters
+            console.log(characters)
+            this.characters = characters
+          } catch (error) {
+            
+          }
         },
         randomMinMax(min: number, max: number) {
             let random: number = min + Math.random() * (max + 1 - min);
@@ -77,7 +102,8 @@
     },
     computed: {},
     created() {
-        this.initCharacters();
+        // this.initCharacters();
+        this.initCharactersDb();
     },
     mounted() {
     }
@@ -103,9 +129,11 @@
           :lastname="char['lastname']"
           :level="char['level']"
           :race="char['race']"
-          :class="char['class']"
-          :school="char['school']"
-          :id="index"
+          :classes="char['classes']"
+          :school="char['school'] "
+          :id="char['id']"
+          :classLevel="char['classLevel']"
+          :characterIcon="char['characterIcon']"
           >
         </CharacterCardVue>
       </div>

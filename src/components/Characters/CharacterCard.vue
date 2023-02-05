@@ -23,21 +23,28 @@
         type:String,
         default:"Human"
       },
-      class:{
-        type:String,
-        default:"fighter"
+      classes:{
+        type:Array<String>,
+        default:["fighter"]
       },
       school:{
-        type:String,
-        default:""
+        type:Array<String>,
+        default:[""]
       },
-      id:Number
+      id:Number,
+      classLevel:{
+        type:Array<Number>,
+        default:[0]
+      },
+      characterIcon:String
     },
 
     data(){
       return{
         iconUrl:"https://www.dndbeyond.com/avatars/9221/748/637202353208535995.jpeg?width=60&height=60&fit=bounds&quality=95&auto=webp",
-        backgroundUrl:"https://www.dndbeyond.com/avatars/61/487/636453131400749482.jpeg",
+        // backgroundUrl:"https://www.dndbeyond.com/avatars/61/487/636453131400749482.jpeg",
+        // backgroundUrl:"https://i.pinimg.com/originals/9a/82/8d/9a828d0fc00a2540d35339e3aba5bfcc.jpg"
+        backgroundUrl:"https://kartinkin.net/uploads/posts/2021-03/1616981624_15-p-taverna-oboi-16.jpg"
       }
     },
 
@@ -50,9 +57,19 @@
     },
 
     computed:{
+      classesC(){
+        let res = ''
+        this.classes.forEach((elem,i)=> {
+          const school = this.school[i] !== undefined ? "("+this.school[i]+")" : ""
+          if(i+1 < this.classes.length) res += `${elem}: ${this.classLevel[i]} ${school} , `
+          else res += `${elem}: ${this.classLevel[i]} ${school}`
+        })
+        return res
+      }
     },
 
     mounted(){
+      console.log(this.classLevel,this.school)
     }
 
 
@@ -64,7 +81,7 @@
   <div class="wrapper">
     <div class="header">
       <img class="header-img" :src="backgroundUrl" alt="header background image">
-      <img class="character-icon" :src="iconUrl" alt="character's icon">
+      <img class="character-icon" :src="characterIcon" alt="character's icon">
     </div>
     <div class="content">
       <div>
@@ -76,8 +93,9 @@
         <span class="info">|</span>
         <span class="info">{{race}}</span>
         <span class="info">|</span>
-        <span class="info">{{class}}</span>
-        <span class="info" v-if="school">/{{school}}</span>
+        <span v-if="classes.length > 1" class="info"> {{ classesC }} </span>
+        <span v-else class="info">{{classes[0]}}</span>
+        <span  v-for="sc in school" class="school-info" v-if="school.length>0 && classes.length < 1">/{{sc}}</span>
       </div>
     </div>
     <div class="footer">
@@ -140,12 +158,21 @@
     padding-left: 1.2rem;
     display: flex;
     justify-content: baseline;
+    min-height: 1rem;
+    max-height: 3rem;
   }
 
   .info{
     text-transform: capitalize;
     padding-right: 3px;
     font-size: 16px;
+  }
+
+  .school-info{
+    text-transform: capitalize;
+    padding-right: 3px;
+    font-size: 16px;
+    line-height: 1.5;
   }
 
   .footer{

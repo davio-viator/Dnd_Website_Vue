@@ -63,9 +63,19 @@ export const useUser = defineStore('user', () => {
     setLogin(false)
   }
 
+  async function getCharacters(){
+    const id = localStorage.getItem('user_id');
+    const token = localStorage.getItem('jwt_token')
+    return await axios.get(`${url}/characters?id=${id}`,{
+      headers:{
+        'Authorization':'Bearer '+token
+      }
+    });
+  }
+
 
   return { 
-    loggedIn,user ,isLoggedIn,setLogin,setUser,removeUser
+    loggedIn,user ,isLoggedIn,setLogin,setUser,removeUser,getCharacters
   }
 
 })
