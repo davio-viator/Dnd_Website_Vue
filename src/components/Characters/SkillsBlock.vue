@@ -58,7 +58,8 @@
         <div v-for="(elem,i) in character.skills" class="content">
           <input class="skill-radio" @click="updateSkillProficiency(elem)" disabled type="checkbox" :checked="elem.proficient">
           <span style="text-transform:uppercase">{{ elem.modifier }}</span>
-          <span style="border-bottom:1px solid #d8d8d8">{{ elem.skill }}</span>
+          <!-- <span style="border-bottom:1px solid #d8d8d8">{{ elem.skill }}</span> -->
+          <span style="border-bottom:1px solid #d8d8d8">{{ elem.name }}</span>
   
           <span v-if="elem.proficient" class="bonus clickable" :data-name="elem.skill" @click="rollSkill">{{ elem.bonus+character.proficiency >= 0 ? '+'+(elem.bonus+character.proficiency) : (elem.bonus+character.proficiency) }}</span>
           <span v-else class="bonus clickable" :data-name="elem.skill" @click="rollSkill">{{ elem.bonus >= 0 ? '+'+elem.bonus : elem.bonus }}</span>

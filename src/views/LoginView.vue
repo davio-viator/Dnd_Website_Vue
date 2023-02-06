@@ -103,7 +103,7 @@
 
 <style scoped>
   .container{
-    width: 60vw;
+    width: 40vw;
     margin: auto;
     margin-top: 8rem;
   }

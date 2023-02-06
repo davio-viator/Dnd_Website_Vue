@@ -34,6 +34,16 @@
         let src:string = 'https://www.dndbeyond.com/avatars/9221/748/637202353208535995.jpeg?width=150&height=150&fit=crop&quality=95&auto=webp'
         if(this.character.portraitSrc!== '') src = this.character.portraitSrc 
         return src
+      },
+      classLevels(){
+        let res = ''
+        this.character.class.forEach((elem: any,i: number)=> {
+          // const school = this.school[i] !== undefined ? "("+this.school[i]+")" : ""
+          if(i+1 < this.character.class.length) res += `${elem} ${this.character.classLevel[i]} , `
+          else res += `${elem} ${this.character.classLevel[i]} `
+        })
+        return res
+        // return ""
       }
     },
 
@@ -55,7 +65,7 @@
       <div :style="'background-image: url('+characterPortrait+')'" class="player-icon"></div>
       <div class="text">
         <span class="title">{{ character.firstname }} {{ character.lastname }}</span>
-        <p style="text-transform: capitalize;">{{ character.sex }}  {{ character.race }}  {{ character.class }}  {{ character.level }} </p>
+        <p style="text-transform: capitalize;">{{ character.sex }}  {{ character.race }}  {{ classLevels }}  <!-- {{ character.level }} --> </p>
         <label class="progress-bar-text" for="level"> level {{ character.level }}
           <progress class="progress-bar" id="level" :value="currentXp" :max="character.xpToNextLevel-character.totalXp"></progress>
           level {{ character.level+1 }}
