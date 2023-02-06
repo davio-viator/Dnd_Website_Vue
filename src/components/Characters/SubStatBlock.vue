@@ -27,7 +27,11 @@
     },
 
     computed:{
-
+      contentC(){
+        if(this.content.includes('ft')) return this.content;
+        const value = parseInt(this.content);
+        return value >= 0 ? '+'+value:value
+      }
     },
 
     created(){
@@ -46,7 +50,7 @@
 <template>
   <div class="wrapper outer-border">
     <div class="title" :class="{'speed':speed}"><h3>{{title}}</h3></div>
-    <div class="bonus"><h2>{{parsedContent}}</h2></div>
+    <div class="bonus"><h2>{{contentC}}</h2></div>
     <div class="footer"><h3>{{footer}}</h3></div>
   </div>
 </template>

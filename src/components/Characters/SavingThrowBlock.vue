@@ -92,8 +92,8 @@
     <div class="wrapper">
       <div class="border" v-for="item in character.savingthrows">
         <span class="proficient-icon" :class="{'proficient':item.proficient}"></span>
-        <span class="bold">{{ item.name }} </span>
-        <span @click="rollSavingThrow($event,item)" class="mod clickable">{{ self[item.name] }}</span>
+        <span class="bold">{{ item.name.substring(0,3) }} </span>
+        <span @click="rollSavingThrow($event,item)" class="mod clickable">{{ self[item.name.substring(0,3)] }}</span>
       </div>
     </div>
   </div>

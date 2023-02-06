@@ -54,7 +54,7 @@
     <div class="content">
       <div :style="'background-image: url('+characterPortrait+')'" class="player-icon"></div>
       <div class="text">
-        <span class="title">{{ character.name }}</span>
+        <span class="title">{{ character.firstname }} {{ character.lastname }}</span>
         <p style="text-transform: capitalize;">{{ character.sex }}  {{ character.race }}  {{ character.class }}  {{ character.level }} </p>
         <label class="progress-bar-text" for="level"> level {{ character.level }}
           <progress class="progress-bar" id="level" :value="currentXp" :max="character.xpToNextLevel-character.totalXp"></progress>

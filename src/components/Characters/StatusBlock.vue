@@ -2,19 +2,15 @@
 
 </script>
 
+
+
 <script type="module" lang="ts">
 
   export default {
     
     props:{
-      defences:{
-        type:Array,
-        default:[]
-      },
-      conditions:{
-        type:Array,
-        default:[]
-      }
+      defences:Array<String>,
+      conditions:Array<String>
     },
 
     data(){
@@ -29,10 +25,10 @@
 
     computed:{
       defencesList(){
-        return this.defences.length>0? this.defences?.join(', '):'Add Active Defences'
+        return (this.defences as string[]).length>0? this.defences?.join(', '):'Add Active Defences'
       },
       conditionList(){
-        return this.conditions.length>0? this.conditions?.join(', '):'Add Active Conditions'
+        return (this.conditions as string[]).length>0? this.conditions?.join(', '):'Add Active Conditions'
       }
     },
 
@@ -41,7 +37,6 @@
     },
 
     mounted(){
-
     }
 
 

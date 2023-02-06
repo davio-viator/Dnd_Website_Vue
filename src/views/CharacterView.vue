@@ -13,22 +13,31 @@
   import { useCharacter } from '@/stores/CharacterService';
   import { useDisplayNote } from '@/stores/counter';
   import CharacterManager from '@/components/Characters/managers/CharacterManager.vue';
+  import { storeToRefs } from 'pinia';
+  import loadingAnime from '../assets/loadingdndbeyond.svg'
+
 </script>
 
 <script type="module" lang="ts">
 
   export default {
     
+
     props:{
       
     },
 
     data(){
+      const store = useCharacter()
+      const {character} = storeToRefs(store)
+      const { getCharacter } = store
       return{
         id:this.$route.params.id,
-        character:useCharacter().character,
-        inspiration:useCharacter().character.inspiration,
+        character,
+        inspiration:character.value.inspiration,
         characterStore:useCharacter(),
+        getCharacter,
+        pending:true
       }
     },
 
@@ -65,16 +74,27 @@
       },
       tempHealth(){
         return this.character.health.temp
+      },
+      defences(){
+        return this.character.defences
+      },
+      conditions(){
+        return this.character.conditions
+      },
+
+    },
+
+    async created(){
+
+    },
+
+    async mounted(){
+      await this.getCharacter(parseInt(this.$route.params.id as string))
+      try {
+        this.pending = false
+      } catch (error) {
+        
       }
-
-    },
-
-    created(){
-
-    },
-
-    mounted(){
-
     }
 
 
@@ -83,78 +103,89 @@
 </script>
 
 <template>
-  <div class="character-header">
-    <CharacterHeader/>
+  <div v-if="pending" class="loading">
+    <div>
+    <img class="loading-image" :src="loadingAnime" alt="loading animation">
+    <p >Loading ...</p>
   </div>
-  <div style="background-image: url(https://www.dndbeyond.com/avatars/61/484/636453131399186965.jpeg);margin-top:0px;padding-top:1px">
-
-    <div v-if="isManagerOpen && manager!==''" class="manager">
-      <CharacterManager :caller="manager" />
+  </div>
+  <div v-else>  
+    <div class="character-header">
+      <CharacterHeader/>
     </div>
+    <div style="background-image: url(https://www.dndbeyond.com/avatars/61/484/636453131399186965.jpeg);margin-top:0px;padding-top:1px">
+
+      <div v-if="isManagerOpen && manager!==''" class="manager">
+        <CharacterManager :caller="manager" />
+      </div>
 
 
-    <div class="container">
-  
-      <div class="statblock-container a">
-        <StatBlock 
-          v-for="i in character.stats"
-          :name="i.name"
-          :modifier="i.bonus"
-          :score="i.score"
-        />
-      </div>
-  
-      <div class="passives b">
-        <SavingThrows/>
-        <Sense/>
-        <Proficiency/>
-      </div>
-  
-      <div class="skill c">
-        <Skill/>
-      </div>
-  
-        <div class="substats d">
-          <SubStat title="proficiency" :content="character.proficiency+''" footer="bonus"/>
-          <SubStat title="walking" :content="character.speed" footer="speed" speed/>
+      <div class="container">
+    
+        <div class="statblock-container a">
+          <StatBlock 
+            v-for="i in character.stats"
+            :name="i.name"
+            :modifier="i.bonus"
+            :score="i.score"
+          />
         </div>
-  
-        <div class="g health-block">
-          <div class="inspiration">
-            <div @click="characterStore.setInspiration()" class="box" :class="{'checked':character.inspiration}">
-  
+    
+        <div class="passives b">
+          <SavingThrows/>
+          <Sense/>
+          <Proficiency/>
+        </div>
+    
+        <div class="skill c">
+          <Skill/>
+        </div>
+    
+          <div class="substats d">
+            <SubStat title="proficiency" :content="character.proficiency+''" footer="bonus"/>
+            <SubStat title="walking" :content="character.speed" footer="speed" speed/>
+          </div>
+    
+          <div class="g health-block">
+            <div class="inspiration">
+              <div @click="characterStore.setInspiration()" class="box" :class="{'checked':character.inspiration}">
+    
+              </div>
+              <span style="position:absolute;bottom:0;padding-left:5px;padding-bottom:4px">INSPIRATION</span>
             </div>
-            <span style="position:absolute;bottom:0;padding-left:5px;padding-bottom:4px">INSPIRATION</span>
+            <HealthBlock :max="maxHealth" :current="currentHealth" :temp="tempHealth" />
           </div>
-          <HealthBlock :max="maxHealth" :current="currentHealth" :temp="tempHealth" />
-        </div>
-  
-        <div class="initiative-armor e">
-  
-          <div class="initiative-box">
-            <span>INITIATIVE</span>
-            <input class="initiative" @click="roll" type="button" :value="character.initiative > 0 ? '+'+character.initiative : '-'+character.initiative">
+    
+          <div class="initiative-armor e">
+    
+            <div class="initiative-box">
+              <span>INITIATIVE</span>
+              <input class="initiative" @click="roll" type="button" :value="character.initiative > 0 ? '+'+character.initiative : '-'+character.initiative">
+            </div>
+    
+            <div class="armor-box">
+              <span style="margin-top: 5px;" class="titre">
+                Armor
+              </span>
+              <!-- <span style="margin-top:auto;font-size:25px;font-weight:bold">{{ character.armor }}</span> -->
+              <input @change="updateAc" @keyup="updateAc" class="armor-class-input" type="number" name="armor class" :value="character.armor" >
+              <span style="padding:0;margin-bottom: 15px;" class="titre">
+                Class
+              </span>
+            </div>
           </div>
-  
-          <div class="armor-box">
-            <span style="margin-top: 5px;" class="titre">
-              Armor
-            </span>
-            <!-- <span style="margin-top:auto;font-size:25px;font-weight:bold">{{ character.armor }}</span> -->
-            <input @change="updateAc" @keyup="updateAc" class="armor-class-input" type="number" name="armor class" :value="character.armor" >
-            <span style="padding:0;margin-bottom: 15px;" class="titre">
-              Class
-            </span>
+    
+          <div class="status h">
+            <StatusBlock 
+              :defences="defences" 
+              :conditions="conditions" 
+            />
           </div>
-        </div>
-  
-        <div class="status h">
-          <StatusBlock :defences="character.defences" :conditions="character.conditions" />
-        </div>
-  
-        <div class="primary-box i">
-          <PrimaryBox />
-        </div>
+    
+          <div class="primary-box i">
+            <PrimaryBox />
+          </div>
+      </div>
     </div>
   </div>
 </template>
@@ -351,7 +382,13 @@
   .h{grid-area: h;}
   .i{grid-area: i;}
   
-
+  .loading{
+    text-align: center;
+    font-size: 42px;
+    margin: auto;
+    margin-top: 20vh;
+    width: 20vw;
+  }
 
  
 </style>

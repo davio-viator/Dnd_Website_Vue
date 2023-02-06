@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import axios from 'axios'
 
 import basic_attack from '../assets/svg/basic_attack.svg'
 import evocation from '../assets/svg/evocation_icon.svg'
@@ -35,6 +36,8 @@ const xpForLevel:any = {
   20:355000  
 }
 
+const url = 'http://localhost:3080/api/v1';
+
 export const useCounterStore = defineStore('counter', () => {
   const count = ref(0)
   const doubleCount = computed(() => count.value * 2)
@@ -58,15 +61,18 @@ export const useCharacter = defineStore('character',() => {
   let name:string = 'Odof'
   const character:any = ref(
     {
-      name:"Odof",
+      firstname:"Odof",
+      lastname:"",
       sex:"male",
       race:"Dragonborn",
       class:"cleric",
+      classesLevel:[],
       portraitSrc:'https://img-19.commentcamarche.net/WNCe54PoGxObY8PCXUxMGQ0Gwss=/480x270/smart/d8c10e7fd21a485c909a5b4c5d99e611/ccmcms-commentcamarche/20456790.jpg',
-      level:getLevel(),
+      level:0,
       totalXp:6500,
       currentXp:2567,
-      xpToNextLevel:xpForLevel[getNextLevel()],
+      // xpToNextLevel:xpForLevel[getNextLevel()],
+      xpToNextLevel:0,
       stats:[
         {
           name:'strength',
@@ -580,15 +586,55 @@ export const useCharacter = defineStore('character',() => {
     }
   )
 
+    const characters:any = ref({health:{}})
+
   const managerOpen = ref(false);
   const managerCaller = ref('');
+
+  async function getCharacter(id:number){
+    const token = localStorage.getItem('jwt_token')
+    const characterResp = await axios.get(`${url}/character/${id}`,{
+      headers:{
+        'Authorization':' Bearer '+token
+      }
+    })
+    try {
+      const characterDb = characterResp.data.character
+      delete characterDb.character_id;
+      delete characterDb.owner_id
+      characterDb.portraitSrc = characterDb.character_icon
+      delete characterDb.character_icon
+      Object.keys(characterDb).forEach(elem => {
+        if(elem.endsWith('hp')){
+          const val = elem.replace('hp','')
+          character.value.health[val] = characterDb[elem]
+        }
+        else if(elem === 'defences' || elem === 'conditions'){
+          character.value[elem] = characterDb[elem]
+        }
+        else if(elem === 'speed') character.value[elem] = characterDb[elem]+"ft"
+        else if(elem === 'savingthrows'){
+          characterDb[elem].forEach((item: { name: string | number }) => {
+            character.value.savingthrows[item.name] = item
+          })
+        }
+        else character.value[elem] = characterDb[elem]
+        // console.log(`store character ${elem}: `,character.value[elem]);
+        // console.log(`db character ${elem}: `,characterDb[elem]);
+      }) 
+      character.value.xpToNextLevel = xpForLevel[characterDb.level+1]
+    } catch (error) {
+      console.log(error);
+    }
+    return character
+  }
 
   function getLevel(){
     return 5;
   }
 
   function getNextLevel(){
-    return getLevel()+1;
+    return character.value.level+1
   }
 
   function randomMinMax(min: number, max: number): number {
@@ -747,5 +793,6 @@ export const useCharacter = defineStore('character',() => {
     ,getItemInventoryWeight,changeCharacterAC,updateCurrentHP
     ,updateMaxHP,updateTempHP,rollD20,rollD12,rollD10,rollD8
     ,rollD6,rollD4,longRest,shortRest,updateSkillProficiency
+    ,getCharacter
   }
 })
