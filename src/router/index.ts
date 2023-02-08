@@ -53,6 +53,11 @@ const router = createRouter({
       name: 'logout-view',
       component: () => import('@/views/LogoutView.vue')
     },
+    {
+      path: '/create-action',
+      name: 'action creator',
+      component: () => import('@/views/ActionCreatorView.vue')
+    },
   ]
 })
 

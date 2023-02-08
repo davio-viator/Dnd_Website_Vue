@@ -26,6 +26,7 @@
         links:[
           {name:'Cards',url:'/',routeName:'cards'}, 
           {name:'card creator',url:'/create-card',routeName:'card creator'},
+          {name:'action creator',url:'/create-action',routeName:'action creator'},
           {name:'Characters',url:'/characters',routeName:'characters list'},
         ],
         content:{
