@@ -51,9 +51,9 @@
       </div>
       <Action 
       v-for="(action,i) in actions" 
-      :title="action.title" 
+      :title="action.name" 
       :text="action.text"
-      :amount="action.times"
+      :amount="action.quantity"
       :frequency="action.frequency"
       :used="action.used"
       @used="(emitUsed) => actions[i].used = emitUsed"

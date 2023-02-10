@@ -20,8 +20,8 @@
         default:'Melee Weapon'
       },
       range:{
-        type:String,
-        default:'5ft'
+        type:Number,
+        default:5
       },
       range_type:{
         type:String,
@@ -86,7 +86,9 @@
     },
 
     computed:{
-
+      rangeComp(){
+        return this.range>0 ? `${this.range}ft` : 'Touch'
+      }
     },
 
     created(){
@@ -105,7 +107,7 @@
   <div class="attack-container ">
     <img class="attack-icon" :src="icon">
     <div class="attack-name">{{name}}<span class="attack-type">{{attack_type}}</span></div>
-    <div class="attack-range">{{range}}<span class="attack-type">{{range_type}}</span></div>
+    <div class="attack-range">{{rangeComp}}<span class="attack-type">{{range_type}}</span></div>
     <div v-if="!hit_dc.includes('|')" class="clickable hit" @click="rollHit">{{parseInt(hit_dc) >= 0 ? '+'+hit_dc : '-'+ hit_dc}}</div>
     <div v-else class="hit flex"><span class="mod">{{ hit_dc.split('|')[1].toUpperCase() }}</span><span style="font-size:15px;font-weight:bold">{{ hit_dc.split('|')[0] }}</span></div>
     <div class="clickable damage" @click="rollDamage">{{damage}}<img :src="damage_icon" class="attack-icon"></div>

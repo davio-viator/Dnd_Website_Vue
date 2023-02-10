@@ -45,7 +45,7 @@
         return this.text
       },
       parsedTextBold(){
-        return this.text
+        return this.text?.replaceAll('  ','\n')
       }
     },
 
@@ -54,7 +54,7 @@
     },
 
     mounted(){
-
+      console.log(this.text);
     }
 
 
