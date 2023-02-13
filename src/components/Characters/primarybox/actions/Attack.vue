@@ -42,7 +42,8 @@
       notes:{
         type:String,
         default:'Simple'
-      }
+      },
+      damage_type:String
     },
 
     data(){
@@ -74,7 +75,7 @@
             roll += res
           }
           let result = roll + fixDamage
-          alert(`You did ${result} damage! ( ${rollHistory.join('+ ')} ) ${fixDamage>0 ? '+ '+fixDamage:''} `)
+          alert(`You did ${result} ${this.damage_type} damage! ( ${rollHistory.join(' + ')} ) ${fixDamage>0 ? '+ '+fixDamage:''} `)
         }else{
           alert(`You did ${occurance} damage!`)
         }
@@ -88,6 +89,12 @@
     computed:{
       rangeComp(){
         return this.range>0 ? `${this.range}ft` : 'Touch'
+      },
+      rangeType(){
+        return this.range>0 ? this.range_type : ''
+      },
+      damageTypeComp(){
+        return this.damage_type ? `/src/assets/svg/${this.damage_type}.svg` : undefined
       }
     },
 
@@ -107,10 +114,10 @@
   <div class="attack-container ">
     <img class="attack-icon" :src="icon">
     <div class="attack-name">{{name}}<span class="attack-type">{{attack_type}}</span></div>
-    <div class="attack-range">{{rangeComp}}<span class="attack-type">{{range_type}}</span></div>
+    <div class="attack-range">{{rangeComp}}<span class="attack-type">{{rangeType}}</span></div>
     <div v-if="!hit_dc.includes('|')" class="clickable hit" @click="rollHit">{{parseInt(hit_dc) >= 0 ? '+'+hit_dc : '-'+ hit_dc}}</div>
     <div v-else class="hit flex"><span class="mod">{{ hit_dc.split('|')[1].toUpperCase() }}</span><span style="font-size:15px;font-weight:bold">{{ hit_dc.split('|')[0] }}</span></div>
-    <div class="clickable damage" @click="rollDamage">{{damage}}<img :src="damage_icon" class="attack-icon"></div>
+    <div class="clickable damage" @click="rollDamage">{{damage}}<img :src="damageTypeComp" class="attack-icon"></div>
     <div class="notes">{{notes}}</div>
   </div>
 </template>

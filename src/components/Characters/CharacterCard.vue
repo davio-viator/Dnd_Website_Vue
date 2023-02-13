@@ -51,7 +51,6 @@
     methods:{
       viewCharacter(){
         let url:String = `/character/${this.id}`
-        console.log(url);
         this.$router.push({name:'character-view',params:{id:this.id}})
       }
     },
@@ -69,7 +68,6 @@
     },
 
     mounted(){
-      console.log(this.classLevel,this.school)
     }
 
 

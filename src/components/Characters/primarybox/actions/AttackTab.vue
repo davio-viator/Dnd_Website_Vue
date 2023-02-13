@@ -60,6 +60,7 @@
       :damage="attack['damage']"
       :damage_icon="attack['damage_icon']"
       :notes="attack['notes']"
+      :damage_type="attack['damage_type']"
     />
 
     <div v-if="focused" >
@@ -78,6 +79,7 @@
       :damage="attack['damage']"
       :damage_icon="attack['damage_icon']"
       :notes="attack['notes']"
+      :damage_type="attack['damage_type']"
     />
       
     </div>

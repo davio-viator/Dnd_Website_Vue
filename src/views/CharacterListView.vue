@@ -89,7 +89,6 @@ interface Character {
           const response = await this.userStore.getCharacters()
           try {
             const characters = response.data.characters
-            console.log(characters)
             this.characters = characters
           } catch (error) {
             

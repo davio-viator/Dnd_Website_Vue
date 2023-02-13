@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+  import sphere from '@/assets/svg/sphere.svg'
 </script>
 
 <script type="module" lang="ts">
@@ -24,8 +24,8 @@
         default:'1A'
       },
       range:{
-        type:String,
-        default:'50ft'
+        type:Number,
+        default:50
       },
       hit_dc:{
         type:String,
@@ -54,7 +54,8 @@
       used:{
         type:Number,
         default:0
-      }
+      },
+      damage_type:String
     },
 
     data(){
@@ -111,20 +112,25 @@
 
     computed:{
       notesParsed(){
+        const icons = ["sphere.svg","force.svg","healing.svg"]
         let notesArray = this.notes.split(' ')
         let notes = ''
-        let url
+        let url = '/src/assets/svg/'
         notesArray.forEach(elem=>{
           let parsed = elem
-          if(elem.includes('/src')){
-            parsed = `<img style="margin-left: 5px;height: 15px;width: 15px;" src="${elem.replaceAll(',','')}" class="attack-icon"> `
+          const src = elem.replaceAll(',','')+".svg";
+          if(icons.includes(src)){
+            parsed = `<img style="margin-left: 5px;height: 15px;width: 15px;" src="${url}${src}" class="attack-icon">,`
           }
-          notes += parsed
+          notes += parsed+' '
         })
         
         notes = notes
         
         return notes
+      },
+      rangeComp(){
+        return this.range > 0 ? this.range+"ft" : "Touch"
       }
     },
 
@@ -142,13 +148,19 @@
 
 <template>
   <div class="attack-container ">
-    <div style="text-align:center;margin-right:8px">{{ frequency }}</div>
+    <div style="text-align:center;margin-right:8px">{{  frequency?.replace('EMPTY_ENUM_VALUE','') }}</div>
     <div class="attack-name">{{name}}<span class="attack-type">{{class}}</span></div>
     <div class="attack-name">{{time}}</div>
-    <div class="attack-range">{{range}}</div>
+    <div class="attack-range">{{rangeComp}}</div>
     <div v-if="!hit_dc.includes('|')" class="hit" :class="{'clickable':!hit_dc.includes('--'),'flex':hit_dc.includes('--')}" @click="rollHit">{{parseInt(hit_dc) >= 0 ? '+'+hit_dc : '-'+ hit_dc}}</div>
     <div v-else class="hit flex"><span class="mod">{{ hit_dc.split('|')[1].toUpperCase() }}</span><span style="font-size:15px;font-weight:bold">{{ hit_dc.split('|')[0] }}</span></div>
-    <div class="damage" :class="{'clickable':isNumber(effect.split(' ')[0])}" @click="rollDamage">{{effect.split(' ')[0]}}<img v-if="effect.split(' ')[1]" :src="effect.split(' ')[1]" class="attack-icon"></div>
+    <div class="damage" 
+      :class="{'clickable':isNumber(effect.split(' ')[0])}" 
+      @click="rollDamage">{{effect.split(' ')[0]}}
+      <img v-if="damage_type" 
+      :src="'/src/assets/svg/'+damage_type+'.svg'" 
+      class="attack-icon">
+    </div>
     <div v-html="notesParsed" class="notes"></div>
   </div>
 </template>

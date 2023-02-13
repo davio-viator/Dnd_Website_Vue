@@ -38,7 +38,24 @@
         
       }
     },
-    computed: {},
+    computed: {
+      sortedSpells(){
+        let sortedArray = []
+        for(const item in this.spells){
+          sortedArray.push([item,this.spells[item]])
+        }
+        
+        sortedArray.sort(function(a,b) {
+          if(a[0] === 'Cantrip') return -1
+          return a[0] - a [1]
+        })
+        const sorted = {}
+        sortedArray.forEach(item => {
+          (sorted as any)[item[0]] = item[1]
+        })
+        return sorted
+      }
+    },
     created() {
     },
     mounted() {
@@ -60,7 +77,7 @@
       </div>
     <div class="content">
 
-      <div class="spell-container" v-for="level in Object.keys(spells)">
+      <div class="spell-container" v-for="level in Object.keys(sortedSpells) ">
         <div class="title-container">
           <span class="title">{{ level }}</span> 
           <span v-if="spells[level].slots > 1">
@@ -93,6 +110,7 @@
             :range="spell.range"
             :hit_dc="spell.hit_dc"
             :effect="spell.effect"
+            :damage_type="spell.damage_type"
             :notes="spell.notes"
             :concentration="spell.concentration"
             :ritual="spell.ritual"
