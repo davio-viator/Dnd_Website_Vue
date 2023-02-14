@@ -61,8 +61,8 @@
           <!-- <span style="border-bottom:1px solid #d8d8d8">{{ elem.skill }}</span> -->
           <span style="border-bottom:1px solid #d8d8d8">{{ elem.name }}</span>
   
-          <span v-if="elem.proficient" class="bonus clickable" :data-name="elem.skill" @click="rollSkill">{{ elem.bonus+character.proficiency >= 0 ? '+'+(elem.bonus+character.proficiency) : (elem.bonus+character.proficiency) }}</span>
-          <span v-else class="bonus clickable" :data-name="elem.skill" @click="rollSkill">{{ elem.bonus >= 0 ? '+'+elem.bonus : elem.bonus }}</span>
+          <span v-if="elem.proficient" class="bonus clickable" :data-name="elem.name" @click="rollSkill">{{ elem.bonus+character.proficiency >= 0 ? '+'+(elem.bonus+character.proficiency) : (elem.bonus+character.proficiency) }}</span>
+          <span v-else class="bonus clickable" :data-name="elem.name" @click="rollSkill">{{ elem.bonus >= 0 ? '+'+elem.bonus : elem.bonus }}</span>
         </div>
       </div>
     </div>
