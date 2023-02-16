@@ -29,7 +29,7 @@
     },
     mounted() {
       this.attacks.forEach((element: { bonus: any; }) => {
-        console.log({name:element['name']},{bonus:element.bonus});
+        // console.log({name:(element as any)['name']},{bonus:element.bonus});
         if (element.bonus){
           this.bonus_actions.push(element as never)
           this.hasAttacks = true
@@ -62,7 +62,7 @@
         :icon="attack['icon']"
         :name="attack['name']"
         :attack_type="attack['attack_type']"
-        :range="attack['range']"
+        :range="parseInt(attack['range'])"
         :range_type="attack['range_type']"
         :hit_dc="attack['hit_dc']+''"
         :damage="attack['damage']"

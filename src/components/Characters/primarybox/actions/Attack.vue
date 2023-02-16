@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useCharacter } from '@/stores/CharacterService';
+
 
 </script>
 
@@ -48,7 +50,7 @@
 
     data(){
       return{
-        
+        character:useCharacter().character
       }
     },
 
@@ -95,6 +97,18 @@
       },
       damageTypeComp(){
         return this.damage_type ? `/src/assets/svg/${this.damage_type}.svg` : undefined
+      },
+      effectDamage(){
+        let bonus = this.damage.substring(this.damage.indexOf('}')+1)
+        if(this.damage == bonus) return this.damage
+        let damage = this.damage.substring(this.damage.indexOf('{'),this.damage.indexOf('}')+1)
+        damage = JSON.parse(damage)
+        return damage[(Object.keys(damage) as any)[0]].replaceAll(' + MOD',bonus)
+
+      },
+      iconComp(){
+        const icon = this.icon === "weapon" || this.icon === "test" ? "basic_attack" : this.icon  
+        return `/src/assets/svg/${icon}.svg`
       }
     },
 
@@ -112,12 +126,12 @@
 
 <template>
   <div class="attack-container ">
-    <img class="attack-icon" :src="icon">
+    <img class="attack-icon" :src="iconComp">
     <div class="attack-name">{{name}}<span class="attack-type">{{attack_type}}</span></div>
     <div class="attack-range">{{rangeComp}}<span class="attack-type">{{rangeType}}</span></div>
     <div v-if="!hit_dc.includes('|')" class="clickable hit" @click="rollHit">{{parseInt(hit_dc) >= 0 ? '+'+hit_dc : '-'+ hit_dc}}</div>
     <div v-else class="hit flex"><span class="mod">{{ hit_dc.split('|')[1].toUpperCase() }}</span><span style="font-size:15px;font-weight:bold">{{ hit_dc.split('|')[0] }}</span></div>
-    <div class="clickable damage" @click="rollDamage">{{damage}}<img :src="damageTypeComp" class="attack-icon"></div>
+    <div class="clickable damage" @click="rollDamage">{{effectDamage}}<img :src="damageTypeComp" class="attack-icon"></div>
     <div class="notes">{{notes}}</div>
   </div>
 </template>

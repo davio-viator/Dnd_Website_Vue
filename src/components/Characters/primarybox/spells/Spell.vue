@@ -55,7 +55,8 @@
         type:Number,
         default:0
       },
-      damage_type:String
+      damage_type:String,
+      level:String
     },
 
     data(){
@@ -91,7 +92,7 @@
                 roll += res
               }
               let result = roll + fixDamage
-              alert(`You did ${result} damage! ( ${rollHistory.join('+ ')} ) ${fixDamage>0 ? '+ '+fixDamage:''} `)
+              alert(`You did ${result} ${this.damage_type} damage! ( ${rollHistory.join('+ ')} ) ${fixDamage>0 ? '+ '+fixDamage:''} `)
             }else{
               alert(`You did ${occurance} damage!`)
             }
@@ -131,6 +132,22 @@
       },
       rangeComp(){
         return this.range > 0 ? this.range+"ft" : "Touch"
+      },
+      effectDamage(){
+        const level = parseInt(this.level as string);
+        if(!Number.isNaN(level)){
+          let damageForLevel 
+          try {
+            let bonus = this.effect.substring(this.effect.indexOf('}')+1)
+            const damage = this.effect.substring(this.effect.indexOf('{'),this.effect.indexOf('}')+1)
+            if(bonus == this.effect) bonus = ''
+            damageForLevel = JSON.parse(damage)
+            return damageForLevel[level].replace(' + MOD',bonus)
+          } catch (error) {
+            // console.log(error);
+          }
+        }
+        return this.effect
       }
     },
 
@@ -152,11 +169,16 @@
     <div class="attack-name">{{name}}<span class="attack-type">{{class}}</span></div>
     <div class="attack-name">{{time}}</div>
     <div class="attack-range">{{rangeComp}}</div>
-    <div v-if="!hit_dc.includes('|')" class="hit" :class="{'clickable':!hit_dc.includes('--'),'flex':hit_dc.includes('--')}" @click="rollHit">{{parseInt(hit_dc) >= 0 ? '+'+hit_dc : '-'+ hit_dc}}</div>
+    <div v-if="!hit_dc.includes('|')" 
+      class="hit" 
+      :class="{'clickable':!hit_dc.includes('--'),'flex':hit_dc.includes('--')}" 
+      @click="rollHit">
+      {{parseInt(hit_dc) >= 0 ? '+'+hit_dc : '-'+ hit_dc}}
+    </div>
     <div v-else class="hit flex"><span class="mod">{{ hit_dc.split('|')[1].toUpperCase() }}</span><span style="font-size:15px;font-weight:bold">{{ hit_dc.split('|')[0] }}</span></div>
     <div class="damage" 
-      :class="{'clickable':isNumber(effect.split(' ')[0])}" 
-      @click="rollDamage">{{effect.split(' ')[0]}}
+      :class="{'clickable':isNumber(effectDamage)}" 
+      @click="rollDamage">{{effectDamage}}
       <img v-if="damage_type" 
       :src="'/src/assets/svg/'+damage_type+'.svg'" 
       class="attack-icon">

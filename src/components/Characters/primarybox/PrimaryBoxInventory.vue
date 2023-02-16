@@ -112,7 +112,7 @@
 
         <div style="margin-bottom:2rem" v-if="tabSelected == 'All' || tabSelected == 'alms box' ">
           <div class="inventory-info">
-            <span class="title">ALMS BOX<span> ({{ characterStore.getEquipementAlmsBox().length }}) </span></span>  
+            <span v-if="characterStore.getEquipementAlmsBox()" class="title">ALMS BOX<span> ({{ characterStore.getEquipementAlmsBox().length }}) </span></span>  
             <span class="title">{{ characterStore.getItemInventoryWeight('almsBox') }} <span style="text-transform:lowercase;color:#A8A8A8">lb</span></span>
           </div>
           <div v-if="displayAlmsBox">

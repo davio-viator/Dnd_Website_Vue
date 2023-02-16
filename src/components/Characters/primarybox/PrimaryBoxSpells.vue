@@ -107,15 +107,16 @@
             :name="spell.name"
             :class="spell.class"
             :time="spell.time"
-            :range="spell.range"
+            :range="parseInt(spell.range)"
             :hit_dc="spell.hit_dc"
-            :effect="spell.effect"
+            :effect="spell.damage"
             :damage_type="spell.damage_type"
             :notes="spell.notes"
             :concentration="spell.concentration"
             :ritual="spell.ritual"
             :slots="spells[level].slots"
             :used="spells[level].used"
+            :level="level"
           />
         </template>
       </div>
