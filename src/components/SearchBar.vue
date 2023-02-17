@@ -67,7 +67,7 @@ import { getRef, setRef  } from '@/services/Utils';
       <div :class="{'small':small}" class="input-container">
         <input ref="input" :class="{'small':small}" @keyup="emitSearchTerm" class="searchbar" type="text" name="searchbar" id="searchbar" :placeholder="placeholderCalc">
         <select 
-          v-if="order" class="selector" 
+          v-if="order" :class="{'small':small}" class="selector" 
           v-model="sortOrder" 
           @change="$emit('orderSort',sortOrder)" 
           name="test" 
@@ -135,6 +135,10 @@ import { getRef, setRef  } from '@/services/Utils';
     margin: 1rem 0;
     margin-left: 1.5rem;
     font-size: 20px;
+  }
+
+  .selector.small{
+    height: 2rem;
   }
 
   .input-container{

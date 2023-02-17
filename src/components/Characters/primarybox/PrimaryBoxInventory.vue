@@ -34,10 +34,14 @@
         };
     },
     methods: {
-      openManager(event:any){
+      openMoneyManager(event:any){
         this.characterStore.setManagerCaller('money');
         this.characterStore.displayManager()
       },
+      openInventoryManager(event:any){
+        this.characterStore.setManagerCaller('inventory')
+        this.characterStore.displayManager()
+      }
       
     },
     computed: {
@@ -66,15 +70,18 @@
 
 <template>
   <div class="wrap">
-    <div class="money-container" data-manager-item="true" @click="openManager">
+    <div class="money-container" data-manager-item="true" @click="openMoneyManager">
       <div class="money-wrapper" title="platinum pieces" v-if="platinum>0">{{ platinum }} <img class="money-icon" :src="platinumSrc" alt="platinum icon"></div>
       <div class="money-wrapper" title="gold pieces" v-if="gold>0">{{ gold }} <img class="money-icon" :src="goldSrc" alt="gold icon"></div>
       <div class="money-wrapper" title="electrum pieces" v-if="electrum>0">{{ electrum }} <img class="money-icon" :src="electrumSrc" alt="electrum icon"></div>
       <div class="money-wrapper" title="silver pieces" v-if="silver>0">{{ silver }} <img class="money-icon" :src="silverSrc" alt="silver icon"></div>
       <div class="money-wrapper" title="copper pieces" v-if="copper>0">{{ copper }} <img class="money-icon" :src="copperSrc" alt="copper icon"></div>
     </div>
-    <div class="searchbar-container">
-      <SearchBar @search-term="" icon small/>
+    <div style="display:flex">
+      <div class="searchbar-container">
+        <SearchBar @search-term="" :options="[{value:'test',text:'test'},{value:'tast',text:'tast'}]" order icon small/>
+      </div>
+      <button @click="openInventoryManager" class="inventory-manager">manage inventory</button>
     </div>
     <NavBar @selected="(emitSelected)=>tabSelected = emitSelected" sub :tabs="tabs"/>
       <div class="header">
@@ -217,6 +224,19 @@
     justify-content:space-between;
     margin-top:1.2rem;
     padding-right: 0.5rem;
+  }
+
+  .inventory-manager{
+    all: unset;
+    cursor: pointer;
+    border: 1px solid #c53131;
+    color: #c53131;
+    height: 2rem;
+    border-radius: 0.375rem;
+    padding: 0 4px;
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+    text-transform: uppercase;
   }
   
 </style>

@@ -4,6 +4,7 @@
 
   import MoneyManager from './MoneyManager.vue';
   import HealthManager from './HealthManager.vue';
+import InventoryManager from './InventoryManager.vue';
 </script>
 
 <script type="module" lang="ts">
@@ -51,7 +52,7 @@
     },
     mounted() {
     },
-    components: { MoneyManager }
+    components: { MoneyManager, InventoryManager }
 }
 
 </script>
@@ -73,6 +74,10 @@
 
     <HealthManager
       v-if="caller == 'health'"
+    />
+
+    <InventoryManager
+      v-if="caller == 'inventory'"
     />
   </div>
 </template>
