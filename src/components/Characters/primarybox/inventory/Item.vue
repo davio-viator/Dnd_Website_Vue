@@ -32,7 +32,6 @@
     computed:{
       isActive(){
         let x = this.characterStore.getItemInventory((this as any)['name'],(this as any)['location']) 
-        console.log(this.name,this.location,x);
         return x.active
       }
     },

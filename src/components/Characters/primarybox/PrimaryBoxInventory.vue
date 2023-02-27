@@ -79,7 +79,7 @@
     </div>
     <div style="display:flex">
       <div class="searchbar-container">
-        <SearchBar @search-term="" :options="[{value:'test',text:'test'},{value:'tast',text:'tast'}]" order icon small/>
+        <SearchBar @search-term="" :options="[{value:'test',text:'test'},{value:'tast',text:'tast'}]" icon small/>
       </div>
       <button @click="openInventoryManager" class="inventory-manager">manage inventory</button>
     </div>

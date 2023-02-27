@@ -4,7 +4,7 @@
   import upArrow from '@/assets/svg/up-arrow.svg'
   import downArrow from '@/assets/svg/down-arrow.svg'
 
-
+  import Item from '@/components/Characters/primarybox/inventory/InventoryItem.vue'
 </script>
 
 <script type="module" lang="ts">
@@ -41,6 +41,10 @@
         console.log(this.inventory.equipment);
 
       },
+      openDetails(event:any,item:any){
+        event.target.innerText == '^' ? event.target.innerText = 'v' : event.target.innerText = '^';
+
+      }
     },
     computed: {
       isActive(){
@@ -85,10 +89,16 @@
       </div>
       <div v-if="equipmentOpen">
         <div v-for="item in inventory.equipment">
-          <span v-if="(item.active as number)>=0"> <div @click="click($event,item)" class="checkbox" :class="{'used':item.active==1}"></div></span>
-          <span>{{ item.name }}</span>
-          <span>move</span>
-          <span>^</span>
+          <Item :name="item.name"
+          :subname="item.subname"
+          :active="item.active"
+          :weight="item.weight"
+          :quantity="item.quantity"
+          :cost="item.cost"
+          :desc="item.description"
+          :rarity="item.rarity"
+          location="equipment"/>
+
         </div>
       </div>
     </div>
@@ -100,7 +110,17 @@
         <span v-else class="coin-icon-small" @click="backpackOpen = !backpackOpen"><img :src="downArrow" alt="down arrow"></span> 
       </div>
       <div v-if="backpackOpen">
-        <div v-for="item in inventory.backpack">{{ item.name }}</div>
+        <div v-for="item in inventory.backpack">
+          <Item :name="item.name"
+          :subname="item.subname"
+          :active="item.active"
+          :weight="item.weight"
+          :quantity="item.quantity"
+          :cost="item.cost"
+          :desc="item.description"
+          :rarity="item.rarity"
+          location="backpack"/>
+        </div>
       </div>
     </div>
 
@@ -109,6 +129,19 @@
         <span>Alms Box (<span>{{ inventory.almsBox.length }}</span>)</span>
         <span v-if="almsBoxOpen" class="coin-icon-small" @click="almsBoxOpen = !almsBoxOpen"><img :src="upArrow" alt="up arrow"></span>
         <span v-else class="coin-icon-small" @click="almsBoxOpen = !almsBoxOpen"><img :src="downArrow" alt="down arrow"></span> 
+      </div>
+      <div v-if="almsBoxOpen">
+        <div v-for="item in inventory.almsBox">
+          <Item :name="item.name"
+          :subname="item.subname"
+          :active="item.active"
+          :weight="item.weight"
+          :quantity="item.quantity"
+          :cost="item.cost"
+          :desc="item.description"
+          :rarity="item.rarity"
+          location="almsBox"/>
+        </div>
       </div>
     </div>
   </div>
@@ -119,6 +152,8 @@
     background-color: white;
     height: 100%;
     width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .title{
@@ -199,6 +234,37 @@
     width: 10px;
     background: red;
     margin: 4px auto 0;
+  }
+
+  .item-container{
+    display: grid;
+    grid-template-columns: 50px 14.5rem 3.5rem auto;
+    grid-gap: 5px;
+    height: 1.5rem;
+  }
+
+  .move-button{
+    padding: 0 5px;
+    padding-top: 3px;
+    height: min-content;
+    border:1px solid #c53131;
+    border-radius: 0.200rem;
+    color: #c53131;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+
+    cursor: pointer;
+  }
+
+  .details{
+    border: 1px solid gray;
+    text-align: center;
+    border-radius: .200rem;
+    padding-top: 2px;
+    height: 19px;
+    cursor: pointer;
   }
 
 </style>
