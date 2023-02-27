@@ -22,6 +22,9 @@
             equipmentOpen:true,
             backpackOpen:false,
             almsBoxOpen:false,
+            searchTerm:'',
+            filters:[] as string[],
+            pending:true,
         };
     },
     methods: {
@@ -30,20 +33,25 @@
           return elem === document.activeElement
         }
         if(![...event.target.classList].includes('focus')){
-          event.target.classList.add('focus')
+          event.target.classList.add('focus');
+          this.filters.push(event.target.innerText);
+          this.searchItem();
         }else{
-          event.target.classList.remove('focus')
+          event.target.classList.remove('focus');
+          this.filters.filter(e => e == event.target.name);
+          this.searchItem();
         }
       },
       click(e:any,item:any){
-        console.log(this.inventory.equipment);
         item.active = item.active === 1 ? 0 : 1;
-        console.log(this.inventory.equipment);
 
       },
       openDetails(event:any,item:any){
         event.target.innerText == '^' ? event.target.innerText = 'v' : event.target.innerText = '^';
 
+      },
+      searchItem(){
+        this.characterStore.searchItem(this.searchTerm,this.filters);
       }
     },
     computed: {
@@ -70,7 +78,7 @@
       </div>
       <div v-if="addItemOpen">
         <span class="upper title">Filter</span>
-        <SearchBar  @search-term="" icon small/>
+        <SearchBar  @search-term="(emitSearchTerm) => searchTerm = emitSearchTerm " @keyup="searchItem(searchTerm,filters)" icon small/>
         <div class="search-options">
           <button 
             v-for="option in optionArray"

@@ -586,7 +586,7 @@ export const useCharacter = defineStore('character',() => {
     }
   )
 
-    const characters:any = ref({health:{}})
+  const characters:any = ref({health:{}})
 
   const managerOpen = ref(false);
   const managerCaller = ref('');
@@ -627,6 +627,10 @@ export const useCharacter = defineStore('character',() => {
       console.log(error);
     }
     return character
+  }
+
+  async function searchItem(searchTerm:string,filters:string[]){
+     console.log(searchTerm,filters);
   }
 
   function getLevel(){
@@ -799,7 +803,7 @@ export const useCharacter = defineStore('character',() => {
     ,getItemInventoryWeight,changeCharacterAC,updateCurrentHP
     ,updateMaxHP,updateTempHP,rollD20,rollD12,rollD10,rollD8
     ,rollD6,rollD4,longRest,shortRest,updateSkillProficiency
-    ,getCharacter
+    ,getCharacter,searchItem
   }
 })
 
