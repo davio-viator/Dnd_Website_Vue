@@ -32,7 +32,9 @@
 
     methods:{
       click(e:any){
-        this.characterStore.updateActiveEquipment((this as any)['name'],(this as any)['location'])
+        const characterId = parseInt(this.$route.params.id as string)
+        console.log({characterId});
+        this.characterStore.updateActiveEquipment((this as any)['name'],(this as any)['location'],characterId)
       },
       openDetails(event:any){
         this.detailOpen = !this.detailOpen

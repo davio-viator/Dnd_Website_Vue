@@ -707,11 +707,20 @@ export const useCharacter = defineStore('character',() => {
     return character.value.inventory.almsBox
   }
 
-  function updateActiveEquipment(name:string,location:string){
+  function updateActiveEquipment(name:string,location:string,characterId:number = -1){
     character.value.inventory[location].forEach((element: { name: string; active: number }) => {
       if(element.name === name){
         if(element.active >= 0){
-          element.active = element.active == 1 ? 0 : 1
+          activateItem(element);
+          if(characterId >- 1){
+            axios.put(`${url}/character/${characterId}`,element)
+              .then(res => {
+                console.log(res);
+              })
+              .catch(err => {
+                console.log(err);
+              })
+          }
         }
       }
     });
@@ -796,3 +805,7 @@ export const useCharacter = defineStore('character',() => {
     ,getCharacter
   }
 })
+
+function activateItem(element: { name: string; active: number }) {
+  element.active = element.active == 1 ? 0 : 1
+}
