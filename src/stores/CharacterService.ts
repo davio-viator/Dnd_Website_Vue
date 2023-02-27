@@ -714,9 +714,6 @@ export const useCharacter = defineStore('character',() => {
           activateItem(element);
           if(characterId >- 1){
             axios.put(`${url}/character/${characterId}`,element)
-              .then(res => {
-                console.log(res);
-              })
               .catch(err => {
                 console.log(err);
               })
