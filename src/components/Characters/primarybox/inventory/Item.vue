@@ -5,6 +5,7 @@
 <script type="module" lang="ts">
 
   export default {
+    emits:['pending'],
     
     props:{
       name:String,
@@ -20,20 +21,39 @@
     data(){
       return{
         characterStore:useCharacter(),
+        pending:false
       }
     },
 
     methods:{
-      click(e:any){
-        this.characterStore.updateActiveEquipment((this as any)['name'],(this as any)['location'])
+      async click(e:any){
+        this.pending = true
+        // this.$emit('pending',true)
+        this.emitPendind(true);
+        const characterId = parseInt(this.$route.params.id as string)
+        const res = await this.characterStore.updateActiveEquipment((this as any)['name'],(this as any)['location'],characterId)
+        console.log((res as any).data);
+        // this.$emit('pending',false);
+        this.pending = false;
+        this.emitPendind(false);
+/*           .finally(()=> {
+            console.log("went there");
+            this.pending = false
+            setTimeout(() => {
+            this.$emit('pending',false);
+            }, 500);
+          }) */
       },
+      emitPendind(status:boolean){
+        this.$emit('pending',status);
+      }
     },
 
     computed:{
       isActive(){
         let x = this.characterStore.getItemInventory((this as any)['name'],(this as any)['location']) 
         return x.active
-      }
+      },
     },
 
     created(){

@@ -711,20 +711,18 @@ export const useCharacter = defineStore('character',() => {
     return character.value.inventory.almsBox
   }
 
-  function updateActiveEquipment(name:string,location:string,characterId:number = -1){
-    character.value.inventory[location].forEach((element: { name: string; active: number }) => {
+  async function updateActiveEquipment(name:string,location:string,characterId:number = -1){
+    let res:unknown
+    character.value.inventory[location].forEach(async (element: { name: string; active: number }) => {
       if(element.name === name){
-        if(element.active >= 0){
-          activateItem(element);
-          if(characterId >- 1){
-            axios.put(`${url}/character/${characterId}`,element)
-              .catch(err => {
-                console.log(err);
-              })
-          }
-        }
+        res = activateItemDb(element, characterId);
       }
     });
+    try {
+      return res
+    } catch (error) {
+      return error;
+    }
   }
 
   function getItemInventory(name:string,location:string){
@@ -806,6 +804,24 @@ export const useCharacter = defineStore('character',() => {
     ,getCharacter,searchItem
   }
 })
+
+async function activateItemDb(element: { name: string; active: number }, characterId: number) {
+  if (element.active >= 0) {
+    activateItem(element)
+    if (characterId > -1) {
+      return axios.put(`${url}/character/${characterId}`, element)
+      .then(res => {
+        return res
+      })
+      .catch(err => console.log(err));
+      // try {
+      //   return result;
+      // } catch (error) {
+      //   console.log(error);
+      // }
+    }
+  }
+}
 
 function activateItem(element: { name: string; active: number }) {
   element.active = element.active == 1 ? 0 : 1

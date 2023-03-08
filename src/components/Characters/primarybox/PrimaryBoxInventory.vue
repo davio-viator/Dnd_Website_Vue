@@ -8,7 +8,8 @@
   import platinumSrc from '@/assets/svg/platinum.svg'
   
   import NavBar from '@/components/navbar/NavBar.vue';
-  import Item from '@/components/Characters/primarybox/inventory/Item.vue'
+  import Item from '@/components/Characters/primarybox/inventory/Item.vue';
+  import loadingAnime from '@/assets/loadingdndbeyond.svg'
 </script>
 
 <script type="module" lang="ts">
@@ -30,7 +31,8 @@
             tabSelected:'',
             displayEquipment:true,
             displayAlmsBox:true,
-            displayBackpack:true
+            displayBackpack:true,
+            pending:false,
         };
     },
     methods: {
@@ -41,7 +43,7 @@
       openInventoryManager(event:any){
         this.characterStore.setManagerCaller('inventory')
         this.characterStore.displayManager()
-      }
+      },
       
     },
     computed: {
@@ -49,7 +51,8 @@
       gold(){return useCharacter().character.inventory.gold},
       electrum(){return useCharacter().character.inventory.electrum},
       silver(){return useCharacter().character.inventory.silver},
-      copper(){return useCharacter().character.inventory.copper}
+      copper(){return useCharacter().character.inventory.copper},
+      pendingStatus(){ console.log(this.pending); return this.pending}
 
     },
     created() {
@@ -69,7 +72,13 @@
 </script>
 
 <template>
-  <div class="wrap">
+  <div v-if="pendingStatus" class="loading">
+    <div>
+      <img class="loading-image" :src="loadingAnime" alt="loading animation">
+      <p >Loading ...</p>
+    </div>
+  </div>
+  <div v-else class="wrap">
     <div class="money-container" data-manager-item="true" @click="openMoneyManager">
       <div class="money-wrapper" title="platinum pieces" v-if="platinum>0">{{ platinum }} <img class="money-icon" :src="platinumSrc" alt="platinum icon"></div>
       <div class="money-wrapper" title="gold pieces" v-if="gold>0">{{ gold }} <img class="money-icon" :src="goldSrc" alt="gold icon"></div>
@@ -99,7 +108,7 @@
             <span class="title">{{ characterStore.getItemInventoryWeight('equipment') }} <span style="text-transform:lowercase;color:#A8A8A8">lb</span></span>
           </div>
           <div v-if="displayEquipment">
-            <Item v-for="item in characterStore.getEquipementInventory()"
+            <Item @pending="(emitPending) => pending = emitPending" v-for="item in characterStore.getEquipementInventory()"
               :name="item.name"
               :subname="item.subname"
               :active="item.active"
@@ -238,5 +247,14 @@
     margin-left: 0.5rem;
     text-transform: uppercase;
   }
+
+  .loading{
+    text-align: center;
+    font-size: 42px;
+    margin: auto;
+    margin-top: 20vh;
+    width: 20vw;
+  }
+
   
 </style>

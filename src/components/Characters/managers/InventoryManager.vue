@@ -78,7 +78,7 @@
       </div>
       <div v-if="addItemOpen">
         <span class="upper title">Filter</span>
-        <SearchBar  @search-term="(emitSearchTerm) => searchTerm = emitSearchTerm " @keyup="searchItem(searchTerm,filters)" icon small/>
+        <SearchBar  @search-term="(emitSearchTerm) => searchTerm = emitSearchTerm " @keyup="searchItem" icon small/>
         <div class="search-options">
           <button 
             v-for="option in optionArray"
