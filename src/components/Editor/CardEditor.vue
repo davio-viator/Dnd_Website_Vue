@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 </script>
 
 <script type="module" lang="ts">
@@ -34,7 +33,7 @@
         let inputName = e.target.name;
         let inputValue = e.target.value;
         this.$emit(inputName,inputValue);
-      }
+      },
     },
 
     computed:{
@@ -96,14 +95,13 @@
 
     <label for="link">Image's link</label>
     <input @touch.passive="uploadImage" @keyup="uploadImage" type="text" name="link" id="" placeholder="http://image.com">
-
     
-      <label>Upload your own image</label>
-      <label @change="uploadImage"  for="file">
-        <span class="button">Upload image</span>
-        <span class="upload-text">{{fileName || "No file chosen"}}</span>
-        <input type="file" accept=".png,;apng,.jpeg,.jpg,.webp,.gif" multiple=false class="file-upload" name="file" id="file">
-      </label>
+    <label>Upload your own image</label>
+    <label @change="uploadImage"  for="file">
+      <span class="button">Upload image</span>
+      <span class="upload-text">{{fileName || "No file chosen"}}</span>
+      <input type="file" accept=".png,;apng,.jpeg,.jpg,.webp,.gif" multiple=false class="file-upload" name="file" id="file">
+    </label>
   </div>
 </template>
 
@@ -159,5 +157,25 @@
     padding-left: 5px;
     background-color: white;
     border-radius: 0 0.375rem 0.375rem 0;
+  }
+
+  .button-container{
+    display: flex;
+    flex-direction: row !important;
+    justify-content:space-between;
+  }
+
+  .button-create{
+    padding: 12px;
+    margin-top: 20px;
+    height: 3em;
+    width: 5em;
+    font-size: 15px;
+    font-weight:bold;
+    color:white;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    cursor: pointer;
+    border-radius: 0.375rem;
   }
 </style>

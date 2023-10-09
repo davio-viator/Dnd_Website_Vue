@@ -5,7 +5,8 @@ const url: string = 'http://localhost:3080/api/v1'
 
 export async function getAllUsers() {
 
-  const response = await fetch('http://localhost:3080/api/users');
+  // const response = await fetch('http://localhost:3080/api/user');
+  const response = await fetch(`${url}/user`);
   return await response.json();
 }
 

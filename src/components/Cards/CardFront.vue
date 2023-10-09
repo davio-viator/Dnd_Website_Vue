@@ -24,7 +24,8 @@
 
     computed:{
       imageUrl(){
-        return this.imgSrc?this.imgSrc:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpngimage.net%2Fwp-content%2Fuploads%2F2018%2F06%2Fno-image-png-2.png&f=1&nofb=1&ipt=5efc1082b4d3b4624e2c64d5849209f3449af89891f9e87ac32e95e55c6b4243&ipo=images"
+        return this.imgSrc?this.imgSrc:"https://st3.depositphotos.com/1322515/35964/v/600/depositphotos_359648638-stock-illustration-image-available-icon.jpg"
+        // return this.imgSrc?this.imgSrc:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpngimage.net%2Fwp-content%2Fuploads%2F2018%2F06%2Fno-image-png-2.png&f=1&nofb=1&ipt=5efc1082b4d3b4624e2c64d5849209f3449af89891f9e87ac32e95e55c6b4243&ipo=images"
         return this.imgSrc?this.imgSrc:"https://cdn.discordapp.com/attachments/321941760911736833/1024787851688288316/telecharge_4.gif"
       },
     },

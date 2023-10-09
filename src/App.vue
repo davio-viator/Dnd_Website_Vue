@@ -11,6 +11,7 @@
   import { faker } from '@faker-js/faker';
   import { useDisplayNote } from '@/stores/counter';
   import { useCharacter } from '@/stores/CharacterService';
+  import { updateNote } from '@/services/NoteService';
 
   import { useUser, useCounterStore } from '@/stores/UserStore'
 
@@ -42,7 +43,10 @@
     }
 
     ,methods:{
-
+      async handleUpdate(content:string){
+        const userId = parseInt(localStorage.getItem("user_id") as string)
+        await updateNote({userId,cardId:2,content:content})
+      }
     }
 
     ,created(){
@@ -110,7 +114,7 @@
         <NoteVue 
           :open="noteIsOpen" 
           :title="noteTitle" 
-          @noteContent="(emitContent)=>cardContent=emitContent" 
+          @noteContent="async (emitContent)=>handleUpdate(emitContent)" 
           :content="cardContent">
         </NoteVue>
       </div>

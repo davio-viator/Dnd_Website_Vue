@@ -28,7 +28,8 @@ type Card = {
         noteOpenned:false,
         pending:true,
         skip:9,
-        take:6
+        take:6,
+        currentCardId:0
       }
     }
     ,methods:{
@@ -102,9 +103,8 @@ type Card = {
             
           }})
         }
-      }
+      },
     }
-
     ,created(){
 
     },
@@ -128,9 +128,10 @@ type Card = {
   <div v-if="!pending">
     <div :class="{'card-container note-open-card':noteOpenned,'card-container note-close-card':!noteOpenned}">
       <CardVue 
-        v-for="card in cardArray" 
+        v-for="card in cardArray" current
         @noteDisplayed="(emitNoteDisplayed)=>noteOpenned = emitNoteDisplayed" 
         @noteTitle="(emitNoteTitle)=>cardTitle = emitNoteTitle"  
+        @cardId="(emitCardId)=>currentCardId = emitCardId"
         :id="card['id']"
         :name="card['name']" 
         :rank="card['rank']" 

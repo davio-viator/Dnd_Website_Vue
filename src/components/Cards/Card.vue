@@ -6,13 +6,15 @@
   import { useDisplayNote } from '@/stores/counter';
 
   import { getAllUsers, createUser } from '@/services/UserService'
+  import { createCard, getUserCardNotes } from '@/services/CardService'
+  import { createNote } from '@/services/NoteService'
 </script>
 
 <script type="module" lang="ts">
 
   export default {
     
-    emits:['noteDisplayed','noteTitle'],
+    emits:['noteDisplayed','noteTitle','cardId'],
 
     props:{
       keywords:Array<string>,
@@ -39,19 +41,50 @@
     },
 
     methods:{
-      displayNotes(){
+      async displayNotes(){
         this.noteDisplayed.displayNote()
         this.noteDisplayed.setTitle(this.name)
         this.$emit('noteDisplayed',this.noteDisplayed.noteDisplayed)
         this.$emit('noteTitle',this.name)
+        this.$emit('cardId',this.id)
+        await this.getNote()
       },
       getUsers(){
         getAllUsers().then((res: any[]) => {
         res.map((item: any)=>this.users.push((item as never)))
       })
       },
-      getNote(){
-
+      async getNote(){
+        const currentUserId = localStorage.getItem("user_id") as string
+        const currentUser = this.users.filter(item => item["user_id"] == currentUserId)[0]
+        const test = await getUserCardNotes(currentUser["user_id"], this.id as number);
+        if(typeof test?.message !== typeof undefined){
+          console.log("no notes yet");
+          const res = await createNote({
+            userId:parseInt(currentUserId),
+            cardId:(this.id as number),
+            title:this.name as string,
+            content: useDisplayNote().getContent()
+          })
+          console.log(res);
+        }
+        // console.log(currentUser, this.id);
+      },
+      createCardFn(){
+        return createCard({
+          name:this.name ?? "no name",
+          rank: this.rank ?? "∅",
+          keywords: this.keywords as string[],
+          content: this.content,
+          url:this.src ?? "https://st3.depositphotos.com/1322515/35964/v/600/depositphotos_359648638-stock-illustration-image-available-icon.jpg"
+        }).then(() => {
+          alert("card created")
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("an error occured while creating the card, please try again")
+        })
       }
     },
 
@@ -63,7 +96,7 @@
 
     },
     created(){
-      // this.getUsers()
+      this.getUsers()
     }
 
 
@@ -91,6 +124,7 @@
         @strength="(emitStrength:any)=>(strength as string) = emitStrength"
         @weakness="(emitWeakness:any)=>(weakness as string) = emitWeakness"
       ></CardEditorVue>
+      <input @click="createCardFn" class="button" type="button" value="Save">
     </div>
   </div>
 </template>
