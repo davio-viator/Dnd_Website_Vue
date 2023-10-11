@@ -8,17 +8,19 @@
 import { debounce, type MonoTypeOperatorFunction, type ObservableInput } from 'rxjs';
 </script>
 
-<script module lang="ts">
-type Card = {
-  id?:number,
-  name:string,
-  rank:string,
-  keywords:string[],
-  content:Object,
-  url:string
-} 
+<script type="module" lang="ts">
+  type Card = {
+    id?:number,
+    name:string,
+    rank:string,
+    keywords:string[],
+    content:Object,
+    url:string
+  }
 
   export default{
+    emits:['currentCardId'],
+
     data() {
       return {
         cardArray:([] as Card[]),
@@ -59,7 +61,6 @@ type Card = {
         }
         createCard(card)
         this.initDb()
-        console.log(this.cardArray);
       },
       initDb(){
         let x = getAllCards(0,9)
@@ -88,8 +89,8 @@ type Card = {
       handleScroll(event: any){
         let winHeight = window.innerHeight;
         let scroll = event.target.documentElement.scrollTop
-        let height = event.target.documentElement.scrollHeight     
-        if(winHeight+scroll >= height && scroll > 100 ){
+        let height = event.target.documentElement.scrollHeight;
+        if(Math.ceil(winHeight+scroll) >= height && scroll > 100 ){
           getAllCards(this.skip,this.take)
           .subscribe({next:(cardArrayForAminCuzHesAnAnnoyingBastardThatPissesMeOff)=>{
             const size = (cardArrayForAminCuzHesAnAnnoyingBastardThatPissesMeOff.data.length);
@@ -100,10 +101,13 @@ type Card = {
               this.skip += this.take
             }
           },error:(err)=>{
-            
+            console.log(err);
           }})
         }
       },
+      emitCardIdFn(id:number){
+        this.$emit("currentCardId",id)
+      }
     }
     ,created(){
 
@@ -131,7 +135,7 @@ type Card = {
         v-for="card in cardArray" current
         @noteDisplayed="(emitNoteDisplayed)=>noteOpenned = emitNoteDisplayed" 
         @noteTitle="(emitNoteTitle)=>cardTitle = emitNoteTitle"  
-        @cardId="(emitCardId)=>currentCardId = emitCardId"
+        @cardId="(emitCardId)=>emitCardIdFn(emitCardId)"
         :id="card['id']"
         :name="card['name']" 
         :rank="card['rank']" 

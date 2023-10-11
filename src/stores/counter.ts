@@ -27,8 +27,11 @@ export const useDisplayNote = defineStore('dislayNote',() => {
   function getContent(){
     return content.value
   }
+  function getTitle(){
+    return title.value
+  }
 
-  return {noteDisplayed,title,displayNote,setTitle,setContent,getContent}
+  return {noteDisplayed,title,displayNote,setTitle,getTitle,setContent,getContent}
 })
 
 export const useNoteTitle = defineStore('noteTitle', () => {

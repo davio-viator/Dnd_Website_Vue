@@ -27,3 +27,12 @@ export async function updateNote(data: {userId:number, cardId:number, content:st
   })
   return await response.json()
 }
+
+export async function getNotes(){
+
+}
+
+export async function getNote(userId:number, cardId:number){
+  const response = await fetch(`${url}/note/${userId}/${cardId}`)
+  return await response.json()
+}

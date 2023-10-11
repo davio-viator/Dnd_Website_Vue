@@ -60,536 +60,538 @@ export async function createUser(data:any) {
 export const useCharacter = defineStore('character',() => {
   let name:string = 'Odof'
   const character:any = ref(
-    {
-      firstname:"Odof",
-      lastname:"",
-      sex:"male",
-      race:"Dragonborn",
-      class:"cleric",
-      classesLevel:[],
-      portraitSrc:'https://img-19.commentcamarche.net/WNCe54PoGxObY8PCXUxMGQ0Gwss=/480x270/smart/d8c10e7fd21a485c909a5b4c5d99e611/ccmcms-commentcamarche/20456790.jpg',
-      level:0,
-      totalXp:6500,
-      currentXp:2567,
-      // xpToNextLevel:xpForLevel[getNextLevel()],
-      xpToNextLevel:0,
-      stats:[
-        {
-          name:'strength',
-          score:17,
-          bonus:calculateBonus(17),
-        },
-        {
-          name:'dexterity',
-          score: 18,
-          bonus: calculateBonus(18)
-        },
-        {
-          name:'constitution',
-          score: 14,
-          bonus: calculateBonus(14)
-        },
-        {
-          name:'intelligence',
-          score: 13,
-          bonus: calculateBonus(13)
-        },
-        {
-          name:'wisdom',
-          score: 7,
-          bonus: calculateBonus(7)
-        },
-        {
-          name:'charisma',
-          score: 11,
-          bonus: calculateBonus(11)
-        }
-      ],
-      proficiency:3,
-      speed:'30ft',
-      inspiration:false,
-      spellcaster:true,
-      health:{
-        current:30,
-        max:42,
-        temp:0
-      },
-      initiative:2,
-      armor:17,
-      defences:['Lightning'],
-      conditions:[],
-      savingthrows:{
-        strength:{
-          name:"str",
-          proficient:true,
-          mod:3
-        },
-        intelligence: {
-          name:"int",
-          proficient:false,
-          mod:1
-        },
-        dexterity:{
-          name:"dex",
-          proficient:true,
-          mod:4
-        },
-        wisdom:{
-          name:"wis",
-          proficient:false,
-          mod:-2
-        },
-        constitution:{
-          name:"con",
-          proficient:false,
-          mod:2
-        },
-        charisma:{
-          name:"cha",
-          proficient:false,
-          mod:0
-        }
-      },
-      senses:{
-        passive_perception:18,
-        passive_investigation:15,
-        passive_insight:13
-      },
-      proficiencies:{
-        armors:['heavy armor','light armor','medium armor','shield'],
-        weapons:['simple weapons'],
-        tools:[],
-        languages:['Celestial','Common','Draconic','Elvish']
-      },
-      skills:[
-        {
-          skill:'acrobatics',
-          proficient:false,
-          modifier:'dex',
-          bonus:4
-        },
-        {
-          skill:'Animal handling',
-          proficient:false,
-          modifier:'wis',
-          bonus:-2
-        },
-        {
-          skill:'arcana',
-          proficient:true,
-          modifier:'int',
-          bonus:+1
-        },
-        {
-          skill:'Athletics',
-          proficient:false,
-          modifier:'str',
-          bonus:+3
-        },
-        {
-          skill:'deception',
-          proficient:false,
-          modifier:'cha',
-          bonus:0
-        },
-        {
-          skill:'history',
-          proficient:true,
-          modifier:'int',
-          bonus:1
-        },
-        {
-          skill:'insight',
-          proficient:false,
-          modifier:'wis',
-          bonus:-2
-        },
-        {
-          skill:'intimidation',
-          proficient:false,
-          modifier:'cha',
-          bonus:0
-        },
-        {
-          skill:'investigation',
-          proficient:false,
-          modifier:'int',
-          bonus:1
-        },
-        {
-          skill:'medecine',
-          proficient:true,
-          modifier:'wis',
-          bonus:-2
-        },
-        {
-          skill:'nature',
-          proficient:false,
-          modifier:'int',
-          bonus:1
-        },
-        {
-          skill:'perception',
-          proficient:false,
-          modifier:'wis',
-          bonus:-2
-        },
-        {
-          skill:'performance',
-          proficient:false,
-          modifier:'cha',
-          bonus:0
-        },
-        {
-          skill:'persuasion',
-          proficient:false,
-          modifier:'cha',
-          bonus:0
-        },
-        {
-          skill:'religion',
-          proficient:true,
-          modifier:'int',
-          bonus:1
-        },
-        {
-          skill:'sleight of hand',
-          proficient:false,
-          modifier:'dex',
-          bonus:4
-        },
-        {
-          skill:'stealth',
-          proficient:false,
-          modifier:'dex',
-          bonus:4
-        },
-        {
-          skill:'survival',
-          proficient:false,
-          modifier:'wis',
-          bonus:-2
-        }      
-      ],
-      actions:{
-        attacks:[
-          // {
-          //   basic_attack:'',
-          //   evocation:'',
-          //   necromancy:'',
-          //   unarmed:'',
-          //   lightning:'',
-          //   force:'',
-          //   bludgeoning:'',
-          //   necrotic:'',
-          //   sphere:''
-          // },
-          {
-            icon:basic_attack,
-            name:'mace',
-            attack_type:'Melee weapon',
-            range:'5ft',
-            range_type:'reach',
-            hit_dc:4,
-            damage:'1d6+1',
-            damage_icon:bludgeoning,
-            notes:'Simple',
-            bonus:false
-          },
-          {
-            icon:necromancy,
-            name:'inflict wounds',
-            attack_type:'2nd Level • Cleric',
-            range:'touch',
-            range_type:'',
-            hit_dc:6,
-            damage:'3d10',
-            damage_icon:necrotic,
-            notes:'V/S',
-            bonus:false
-          },
-          {
-            icon:unarmed,
-            name:'unarmed strike',
-            attack_type:'Melee weapon',
-            range:'5ft',
-            range_type:'reach',
-            hit_dc:4,
-            damage:'2',
-            damage_icon:bludgeoning,
-            notes:'',
-            bonus:false,
-          },
-          {
-            icon:basic_attack,
-            name:'breath weapon (blue)',
-            attack_type:'',
-            range:'30ft',
-            range_type:'range',
-            hit_dc:'13|dex',
-            damage:'2d6',
-            damage_icon:lightning,
-            notes:'1/SR',
-            bonus:false,
-            frequency:{
-              title:'breath weapon (blue)',
-              text:'As an action once per short rest, exhale in a 5 by 30 ft. line (DEX DC 13, half damage on success) for 2d6 Lightning Damage [6th] 3d6, [11th] 4d6, [16th] 5d6',
-              times:1,
-              frequency:'Short Rest',
-              used:0
-            }
-          },
-          {
-            icon:evocation,
-            name:'spiritual weapon',
-            attack_type:'2nd Level • Cleric',
-            range:'60ft',
-            range_type:'',
-            hit_dc:6,
-            damage:'1d8+3',
-            damage_icon:force,
-            notes:'D: 1m, V/S',
-            bonus:true
-          },
-        ],
-        action:[
-          {
-            title:'breath weapon (blue)',
-            text:'As an action once per short rest, exhale in a 5 by 30 ft. line (DEX DC 13, half damage on success) for 2d6 Lightning Damage [6th] 3d6, [11th] 4d6, [16th] 5d6',
-            times:1,
-            frequency:'Short Rest',
-            used:0,
-            bonus:false
-          },
-          {
-            title:'Channel Divinity: Preserve Life',
-            text:'As an action, you can restore <strong>25</strong> HP. Choose any creatures within 30 ft. of you, and divide those hit points among them. This feature can restore a creature to no more than half of its hit point maximum. You can’t use this feature on an undead or a construct.',
-            times:0,
-            frequency:'',
-            used:0,
-            bonus:false
-          },
-          {
-            title:'Channel Divinity: Turn Undead',
-            text:'As an action, you present your holy symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a WIS saving throw (DC <strong>14</strong>). If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage. A turned creature must spend its turns trying to move as far away from you as it can, and it can’t willingly move to a space within 30 feet of you. It also can’t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there’s nowhere to move, the creature can use the Dodge action.',
-            times:0,
-            frequency:'',
-            used:0,
-            bonus:false
-          },
-          {
-            title:'Unarmed Strike',
-            text:'ou can punch, kick, head-butt, or use a similar forceful blow and deal bludgeoning damage equal to 1 + STR modifier',
-            times:0,
-            frequency:'',
-            used:0,
-            bonus:false
-          }
-        ]
-      },
-      spells:{
-        "cantrip":{
-          slots:-1,
-          spells:[
-            {
-              name:'Light', 
-              frequency:'at will',
-              class:'cleric',
-              time:'1A',
-              range:'touch',
-              hit_dc:'dex|14',
-              effect:'creation',
-              notes:'D: 1h, 20ft '+sphere+', V/S'
-            },
-            {
-              name:'Mending', 
-              frequency:'at will',
-              class:'cleric',
-              time:'1m',
-              range:'touch',
-              hit_dc:'--',
-              effect:'utility',
-              notes:'V/S/M'
-            },
-            {
-              name:'Sacred Flame', 
-              frequency:'at will',
-              class:'cleric',
-              time:'1A',
-              range:'touch',
-              hit_dc:'dex|14',
-              effect:'2d9 '+radiant,
-              notes:'V/S'
-            },
-            {
-              name:'Spare the dying', 
-              frequency:'at will',
-              class:'cleric',
-              time:'1A',
-              range:'touch',
-              hit_dc:'--',
-              effect:'Healing',
-              notes:'V/S'
-            }
-          ]
-        },
-        "1st level":{
-          slots:4,
-          used:0,
-          spells:[
-            {
-              name:'Bless', 
-              frequency:'cast',
-              concentration:true,
-              class:'cleric',
-              time:'1A',
-              range:'30ft',
-              hit_dc:'--',
-              effect:'buff',
-              notes:'D: 1m, V/S/M'
-            },
-            {
-              name:'Cure Wounds', 
-              frequency:'cast',
-              class:'cleric',
-              time:'1A',
-              range:'touch',
-              hit_dc:'--',
-              effect:'1d8+6 '+healing,
-              notes:'V/S'
-            },
+    // {
+    //   firstname:"Odof",
+    //   lastname:"",
+    //   sex:"male",
+    //   race:"Dragonborn",
+    //   class:"cleric",
+    //   classesLevel:[],
+    //   portraitSrc:'https://img-19.commentcamarche.net/WNCe54PoGxObY8PCXUxMGQ0Gwss=/480x270/smart/d8c10e7fd21a485c909a5b4c5d99e611/ccmcms-commentcamarche/20456790.jpg',
+    //   level:0,
+    //   totalXp:6500,
+    //   currentXp:2567,
+    //   // xpToNextLevel:xpForLevel[getNextLevel()],
+    //   xpToNextLevel:0,
+    //   stats:[
+    //     {
+    //       name:'strength',
+    //       score:17,
+    //       bonus:calculateBonus(17),
+    //     },
+    //     {
+    //       name:'dexterity',
+    //       score: 18,
+    //       bonus: calculateBonus(18)
+    //     },
+    //     {
+    //       name:'constitution',
+    //       score: 14,
+    //       bonus: calculateBonus(14)
+    //     },
+    //     {
+    //       name:'intelligence',
+    //       score: 13,
+    //       bonus: calculateBonus(13)
+    //     },
+    //     {
+    //       name:'wisdom',
+    //       score: 7,
+    //       bonus: calculateBonus(7)
+    //     },
+    //     {
+    //       name:'charisma',
+    //       score: 11,
+    //       bonus: calculateBonus(11)
+    //     }
+    //   ],
+    //   proficiency:3,
+    //   speed:'30ft',
+    //   inspiration:false,
+    //   spellcaster:true,
+    //   health:{
+    //     current:30,
+    //     max:42,
+    //     temp:0
+    //   },
+    //   initiative:2,
+    //   armor:17,
+    //   defences:['Lightning'],
+    //   conditions:[],
+    //   savingthrows:{
+    //     strength:{
+    //       name:"str",
+    //       proficient:true,
+    //       mod:3
+    //     },
+    //     intelligence: {
+    //       name:"int",
+    //       proficient:false,
+    //       mod:1
+    //     },
+    //     dexterity:{
+    //       name:"dex",
+    //       proficient:true,
+    //       mod:4
+    //     },
+    //     wisdom:{
+    //       name:"wis",
+    //       proficient:false,
+    //       mod:-2
+    //     },
+    //     constitution:{
+    //       name:"con",
+    //       proficient:false,
+    //       mod:2
+    //     },
+    //     charisma:{
+    //       name:"cha",
+    //       proficient:false,
+    //       mod:0
+    //     }
+    //   },
+    //   senses:{
+    //     passive_perception:18,
+    //     passive_investigation:15,
+    //     passive_insight:13
+    //   },
+    //   proficiencies:{
+    //     armors:['heavy armor','light armor','medium armor','shield'],
+    //     weapons:['simple weapons'],
+    //     tools:[],
+    //     languages:['Celestial','Common','Draconic','Elvish']
+    //   },
+    //   skills:[
+    //     {
+    //       skill:'acrobatics',
+    //       proficient:false,
+    //       modifier:'dex',
+    //       bonus:4
+    //     },
+    //     {
+    //       skill:'Animal handling',
+    //       proficient:false,
+    //       modifier:'wis',
+    //       bonus:-2
+    //     },
+    //     {
+    //       skill:'arcana',
+    //       proficient:true,
+    //       modifier:'int',
+    //       bonus:+1
+    //     },
+    //     {
+    //       skill:'Athletics',
+    //       proficient:false,
+    //       modifier:'str',
+    //       bonus:+3
+    //     },
+    //     {
+    //       skill:'deception',
+    //       proficient:false,
+    //       modifier:'cha',
+    //       bonus:0
+    //     },
+    //     {
+    //       skill:'history',
+    //       proficient:true,
+    //       modifier:'int',
+    //       bonus:1
+    //     },
+    //     {
+    //       skill:'insight',
+    //       proficient:false,
+    //       modifier:'wis',
+    //       bonus:-2
+    //     },
+    //     {
+    //       skill:'intimidation',
+    //       proficient:false,
+    //       modifier:'cha',
+    //       bonus:0
+    //     },
+    //     {
+    //       skill:'investigation',
+    //       proficient:false,
+    //       modifier:'int',
+    //       bonus:1
+    //     },
+    //     {
+    //       skill:'medecine',
+    //       proficient:true,
+    //       modifier:'wis',
+    //       bonus:-2
+    //     },
+    //     {
+    //       skill:'nature',
+    //       proficient:false,
+    //       modifier:'int',
+    //       bonus:1
+    //     },
+    //     {
+    //       skill:'perception',
+    //       proficient:false,
+    //       modifier:'wis',
+    //       bonus:-2
+    //     },
+    //     {
+    //       skill:'performance',
+    //       proficient:false,
+    //       modifier:'cha',
+    //       bonus:0
+    //     },
+    //     {
+    //       skill:'persuasion',
+    //       proficient:false,
+    //       modifier:'cha',
+    //       bonus:0
+    //     },
+    //     {
+    //       skill:'religion',
+    //       proficient:true,
+    //       modifier:'int',
+    //       bonus:1
+    //     },
+    //     {
+    //       skill:'sleight of hand',
+    //       proficient:false,
+    //       modifier:'dex',
+    //       bonus:4
+    //     },
+    //     {
+    //       skill:'stealth',
+    //       proficient:false,
+    //       modifier:'dex',
+    //       bonus:4
+    //     },
+    //     {
+    //       skill:'survival',
+    //       proficient:false,
+    //       modifier:'wis',
+    //       bonus:-2
+    //     }      
+    //   ],
+    //   actions:{
+    //     attacks:[
+    //       // {
+    //       //   basic_attack:'',
+    //       //   evocation:'',
+    //       //   necromancy:'',
+    //       //   unarmed:'',
+    //       //   lightning:'',
+    //       //   force:'',
+    //       //   bludgeoning:'',
+    //       //   necrotic:'',
+    //       //   sphere:''
+    //       // },
+    //       {
+    //         icon:basic_attack,
+    //         name:'mace',
+    //         attack_type:'Melee weapon',
+    //         range:'5ft',
+    //         range_type:'reach',
+    //         hit_dc:4,
+    //         damage:'1d6+1',
+    //         damage_icon:bludgeoning,
+    //         notes:'Simple',
+    //         bonus:false
+    //       },
+    //       {
+    //         icon:necromancy,
+    //         name:'inflict wounds',
+    //         attack_type:'2nd Level • Cleric',
+    //         range:'touch',
+    //         range_type:'',
+    //         hit_dc:6,
+    //         damage:'3d10',
+    //         damage_icon:necrotic,
+    //         notes:'V/S',
+    //         bonus:false
+    //       },
+    //       {
+    //         icon:unarmed,
+    //         name:'unarmed strike',
+    //         attack_type:'Melee weapon',
+    //         range:'5ft',
+    //         range_type:'reach',
+    //         hit_dc:4,
+    //         damage:'2',
+    //         damage_icon:bludgeoning,
+    //         notes:'',
+    //         bonus:false,
+    //       },
+    //       {
+    //         icon:basic_attack,
+    //         name:'breath weapon (blue)',
+    //         attack_type:'',
+    //         range:'30ft',
+    //         range_type:'range',
+    //         hit_dc:'13|dex',
+    //         damage:'2d6',
+    //         damage_icon:lightning,
+    //         notes:'1/SR',
+    //         bonus:false,
+    //         frequency:{
+    //           title:'breath weapon (blue)',
+    //           text:'As an action once per short rest, exhale in a 5 by 30 ft. line (DEX DC 13, half damage on success) for 2d6 Lightning Damage [6th] 3d6, [11th] 4d6, [16th] 5d6',
+    //           times:1,
+    //           frequency:'Short Rest',
+    //           used:0
+    //         }
+    //       },
+    //       {
+    //         icon:evocation,
+    //         name:'spiritual weapon',
+    //         attack_type:'2nd Level • Cleric',
+    //         range:'60ft',
+    //         range_type:'',
+    //         hit_dc:6,
+    //         damage:'1d8+3',
+    //         damage_icon:force,
+    //         notes:'D: 1m, V/S',
+    //         bonus:true
+    //       },
+    //     ],
+    //     action:[
+    //       {
+    //         title:'breath weapon (blue)',
+    //         text:'As an action once per short rest, exhale in a 5 by 30 ft. line (DEX DC 13, half damage on success) for 2d6 Lightning Damage [6th] 3d6, [11th] 4d6, [16th] 5d6',
+    //         times:1,
+    //         frequency:'Short Rest',
+    //         used:0,
+    //         bonus:false
+    //       },
+    //       {
+    //         title:'Channel Divinity: Preserve Life',
+    //         text:'As an action, you can restore <strong>25</strong> HP. Choose any creatures within 30 ft. of you, and divide those hit points among them. This feature can restore a creature to no more than half of its hit point maximum. You can’t use this feature on an undead or a construct.',
+    //         times:0,
+    //         frequency:'',
+    //         used:0,
+    //         bonus:false
+    //       },
+    //       {
+    //         title:'Channel Divinity: Turn Undead',
+    //         text:'As an action, you present your holy symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a WIS saving throw (DC <strong>14</strong>). If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage. A turned creature must spend its turns trying to move as far away from you as it can, and it can’t willingly move to a space within 30 feet of you. It also can’t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there’s nowhere to move, the creature can use the Dodge action.',
+    //         times:0,
+    //         frequency:'',
+    //         used:0,
+    //         bonus:false
+    //       },
+    //       {
+    //         title:'Unarmed Strike',
+    //         text:'ou can punch, kick, head-butt, or use a similar forceful blow and deal bludgeoning damage equal to 1 + STR modifier',
+    //         times:0,
+    //         frequency:'',
+    //         used:0,
+    //         bonus:false
+    //       }
+    //     ]
+    //   },
+    //   spells:{
+    //     "cantrip":{
+    //       slots:-1,
+    //       spells:[
+    //         {
+    //           name:'Light', 
+    //           frequency:'at will',
+    //           class:'cleric',
+    //           time:'1A',
+    //           range:'touch',
+    //           hit_dc:'dex|14',
+    //           effect:'creation',
+    //           notes:'D: 1h, 20ft '+sphere+', V/S'
+    //         },
+    //         {
+    //           name:'Mending', 
+    //           frequency:'at will',
+    //           class:'cleric',
+    //           time:'1m',
+    //           range:'touch',
+    //           hit_dc:'--',
+    //           effect:'utility',
+    //           notes:'V/S/M'
+    //         },
+    //         {
+    //           name:'Sacred Flame', 
+    //           frequency:'at will',
+    //           class:'cleric',
+    //           time:'1A',
+    //           range:'touch',
+    //           hit_dc:'dex|14',
+    //           effect:'2d9 '+radiant,
+    //           notes:'V/S'
+    //         },
+    //         {
+    //           name:'Spare the dying', 
+    //           frequency:'at will',
+    //           class:'cleric',
+    //           time:'1A',
+    //           range:'touch',
+    //           hit_dc:'--',
+    //           effect:'Healing',
+    //           notes:'V/S'
+    //         }
+    //       ]
+    //     },
+    //     "1st level":{
+    //       slots:4,
+    //       used:0,
+    //       spells:[
+    //         {
+    //           name:'Bless', 
+    //           frequency:'cast',
+    //           concentration:true,
+    //           class:'cleric',
+    //           time:'1A',
+    //           range:'30ft',
+    //           hit_dc:'--',
+    //           effect:'buff',
+    //           notes:'D: 1m, V/S/M'
+    //         },
+    //         {
+    //           name:'Cure Wounds', 
+    //           frequency:'cast',
+    //           class:'cleric',
+    //           time:'1A',
+    //           range:'touch',
+    //           hit_dc:'--',
+    //           effect:'1d8+6 '+healing,
+    //           notes:'V/S'
+    //         },
             
-          ]
-        },
-        "2nd level":{
-          slots:3,
-          used:0,
-          spells:[
-            {
-              name:'Spiritual Weapons', 
-              frequency:'cast',
-              class:'cleric',
-              time:'1A',
-              range:'60ft',
-              hit_dc:'6',
-              effect:'1d8+6 '+force,
-              notes:'D: 1m, V/S',
-              bonus:true
-            }
-          ]
-        },
-        "3rd level":{
-          slots:2,
-          used:0,
-          spells:[
-            {
-              name:"Spirit Guardians",
-              frequency:'cast',
-              class:'cleric',
-              time:'1A',
-              range:'self',
-              hit_dc:'wis|14',
-              effect:'3d8 '+radiant,
-              notes:'D: 10m, '+sphere+' ; V/S/M',
-              bonus:true
-            }
-          ]
-        }
-      },
-      inventory:{
-        copper:1,
-        silver:2,
-        electrum:3,
-        gold:10,
-        platinum:4,
-        hasBackpack:true,
-        hasAlmsBox:true,
-        equipment:[
-          {
-            name:'mace',
-            subname:'mace',
-            active:1,
-            weight:4,
-            quantity:-1,
-            cost:5, // in gp
-            notes:'Simple'
-          },
-          {
-            name:'Leather',
-            subname:'Light Armor • Leather',
-            active:1,
-            weight:10,
-            quantity:-1,
-            cost:10,
-            notes:'AC 11'
-          },
-          {
-            name:'Shield',
-            subname:'Shield • Shield',
-            active:1,
-            weight:6,
-            quantity:-1,
-            cost:10,
-            notes:'+2 AC'
-          },
-          {
-            name:'Crossbow, light',
-            subname:'crossbow, light',
-            active:0,
-            weight:5,
-            quantity:-1,
-            cost:25,
-            notes:'Simple, Ammunition, Loading, Range, Two-Handed, Range (80/320)'
-          },
-          {
-            name:'Crossbow Bolts',
-            subname:'gear • ammunition',
-            active:0,
-            weight:1.5,
-            quantity:20,
-            cost:1,
-            notes:'Damage, Combat'
-          },
-          {
-            name:'Amulet',
-            subname:'gear • holy Symbole',
-            active:-1,
-            weight:1,
-            quantity:1,
-            cost:5,
-            notes:'Utility'
-          },
-        ],
-        backpack:[
-          {
-            name:'Small Knife',
-            subname:'gear • Adventuring Gear',
-            active:-1,
-            weight:0,
-            quantity:1,
-            cost:0,
-            notes:'Utility'
-          },
-        ],
-        almsBox:[
-          {
-            name:'Block of Incense',
-            subname:'gear • Adventuring Gear',
-            active:-1,
-            weight:0,
-            quantity:2,
-            cost:0,
-            notes:'Social, Utility'
-          },
-        ]
-      }
-    }
+    //       ]
+    //     },
+    //     "2nd level":{
+    //       slots:3,
+    //       used:0,
+    //       spells:[
+    //         {
+    //           name:'Spiritual Weapons', 
+    //           frequency:'cast',
+    //           class:'cleric',
+    //           time:'1A',
+    //           range:'60ft',
+    //           hit_dc:'6',
+    //           effect:'1d8+6 '+force,
+    //           notes:'D: 1m, V/S',
+    //           bonus:true
+    //         }
+    //       ]
+    //     },
+    //     "3rd level":{
+    //       slots:2,
+    //       used:0,
+    //       spells:[
+    //         {
+    //           name:"Spirit Guardians",
+    //           frequency:'cast',
+    //           class:'cleric',
+    //           time:'1A',
+    //           range:'self',
+    //           hit_dc:'wis|14',
+    //           effect:'3d8 '+radiant,
+    //           notes:'D: 10m, '+sphere+' ; V/S/M',
+    //           bonus:true
+    //         }
+    //       ]
+    //     }
+    //   },
+    //   inventory:{
+    //     copper:1,
+    //     silver:2,
+    //     electrum:3,
+    //     gold:10,
+    //     platinum:4,
+    //     hasBackpack:true,
+    //     hasAlmsBox:true,
+    //     equipment:[
+    //       {
+    //         name:'mace',
+    //         subname:'mace',
+    //         active:1,
+    //         weight:4,
+    //         quantity:-1,
+    //         cost:5, // in gp
+    //         notes:'Simple'
+    //       },
+    //       {
+    //         name:'Leather',
+    //         subname:'Light Armor • Leather',
+    //         active:1,
+    //         weight:10,
+    //         quantity:-1,
+    //         cost:10,
+    //         notes:'AC 11'
+    //       },
+    //       {
+    //         name:'Shield',
+    //         subname:'Shield • Shield',
+    //         active:1,
+    //         weight:6,
+    //         quantity:-1,
+    //         cost:10,
+    //         notes:'+2 AC'
+    //       },
+    //       {
+    //         name:'Crossbow, light',
+    //         subname:'crossbow, light',
+    //         active:0,
+    //         weight:5,
+    //         quantity:-1,
+    //         cost:25,
+    //         notes:'Simple, Ammunition, Loading, Range, Two-Handed, Range (80/320)'
+    //       },
+    //       {
+    //         name:'Crossbow Bolts',
+    //         subname:'gear • ammunition',
+    //         active:0,
+    //         weight:1.5,
+    //         quantity:20,
+    //         cost:1,
+    //         notes:'Damage, Combat'
+    //       },
+    //       {
+    //         name:'Amulet',
+    //         subname:'gear • holy Symbole',
+    //         active:-1,
+    //         weight:1,
+    //         quantity:1,
+    //         cost:5,
+    //         notes:'Utility'
+    //       },
+    //     ],
+    //     backpack:[
+    //       {
+    //         name:'Small Knife',
+    //         subname:'gear • Adventuring Gear',
+    //         active:-1,
+    //         weight:0,
+    //         quantity:1,
+    //         cost:0,
+    //         notes:'Utility'
+    //       },
+    //     ],
+    //     almsBox:[
+    //       {
+    //         name:'Block of Incense',
+    //         subname:'gear • Adventuring Gear',
+    //         active:-1,
+    //         weight:0,
+    //         quantity:2,
+    //         cost:0,
+    //         notes:'Social, Utility'
+    //       },
+    //     ]
+    //   }
+    // }
+    {}
   )
 
   const characters:any = ref({health:{}})
 
   const managerOpen = ref(false);
   const managerCaller = ref('');
+  const idRef = ref(-1)
 
   async function getCharacter(id:number){
     const token = localStorage.getItem('jwt_token')
@@ -599,6 +601,7 @@ export const useCharacter = defineStore('character',() => {
       }
     })
     try {
+      idRef.value = id;
       const characterDb = characterResp.data.character
       delete characterDb.character_id;
       delete characterDb.owner_id
@@ -615,6 +618,9 @@ export const useCharacter = defineStore('character',() => {
         else if(elem === 'speed') character.value[elem] = characterDb[elem]+"ft"
         else if(elem === 'savingthrows'){
           characterDb[elem].forEach((item: { name: string | number }) => {
+            if(!character.value.savingthrows){
+              character.value['savingthrows'] = {}
+            }
             character.value.savingthrows[item.name] = item
           })
         }
@@ -623,6 +629,8 @@ export const useCharacter = defineStore('character',() => {
         // console.log(`db character ${elem}: `,characterDb[elem]);
       }) 
       character.value.xpToNextLevel = xpForLevel[characterDb.level+1]
+      character.value.totalXp = xpForLevel[characterDb.level] + characterDb.currentxp 
+      // character.value.currentXp = characterDb.currentxp
     } catch (error) {
       console.log(error);
     }
@@ -747,16 +755,46 @@ export const useCharacter = defineStore('character',() => {
     character.value.armor = ac
   }
 
-  function updateCurrentHP(hpValue:number){
+  async function updateCurrentHP(hpValue:number){
     character.value.health.current = hpValue
+    if(idRef.value != -1){
+      const response = await axios.patch(`${url}/hp`,{
+        body:{id:idRef.value,value:hpValue,type:"currenthp"}
+      })
+      try {
+        return response
+      } catch (error) {
+        return error
+      }
+    }
   }
 
-  function updateMaxHP(hpValue:number){
+  async function updateMaxHP(hpValue:number){
     character.value.health.max = hpValue
+    if(idRef.value != -1){
+      const response = await axios.patch(`${url}/hp`,{
+        body:{id:idRef.value,value:hpValue,type:"maxhp"}
+      })
+      try {
+        return response
+      } catch (error) {
+        return error
+      }
+    }
   }
 
-  function updateTempHP(hpValue:number){
-    if(hpValue!= null) character.value.health.temp = hpValue
+  async function updateTempHP(hpValue:number){
+    character.value.health.temp = hpValue;
+    if(idRef.value != -1){
+      const response = await axios.patch(`${url}/hp`,{
+        body:{id:idRef.value,value:hpValue,type:"temphp"}
+      })
+      try {
+        return response
+      } catch (error) {
+        return error
+      }
+    }
   }
 
   function shortRest(){
@@ -801,7 +839,7 @@ export const useCharacter = defineStore('character',() => {
     ,getItemInventoryWeight,changeCharacterAC,updateCurrentHP
     ,updateMaxHP,updateTempHP,rollD20,rollD12,rollD10,rollD8
     ,rollD6,rollD4,longRest,shortRest,updateSkillProficiency
-    ,getCharacter,searchItem
+    ,getCharacter,searchItem,
   }
 })
 

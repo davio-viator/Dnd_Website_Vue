@@ -34,10 +34,11 @@
       return{
         id:this.$route.params.id,
         character,
-        inspiration:character.value.inspiration,
+        inspiration:character?.value?.inspiration ?? 0,
         characterStore:useCharacter(),
         getCharacter,
-        pending:true
+        pending:true,
+        currentCharacter:null
       }
     },
 
@@ -89,12 +90,29 @@
     },
 
     async mounted(){
-      await this.getCharacter(parseInt(this.$route.params.id as string))
-      try {
-        this.pending = false
-      } catch (error) {
-        
-      }
+      // try {
+      //   const x = await this.getCharacter(parseInt(this.$route.params.id as string))
+      //   console.log({character:x});
+      //   this.currentCharacter = x
+      //   console.log(this.currentCharacter);
+      //   this.pending = false
+      // } catch (error) {
+      //   console.log(error);
+      // }
+
+      return this.getCharacter(parseInt(this.$route.params.id as string))
+      .then(res => {
+        this.character = res;
+        this.pending = false;
+        return this.pending;
+      })
+      .catch(err => {
+        console.log(err);
+        throw error(err)
+      })
+
+
+
     }
 
 
@@ -105,9 +123,9 @@
 <template>
   <div v-if="pending" class="loading">
     <div>
-    <img class="loading-image" :src="loadingAnime" alt="loading animation">
-    <p >Loading ...</p>
-  </div>
+      <img class="loading-image" :src="loadingAnime" alt="loading animation">
+      <p >Loading ...</p>
+    </div>
   </div>
   <div v-else>  
     <div class="character-header">

@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { useCharacter } from '@/stores/CharacterService';
+  import loadingAnime from '../../assets/loadingdndbeyond.svg'
 </script>
 
 <script type="module" lang="ts">
@@ -17,24 +18,29 @@
         maxHealth:this.max?this.max:42,
         currentHealth:this.current?this.current:12,
         tempHP:this.temp?this.temp:null,
-        characterStore:useCharacter()
+        characterStore:useCharacter(),
+        isPending: false,
       }
     },
 
     methods:{
-      heal(){
+      async heal(){
+        this.isPending = true
         let refValue = ((this.$refs['health_input'] as any).value as string) 
+        console.log({refValue});
         let value = refValue == '' ? 0 : Number.parseInt(refValue) ;
         this.currentHealth += value;
         if(this.currentHealth > this.maxHealth)this.currentHealth = this.maxHealth;
         (this.$refs['health_input'] as any).value = null;
-        this.characterStore.updateCurrentHP(this.currentHealth)
+        await this.characterStore.updateCurrentHP(this.currentHealth)
+        this.isPending = false
       },
 
-      damage(){
-        let refValue = ((this.$refs['health_input'] as any).valus as string)
+      async damage(){
+        let refValue = ((this.$refs['health_input'] as any).value as string)
         let value = refValue == '' ? 0 : Number.parseInt(refValue) ;
 
+        this.isPending = true
         if((this.tempHP as number)  <= 0){
           this.currentHealth -= value;
           if(this.currentHealth < 0)this.currentHealth = 0;
@@ -44,23 +50,27 @@
           let newTemp = (this.tempHP as number) - value
           if(newTemp > 0) this.tempHP = newTemp
           else{
+            console.log("here");
             this.tempHP = null;
             let newHp = this.currentHealth - Math.abs(newTemp)
             this.currentHealth = newHp
           }
         }
         (this.$refs['health_input'] as any).value = null;
-        this.characterStore.updateCurrentHP(this.currentHealth)
-        this.characterStore.updateTempHP((this.tempHP as number))
+        await this.characterStore.updateCurrentHP(this.currentHealth)
+        await this.characterStore.updateTempHP((this.tempHP as number))
+        this.isPending = false
       },
 
-      healthChange(e:any){
+      async healthChange(e:any){
+        this.isPending = true
         let value = e.target.value
         let name = e.target.name
         if(name == 'health')this.currentHealth = parseInt(value)
         if(name == 'temp') this.tempHP = parseInt(value)
-        this.characterStore.updateCurrentHP(this.currentHealth)
-        this.characterStore.updateTempHP((this.tempHP as number))
+        await this.characterStore.updateCurrentHP(this.currentHealth)
+        await this.characterStore.updateTempHP((this.tempHP as number))
+        this.isPending = false
 
       },
       openManager(event:any){
@@ -91,12 +101,18 @@
 </script>
 
 <template>
-  <div class="wrapper outer-border" @click="openManager">
+  <div v-if="isPending" class="outer-border loading wrapper ">
+    <div>
+      <img class="loading-image" :src="loadingAnime" alt="loading animation">
+      <p >Loading ...</p>
+    </div>
+  </div>
+  <div v-else class="wrapper outer-border" @click="openManager">
 
     <div class="inputs">
-       <button @click="heal" class="input heal">heal</button>
-       <input ref="health_input" min="0" class="input" type="number">
-       <button @click="damage" class="input damage">damage</button>
+      <button @click="heal" class="input heal">heal</button>
+      <input ref="health_input" min="0" class="input" type="number">
+      <button @click="damage" class="input damage">damage</button>
     </div>
 
     <div class="health-container" >
@@ -115,7 +131,7 @@
 
       <div class="test">
         <span class="title">temp</span>
-        <input class="health-input" type="number" placeholder="--" @change="healthChange" name="temp" min="0" :value="temp">
+        <input ref="temp-hp" class="health-input" type="number" placeholder="--" @change="healthChange" name="temp" min="0" :value="temp">
       </div>
 
     </div>
@@ -231,6 +247,21 @@
     bottom:0;
     left: calc(50% - 40px);
     padding-bottom: 5px;
+  }
+
+  .loading{
+    /* background-color: white; */
+    width:unset !important;
+    text-align: center !important;
+    width: 80% !important;
+    font-size: 25px !important;
+    margin: auto !important;
+    /* width: 20vw; */
+  }
+
+  .loading-image{
+    margin-top: 5px;
+    width:3.5rem;
   }
 
 </style>

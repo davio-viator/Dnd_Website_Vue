@@ -28,13 +28,17 @@
         }
       },
       obeySearch(spell:any){
-        return spell.name.includes(this.searchTerm) ||
-        spell.class.includes(this.searchTerm) ||
-        spell.time.includes(this.searchTerm) ||
-        spell.notes.includes(this.searchTerm) ||
-        spell.effect.includes(this.searchTerm) ||
-        spell.range.includes(this.searchTerm) ||
-        spell.hit_dc.includes(this.searchTerm) 
+        console.log(spell);
+        return spell.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        // spell.class.includes(this.searchTerm) ||
+        spell.school.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        // spell.time.includes(this.searchTerm) ||
+        spell.castingTime.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        spell.notes.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        // spell.effect.includes(this.searchTerm) ||
+        spell.damage_type.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        spell.range.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        spell.hit_dc.toLowerCase().includes(this.searchTerm.toLowerCase()) 
         
       }
     },

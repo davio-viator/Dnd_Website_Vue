@@ -44,11 +44,15 @@
         })
         return res
         // return ""
+      },
+      computedCurrentXP(): number{
+        this.currentXp = this.character.currentxp
+        return this.currentXp
       }
     },
 
     created(){
-      this.currentXp = this.character.currentXp
+      this.currentXp = this.character.currentxp
     },
 
     mounted(){
@@ -67,10 +71,10 @@
         <span class="title">{{ character.firstname }} {{ character.lastname }}</span>
         <p style="text-transform: capitalize;">{{ character.sex }}  {{ character.race }}  {{ classLevels }}  <!-- {{ character.level }} --> </p>
         <label class="progress-bar-text" for="level"> level {{ character.level }}
-          <progress class="progress-bar" id="level" :value="currentXp" :max="character.xpToNextLevel-character.totalXp"></progress>
+          <progress class="progress-bar" id="level" :value="computedCurrentXP" :max="character.xpToNextLevel"></progress>
           level {{ character.level+1 }}
         </label>
-        <span>{{ character.totalXp + parseInt(currentXp+'') }} / {{ character.xpToNextLevel }}</span>
+        <span>{{ /* character.totalXp +  */parseInt(computedCurrentXP+'') }} / {{ character.xpToNextLevel }}</span>
         <!--<input style="width:13%" type="range" min="0" v-model="currentXp" :max="character.xpToNextLevel-character.totalXp">-->
       </div>
       <div class="button-container">

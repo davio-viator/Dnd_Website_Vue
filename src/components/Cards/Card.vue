@@ -7,7 +7,7 @@
 
   import { getAllUsers, createUser } from '@/services/UserService'
   import { createCard, getUserCardNotes } from '@/services/CardService'
-  import { createNote } from '@/services/NoteService'
+  import { createNote, getNote } from '@/services/NoteService'
 </script>
 
 <script type="module" lang="ts">
@@ -43,11 +43,11 @@
     methods:{
       async displayNotes(){
         this.noteDisplayed.displayNote()
+        await this.getNote()
         this.noteDisplayed.setTitle(this.name)
         this.$emit('noteDisplayed',this.noteDisplayed.noteDisplayed)
         this.$emit('noteTitle',this.name)
         this.$emit('cardId',this.id)
-        await this.getNote()
       },
       getUsers(){
         getAllUsers().then((res: any[]) => {
@@ -59,16 +59,22 @@
         const currentUser = this.users.filter(item => item["user_id"] == currentUserId)[0]
         const test = await getUserCardNotes(currentUser["user_id"], this.id as number);
         if(typeof test?.message !== typeof undefined){
-          console.log("no notes yet");
+          const content = useDisplayNote().getContent()
           const res = await createNote({
             userId:parseInt(currentUserId),
             cardId:(this.id as number),
             title:this.name as string,
-            content: useDisplayNote().getContent()
+            content: content
           })
-          console.log(res);
+
+          this.noteDisplayed.setContent(content);
+          this.noteDisplayed.setTitle(this.name);
+        }else{
+          const note = await getNote(currentUser['user_id'],this.id as number)
+          
+          this.noteDisplayed.setContent(note.content);
+          this.noteDisplayed.setTitle(note.title);
         }
-        // console.log(currentUser, this.id);
       },
       createCardFn(){
         return createCard({
@@ -82,7 +88,6 @@
           window.location.reload();
         })
         .catch((err) => {
-          console.log(err);
           alert("an error occured while creating the card, please try again")
         })
       }

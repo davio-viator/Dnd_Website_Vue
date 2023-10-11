@@ -37,7 +37,8 @@
         },
         cardArray:[],
         cardTitle:'Hey i\'m the note\'s title',
-        cardContent:'Hey i\'m the note\'s content',
+        cardContent:useDisplayNote().getContent(),
+        cardId:0,
         noteOpenned:false
       }
     }
@@ -45,7 +46,8 @@
     ,methods:{
       async handleUpdate(content:string){
         const userId = parseInt(localStorage.getItem("user_id") as string)
-        await updateNote({userId,cardId:2,content:content})
+        await updateNote({userId,cardId:this.cardId,content:content})
+        this.cardContent = content
       }
     }
 
@@ -94,6 +96,9 @@
           )
         }
         return this.links
+      },
+      currentNoteContent(){
+        return useDisplayNote().getContent() ||  'Hey i\'m the note\'s content'
       }
     }
   }
@@ -109,13 +114,13 @@
         :iconSrc="DefaultUser"
         :urls=linksArray>
       </TheHeaderVue>
-      <RouterView/>
+      <RouterView @currentCardId="(currentCardId:number)=> cardId = currentCardId" />
       <div ref="note" :class="{'note-container note-open-note':noteIsOpen,'note-container note-close-note':!noteIsOpen}">
         <NoteVue 
           :open="noteIsOpen" 
           :title="noteTitle" 
           @noteContent="async (emitContent)=>handleUpdate(emitContent)" 
-          :content="cardContent">
+          :content="currentNoteContent">
         </NoteVue>
       </div>
        <!--
