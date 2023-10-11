@@ -14,21 +14,26 @@
     data() {
         return {
             spells: useCharacter().character.spells,
+            character: useCharacter().character,
             searchTerm:''
         };
     },
     methods: {
-      click(e:any,level:any){
+      async click(e:any,level:any){
         let input:any = e.target
+        console.log(this.character);
         if([...input.classList].includes('used')) {
           this.spells[level].used--
+          console.log(this.spells[level],level);
+          await useCharacter().updateSpellSlots(level, this.spells[level].used);
         }
         else {
           this.spells[level].used++
+          console.log(this.spells[level],level);
+          await useCharacter().updateSpellSlots(level, this.spells[level].used);
         }
       },
       obeySearch(spell:any){
-        console.log(spell);
         return spell.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         // spell.class.includes(this.searchTerm) ||
         spell.school.toLowerCase().includes(this.searchTerm.toLowerCase()) ||

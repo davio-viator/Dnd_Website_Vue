@@ -5,7 +5,7 @@
 <script type="module" lang="ts">
 
   export default {
-    emits:['pending'],
+    emits:['pending','pending-start','pending-end'],
     
     props:{
       name:String,
@@ -27,25 +27,17 @@
 
     methods:{
       async click(e:any){
-        this.pending = true
-        // this.$emit('pending',true)
-        this.emitPendind(true);
+        this.pending = true;
+        this.emitPendind(this.pending);
         const characterId = parseInt(this.$route.params.id as string)
         const res = await this.characterStore.updateActiveEquipment((this as any)['name'],(this as any)['location'],characterId)
-        console.log((res as any).data);
-        // this.$emit('pending',false);
         this.pending = false;
-        this.emitPendind(false);
-/*           .finally(()=> {
-            console.log("went there");
-            this.pending = false
-            setTimeout(() => {
-            this.$emit('pending',false);
-            }, 500);
-          }) */
+        setTimeout(() => {
+          this.emitPendind(this.pending);
+        },500)
       },
       emitPendind(status:boolean){
-        this.$emit('pending',status);
+        status ? this.$emit('pending-start',status) : this.$emit('pending-end',status);
       }
     },
 

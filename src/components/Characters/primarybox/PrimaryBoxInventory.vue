@@ -52,7 +52,10 @@
       electrum(){return useCharacter().character.inventory.electrum},
       silver(){return useCharacter().character.inventory.silver},
       copper(){return useCharacter().character.inventory.copper},
-      pendingStatus(){ console.log(this.pending); return this.pending}
+      pendingStatus(){ 
+        console.log(this.pending+" "+ Date.now()); 
+        return this.pending
+      }
 
     },
     created() {
@@ -108,7 +111,9 @@
             <span class="title">{{ characterStore.getItemInventoryWeight('equipment') }} <span style="text-transform:lowercase;color:#A8A8A8">lb</span></span>
           </div>
           <div v-if="displayEquipment">
-            <Item @pending="(emitPending) => pending = emitPending" v-for="item in characterStore.getEquipementInventory()"
+            <Item 
+              @pending="(emitPending) => pending = emitPending" 
+              v-for="item in characterStore.getEquipementInventory()"
               :name="item.name"
               :subname="item.subname"
               :active="item.active"

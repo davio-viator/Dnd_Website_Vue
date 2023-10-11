@@ -677,8 +677,19 @@ export const useCharacter = defineStore('character',() => {
     return Math.floor((value-10)/2)
   }
 
-  function setInspiration(){
+  async function setInspiration(){
     character.value.inspiration = !character.value.inspiration
+    try {
+    const response = await axios.patch(`${url}/inspiration`,{
+      id:idRef.value,inspiration:character.value.inspiration
+    });
+      return response
+    } catch (error) {
+      throw new Error(error as undefined);
+      return error
+    }
+
+
   }
 
 
@@ -797,6 +808,17 @@ export const useCharacter = defineStore('character',() => {
     }
   }
 
+  async function updateSpellSlots(spellLevel:string, quantity:number){
+    try {
+      const response = await axios.patch(`${url}/spell-slots`,{
+        id:idRef.value,spell_level:spellLevel,quantity:quantity
+      })
+      return response
+    } catch (error) {
+      return error
+    }
+  }
+
   function shortRest(){
     Object.keys(character.value.actions).forEach(element => {
       const currentElem = character.value.actions[element]
@@ -839,7 +861,7 @@ export const useCharacter = defineStore('character',() => {
     ,getItemInventoryWeight,changeCharacterAC,updateCurrentHP
     ,updateMaxHP,updateTempHP,rollD20,rollD12,rollD10,rollD8
     ,rollD6,rollD4,longRest,shortRest,updateSkillProficiency
-    ,getCharacter,searchItem,
+    ,getCharacter,searchItem,updateSpellSlots,
   }
 })
 

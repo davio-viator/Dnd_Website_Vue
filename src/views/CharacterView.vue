@@ -38,7 +38,8 @@
         characterStore:useCharacter(),
         getCharacter,
         pending:true,
-        currentCharacter:null
+        currentCharacter:null,
+        loadingAnime:loadingAnime
       }
     },
 
@@ -59,27 +60,27 @@
     },
 
     computed:{
-      isManagerOpen(){
+      isManagerOpen(): boolean{
         let status = this.characterStore
         return status.managerOpen
       },
-      manager(){
+      manager(): string{
         let status = this.characterStore
         return status.managerCaller
       },
-      maxHealth(){
+      maxHealth():  number{
         return this.character.health.max
       },
-      currentHealth(){
+      currentHealth(): number{
         return this.character.health.current
       },
-      tempHealth(){
+      tempHealth(): number{
         return this.character.health.temp
       },
-      defences(){
+      defences(): number{
         return this.character.defences
       },
-      conditions(){
+      conditions(): any[]{
         return this.character.conditions
       },
 
@@ -107,8 +108,7 @@
         return this.pending;
       })
       .catch(err => {
-        console.log(err);
-        throw error(err)
+        throw new Error(err)
       })
 
 
@@ -166,7 +166,7 @@
     
           <div class="g health-block">
             <div class="inspiration">
-              <div @click="characterStore.setInspiration()" class="box" :class="{'checked':character.inspiration}">
+              <div @click="async () => await characterStore.setInspiration()" class="box" :class="{'checked':character.inspiration}">
     
               </div>
               <span style="position:absolute;bottom:0;padding-left:5px;padding-bottom:4px">INSPIRATION</span>

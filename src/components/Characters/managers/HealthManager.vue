@@ -1,20 +1,10 @@
 <script setup lang="ts">
-  import copperSrc from '@/assets/svg/copper.svg'
-  import silverSrc from '@/assets/svg/silver.svg'
-  import electrumSrc from '@/assets/svg/electrum.svg'
-  import goldSrc from '@/assets/svg/gold.svg'
-  import platinumSrc from '@/assets/svg/platinum.svg'
-  import upArrow from '@/assets/svg/up-arrow.svg'
-  import downArrow from '@/assets/svg/down-arrow.svg'
-
-  import NavBar from '@/components/navbar/NavBar.vue';
   import { useCharacter } from '@/stores/CharacterService'
 </script>
 
 <script type="module" lang="ts">
 
   export default {
-    emits:['valueChange','adjustCoin'],
     props:{
       base:String
     },
@@ -40,13 +30,13 @@
         console.log(event.target.value);
         // this.characterStore.updateMaxHP(parseInt(event.target.value));
       },
-      apply(){
+      async apply(){
         let current:number = parseInt((this['newHp'] as any));
         let max:number = parseInt((this.$refs['maxValue'] as any).value);
         let temp:number = parseInt((this.$refs['tempValue']as any).value );
-        this.characterStore.updateCurrentHP(current);
-        this.characterStore.updateMaxHP(max);
-        this.characterStore.updateTempHP(temp);
+        await this.characterStore.updateCurrentHP(current);
+        await this.characterStore.updateMaxHP(max);
+        await this.characterStore.updateTempHP(temp);
         this.damageValue = 0;
         this.healValue = 0;
       }
