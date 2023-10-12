@@ -362,7 +362,7 @@ export const useCharacter = defineStore('character',() => {
     //         bonus:false
     //       },
     //       {
-    //         title:'Channel Divinity: Preserve Life',
+    //         title:'Channel Divini"nonety: Preserve Life',
     //         text:'As an action, you can restore <strong>25</strong> HP. Choose any creatures within 30 ft. of you, and divide those hit points among them. This feature can restore a creature to no more than half of its hit point maximum. You can’t use this feature on an undead or a construct.',
     //         times:0,
     //         frequency:'',

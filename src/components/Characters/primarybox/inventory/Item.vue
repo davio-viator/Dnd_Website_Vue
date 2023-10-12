@@ -33,12 +33,18 @@
         const res = await this.characterStore.updateActiveEquipment((this as any)['name'],(this as any)['location'],characterId)
         this.pending = false;
         setTimeout(() => {
-          this.emitPendind(this.pending);
+          // console.log("test");
         },500)
+        console.log(res);
+
+        this.emitPendind(this.pending);
       },
       emitPendind(status:boolean){
-        status ? this.$emit('pending-start',status) : this.$emit('pending-end',status);
+        // status ? this.$emit('pending-start',status) : this.$emit('pending-end',status);
+        console.log(this.pending);
+        this.$emit('pending',status)
       }
+
     },
 
     computed:{

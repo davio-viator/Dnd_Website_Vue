@@ -10,6 +10,7 @@
   import NavBar from '@/components/navbar/NavBar.vue';
   import Item from '@/components/Characters/primarybox/inventory/Item.vue';
   import loadingAnime from '@/assets/loadingdndbeyond.svg'
+  import { ref } from 'vue';
 </script>
 
 <script type="module" lang="ts">
@@ -19,20 +20,17 @@
         base: String
     },
     data() {
+        const test = ref(false)
         return {
             character: useCharacter().character,
             characterStore:useCharacter(),
-            // copper: useCharacter().character.inventory.copper,
-            // silver: useCharacter().character.inventory.silver,
-            // electrum: useCharacter().character.inventory.electrum,
-            // gold: useCharacter().character.inventory.gold,
-            // platinum: useCharacter().character.inventory.platinum,
             tabs:['All','equipment'],
             tabSelected:'',
             displayEquipment:true,
             displayAlmsBox:true,
             displayBackpack:true,
-            pending:false,
+            pending:ref(false),
+            test
         };
     },
     methods: {
@@ -54,7 +52,15 @@
       copper(){return useCharacter().character.inventory.copper},
       pendingStatus(){ 
         console.log(this.pending+" "+ Date.now()); 
-        return this.pending
+        return this.test
+      },
+      cssVar(){
+        console.log(this.test);
+        const value = this.test === false ? 'none' : 'block'
+        console.log({value});
+        return {
+          '--display': value
+        }
       }
 
     },
@@ -75,13 +81,13 @@
 </script>
 
 <template>
-  <div v-if="pendingStatus" class="loading">
+  <div class="loading" :style="cssVar">
     <div>
       <img class="loading-image" :src="loadingAnime" alt="loading animation">
       <p >Loading ...</p>
     </div>
   </div>
-  <div v-else class="wrap">
+  <div class="wrap">
     <div class="money-container" data-manager-item="true" @click="openMoneyManager">
       <div class="money-wrapper" title="platinum pieces" v-if="platinum>0">{{ platinum }} <img class="money-icon" :src="platinumSrc" alt="platinum icon"></div>
       <div class="money-wrapper" title="gold pieces" v-if="gold>0">{{ gold }} <img class="money-icon" :src="goldSrc" alt="gold icon"></div>
@@ -112,7 +118,7 @@
           </div>
           <div v-if="displayEquipment">
             <Item 
-              @pending="(emitPending) => pending = emitPending" 
+              @pending="(emitPending) => test = emitPending" 
               v-for="item in characterStore.getEquipementInventory()"
               :name="item.name"
               :subname="item.subname"
@@ -259,6 +265,7 @@
     margin: auto;
     margin-top: 20vh;
     width: 20vw;
+    display: var(--display);
   }
 
   

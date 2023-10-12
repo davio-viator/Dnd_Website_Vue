@@ -39,7 +39,7 @@
         let refValue = ((this.$refs['health_input'] as any).value as string)
         let value = refValue == '' ? 0 : Number.parseInt(refValue) ;
 
-        // this.isPending = true
+        this.isPending = true
         if((this.tempHP as number)  <= 0){
           this.currentHealth -= value;
           if(this.currentHealth < 0)this.currentHealth = 0;
@@ -62,7 +62,7 @@
       },
 
       async healthChange(e:any){
-        // this.isPending = true
+        this.isPending = true
         let value = e.target.value
         let name = e.target.name
         if(name == 'health')this.currentHealth = parseInt(value)
