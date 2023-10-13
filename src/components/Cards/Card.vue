@@ -45,9 +45,10 @@
         this.noteDisplayed.displayNote()
         await this.getNote()
         this.noteDisplayed.setTitle(this.name)
-        this.$emit('noteDisplayed',this.noteDisplayed.noteDisplayed)
-        this.$emit('noteTitle',this.name)
-        this.$emit('cardId',this.id)
+        this.$emit('noteDisplayed',this.noteDisplayed.noteDisplayed);
+        this.$emit('noteTitle',this.name);
+        this.noteDisplayed.setCardId(this.id as number);
+
       },
       getUsers(){
         getAllUsers().then((res: any[]) => {
@@ -59,7 +60,7 @@
         const currentUser = this.users.filter(item => item["user_id"] == currentUserId)[0]
         const test = await getUserCardNotes(currentUser["user_id"], this.id as number);
         if(typeof test?.message !== typeof undefined){
-          const content = useDisplayNote().getContent()
+          const content = 'Hey i\'m the note\'s title'
           const res = await createNote({
             userId:parseInt(currentUserId),
             cardId:(this.id as number),

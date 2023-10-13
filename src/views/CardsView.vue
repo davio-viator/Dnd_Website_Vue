@@ -5,7 +5,7 @@
   import { faker } from '@faker-js/faker';
 
   import { getAllCards, createCard } from '@/services/CardService' 
-import { debounce, type MonoTypeOperatorFunction, type ObservableInput } from 'rxjs';
+  import { debounce, type MonoTypeOperatorFunction, type ObservableInput } from 'rxjs';
 </script>
 
 <script type="module" lang="ts">
@@ -18,7 +18,7 @@ import { debounce, type MonoTypeOperatorFunction, type ObservableInput } from 'r
     url:string
   }
 
-  export default{
+  export default {
     emits:['currentCardId'],
 
     data() {
@@ -135,7 +135,6 @@ import { debounce, type MonoTypeOperatorFunction, type ObservableInput } from 'r
         v-for="card in cardArray" current
         @noteDisplayed="(emitNoteDisplayed)=>noteOpenned = emitNoteDisplayed" 
         @noteTitle="(emitNoteTitle)=>cardTitle = emitNoteTitle"  
-        @cardId="(emitCardId)=>emitCardIdFn(emitCardId)"
         :id="card['id']"
         :name="card['name']" 
         :rank="card['rank']" 

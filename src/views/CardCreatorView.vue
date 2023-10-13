@@ -4,8 +4,8 @@
   import { faker } from '@faker-js/faker';
 </script>
 
-<script module lang="ts">
-  export default{
+<script type="module" lang="ts">
+  export default {
     data() {
       return {
       }
@@ -20,7 +20,7 @@
 
 <template>
   <CardVue 
- :edition="Boolean"></CardVue>
+ :edition="true"></CardVue>
 
 </template>
 

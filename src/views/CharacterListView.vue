@@ -64,7 +64,7 @@ interface Character {
     },
     methods: {
         initCharacters() {
-            let iteration: Number = parseInt(faker.random.numeric(2));
+            let iteration: number = parseInt(faker.random.numeric(2));
             iteration = 15;
             for (let i = 0; i < iteration; i++) {
                 let firstname: string = faker.name.firstName();

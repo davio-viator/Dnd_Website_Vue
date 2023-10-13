@@ -46,7 +46,7 @@
     ,methods:{
       async handleUpdate(content:string){
         const userId = parseInt(localStorage.getItem("user_id") as string)
-        await updateNote({userId,cardId:this.cardId,content:content})
+        await updateNote({userId,cardId:useDisplayNote().getCardId(),content:content})
         this.cardContent = content
       }
     }
@@ -114,7 +114,7 @@
         :iconSrc="DefaultUser"
         :urls=linksArray>
       </TheHeaderVue>
-      <RouterView @currentCardId="(currentCardId:number)=> cardId = currentCardId" />
+      <RouterView />
       <div ref="note" :class="{'note-container note-open-note':noteIsOpen,'note-container note-close-note':!noteIsOpen}">
         <NoteVue 
           :open="noteIsOpen" 

@@ -50,14 +50,11 @@
       electrum(){return useCharacter().character.inventory.electrum},
       silver(){return useCharacter().character.inventory.silver},
       copper(){return useCharacter().character.inventory.copper},
-      pendingStatus(){ 
-        console.log(this.pending+" "+ Date.now()); 
+      pendingStatus(){  
         return this.test
       },
       cssVar(){
-        console.log(this.test);
         const value = this.test === false ? 'none' : 'block'
-        console.log({value});
         return {
           '--display': value
         }

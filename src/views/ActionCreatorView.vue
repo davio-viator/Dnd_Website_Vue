@@ -50,6 +50,10 @@
           this.iconSrc = e.target.result
         }
         reader.readAsDataURL(event.target.files[0]) 
+      },
+      handleSubmit(event: Event){
+        const values = {...this}
+        console.log(values);
       }
     },
 
@@ -173,7 +177,7 @@
     </label>
   </div>
 
-  <button class="submit" type="submit">Create action</button>
+  <button class="submit" type="submit" @click="handleSubmit">Create action</button>
 
 </template>
 

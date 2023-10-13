@@ -15,6 +15,7 @@ export const useDisplayNote = defineStore('dislayNote',() => {
   const noteDisplayed = ref(false);
   const title = ref("")
   const content = ref("")
+  const cardId = ref(-1)
   function displayNote(){
     noteDisplayed.value = !noteDisplayed.value
   }
@@ -31,7 +32,15 @@ export const useDisplayNote = defineStore('dislayNote',() => {
     return title.value
   }
 
-  return {noteDisplayed,title,displayNote,setTitle,getTitle,setContent,getContent}
+  function setCardId(id:number) {
+    cardId.value = id;
+  }
+
+  function getCardId() {
+    return cardId.value;
+  }
+
+  return {noteDisplayed,title,cardId,displayNote,setTitle,getTitle,setContent,getContent, setCardId, getCardId}
 })
 
 export const useNoteTitle = defineStore('noteTitle', () => {
